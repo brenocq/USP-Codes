@@ -8,9 +8,14 @@ int main(int argc, char const *argv[]) {
   Aluno* aluno = aluno_criar(0,5,10,9);
   Aluno* aluno2 = aluno_criar(4,5,10,9);
   Aluno* aluno3 = aluno_criar(1,5,10,9);
+
   registro_inserir(registro, aluno);
   registro_inserir(registro, aluno2);
   registro_inserir(registro, aluno3);
+  //registro_remover(registro, 4);
+  //registro_inserir(registro, aluno);// Erro aki
   registro_imprimir(registro);
+
+  registro_deletar(registro);
   return 0;
 }
