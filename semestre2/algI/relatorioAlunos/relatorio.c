@@ -106,6 +106,10 @@ void registro_imprimir(Registros *r){
   Aluno* curr = r->inicio;
   while(curr!=NULL){
     printf("id: %d\n",curr->id);
+    printf("Horas de estudo: %f\n", curr->horasDeEstudo);
+    printf("Nota da primeira avaliação: %f\n", curr->nota1);
+    printf("Nota da segunda avaliação: %f\n", curr->nota2);
+    printf("\n");
     curr=curr->prox;
   }
 }
