@@ -9,12 +9,12 @@
 typedef struct _aluno Aluno;
 typedef struct _registros Registros;
 
-Registros* registro_criar();// Cria o registro
-Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2);// Cria elemento sobre aluno
-bool registro_deletar(Registros *r);// Destroi todos os registros
+Registros* registro_criar();// Criar um registro vazio
+Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2);// Cria elemento de aluno
+bool registro_deletar(Registros *r);// Deleta o registro
 bool registro_inserir(Registros *r, Aluno* aluno);// Insere novo aluno nos registros
 bool registro_remover(Registros *r, int IDdoAluno);// Remove aluno dos registros
-Aluno* registro_busca(Registros *r, int IDdoAluno);// Retorna aluno desejado
+Aluno* registro_busca(Registros *r, int IDdoAluno);// Retorna o primeiro aluno com este ID
 void registro_imprimir(Registros *r);// Imprime todas as informações registradas
 void relatorio_de_aprovacoes(Registros *r);// Imprime o relatório de aprovações
 void horas_de_estudo(Registros *r);// Imprimi a quantidade de horas de estudo

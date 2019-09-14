@@ -3,122 +3,133 @@
 #include <stdio.h>
 
 struct _aluno{
-  int id;
-  float horasDeEstudo;
-  float nota1, nota2;
-  struct _aluno* prox;
-  struct _aluno* prev;
+    int id;
+    float horasDeEstudo;
+    float nota1, nota2;
+    struct _aluno* prox;
+    struct _aluno* prev;
 };
 
 struct _registros{
-  Aluno *inicio;
-  Aluno *fim;
-  int tamanho;
+    Aluno *cabeca;
+    Aluno *fim;
+    int tamanho;
 };
 
 
 
 Registros* registro_criar(void){
-  // Criar um registro vazio
-  Registros *r = (Registros*)malloc(sizeof(Registros));
-  if(r==NULL)
-    return NULL;
-  r->inicio = NULL;
-  r->fim = NULL;
-  r->tamanho = 0;
-  return r;
+    // Criar um registro vazio
+    Registros *r = (Registros*)malloc(sizeof(Registros));
+    if(r==NULL){
+      printf("Não foi possível criar o registro, memória cheia.\n");
+      return NULL;
+    }
+    Aluno *cabeca = aluno_criar(-1,0,0,0);
+    
+    r->cabeca = cabeca;
+    r->fim = NULL;
+    r->tamanho = 0;
+    return r;
 }
 
 Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2){
-  Aluno* aluno = (Aluno*)malloc(sizeof(Aluno));
-  if(aluno==NULL){
-    printf("Não foi possível criar Aluno, memória cheia.");
-    return NULL;
-  }
-    
-  aluno->id = id;
-  aluno->horasDeEstudo = horasDeEstudo;
-  aluno->nota1 = nota1;
-  aluno->nota2 = nota2;
-  aluno->prox = NULL;
-  aluno->prev = NULL;
+    // Cria elemento de aluno
+    Aluno* aluno = (Aluno*)malloc(sizeof(Aluno));
+    if(aluno==NULL){
+      printf("Não foi possível criar Aluno de id %d, memória cheia.\n", id);
+      return NULL;
+    }
+      
+    aluno->id = id;
+    aluno->horasDeEstudo = horasDeEstudo;
+    aluno->nota1 = nota1;
+    aluno->nota2 = nota2;
+    aluno->prox = NULL;
+    aluno->prev = NULL;
 
-  return aluno;
+    return aluno;
 }
 
-void registro_deletar(Registros *r){//funcao 6
+bool registro_deletar(Registros *r){//funcao 6
   // Deleta o registro
-    Aluno* curr = (Aluno *)malloc(sizeof(Aluno));
-    curr = r->inicio;
-    Aluno* prox = (Aluno *)malloc(sizeof(Aluno));
+  if(r==NULL){
+    return false;
+  }
+    Aluno* curr = r->cabeca;
+    Aluno* prox;
     while(curr!=NULL){
         prox = curr->prox;
         free(curr);
-        Aluno* curr = (Aluno *)malloc(sizeof(Aluno));
         curr = prox;
     }
     free(r);
-    free(curr);
-    free(prox);
-    exit(1);                                 
+    return true;                               
 }
 
-void registro_inserir(Registros *r, Aluno* aluno){//funcao 1
+bool registro_inserir(Registros *r, Aluno* aluno){//funcao 1
+  // Insere novo aluno nos registros
+  if(r==NULL || aluno==NULL){
+    return false;
+  }
   if(r->tamanho>0){
     r->fim->prox = aluno;
+    aluno->prox = NULL;
+    aluno->prev = r->fim;
   }else{
-    r->inicio = aluno;
+    r->cabeca->prox = aluno;
+    aluno->prox = NULL;
+    aluno->prev = r->cabeca;
   }
 
   r->fim = aluno;
   r->tamanho++;
 }
 
-int registro_remover(Registros *r, int IDdoAluno){//funcao 2
-    // TODO função não está funcionando
-    Aluno* prev = (Aluno *)malloc(sizeof(Aluno)); 
-    prev = NULL;
-    Aluno* curr = (Aluno *)malloc(sizeof(Aluno)); 
-    curr = r->inicio;
-    int i = 0;
-    char encontrou = 0;
-    for (i = 0; i < r->tamanho; i++) {
-        if(curr->id == IDdoAluno){
-            if(curr==r->inicio){
-                r->inicio = curr->prox;
-            }else if(curr==r->fim){
-                r->fim = prev;
-                r->fim->prox = NULL;
-            }else{
-                prev->prox = curr->prox;
-                curr->prox = NULL;
-            }
-            curr->prox = NULL;
-            free(curr);
-        }
-        prev = curr;
-        curr = curr->prox;
+bool registro_remover(Registros *r, int IDdoAluno){//funcao 2
+    // Remove aluno dos registros
+    if(r==NULL){
+      return false;
     }
+
+    Aluno *aluno = registro_busca(r, IDdoAluno);
+    if(aluno==NULL)
+      return false;
+
+    if(aluno==r->fim){
+        r->fim = aluno->prev;
+        r->fim->prox = NULL;
+    }else{
+        aluno->prev->prox = aluno->prox;
+        aluno->prox->prev = aluno->prev;
+    }
+    aluno->prev = NULL;
+    aluno->prox = NULL;
+    free(aluno);
+
     r->tamanho--;
-    return encontrou;
+    return true;
 }
 
 Aluno *registro_busca(Registros *r, int IDdoAluno){
-    Aluno* curr = r->inicio;
-    int i;
-    if(r!=NULL){
-        while(curr!=NULL){
-            if(curr->id==IDdoAluno){
-                return curr;
-            }
-            curr=curr->prox;
+    // Retorna o primeiro aluno com este ID
+    Aluno* curr = r->cabeca->prox; 
+  
+    if(r==NULL){
+      return NULL;
+    }
+    while(curr!=NULL){
+        if(curr->id==IDdoAluno){
+            return curr;
         }
+        curr=curr->prox;
     }
     return NULL;
 }
 
 void registro_imprimir(Registros *r){//funcao 3
-  Aluno* curr = r->inicio;
+  // Imprime todas as informações registradas
+  Aluno* curr = r->cabeca->prox; 
   if(r!=NULL){
     while(curr!=NULL){
       printf("id: %d\n",curr->id);
@@ -134,10 +145,10 @@ void registro_imprimir(Registros *r){//funcao 3
 }
 
 void relatorio_de_aprovacoes(Registros *r);//funcao 4
+
 void horas_de_estudo(Registros *r){//funcao 5
-  Aluno *curr;
-  curr = (Aluno *)malloc(sizeof(Aluno));
-  curr = r->inicio;
+  // Imprimi a quantidade de horas de estudo
+  Aluno *curr = r->cabeca->prox; 
   int qntdAlunos = 0;
   float somaDasNotas = 0;
   if(r!=NULL){
