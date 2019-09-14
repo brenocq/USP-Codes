@@ -7,6 +7,7 @@ struct _aluno{
   float horasDeEstudo;
   float nota1, nota2;
   struct _aluno* prox;
+  struct _aluno* prev;
 };
 
 struct _registros{
@@ -15,7 +16,10 @@ struct _registros{
   int tamanho;
 };
 
+
+
 Registros* registro_criar(void){
+  // Criar um registro vazio
   Registros *r = (Registros*)malloc(sizeof(Registros));
   if(r==NULL)
     return NULL;
@@ -25,32 +29,38 @@ Registros* registro_criar(void){
   return r;
 }
 
+Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2){
+  Aluno* aluno = (Aluno*)malloc(sizeof(Aluno));
+  if(aluno==NULL){
+    printf("Não foi possível criar Aluno, memória cheia.");
+    return NULL;
+  }
+    
+  aluno->id = id;
+  aluno->horasDeEstudo = horasDeEstudo;
+  aluno->nota1 = nota1;
+  aluno->nota2 = nota2;
+  aluno->prox = NULL;
+  aluno->prev = NULL;
+
+  return aluno;
+}
+
 void registro_deletar(Registros *r){//funcao 6
-    Aluno* curr = (Aluno *)malloc(sizeof(Aluno);
+  // Deleta o registro
+    Aluno* curr = (Aluno *)malloc(sizeof(Aluno));
     curr = r->inicio;
-    Aluno* prox = (Aluno *)malloc(sizeof(Aluno);
+    Aluno* prox = (Aluno *)malloc(sizeof(Aluno));
     while(curr!=NULL){
         prox = curr->prox;
         free(curr);
-        Aluno* curr = (Aluno *)malloc(sizeof(Aluno);
+        Aluno* curr = (Aluno *)malloc(sizeof(Aluno));
         curr = prox;
     }
     free(r);
     free(curr);
     free(prox);
     exit(1);                                 
-}
-
-Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2){
-  Aluno* aluno = (Aluno*)malloc(sizeof(Aluno));
-  if(aluno==NULL)
-    return NULL;
-  aluno->id = id;
-  aluno->horasDeEstudo = horasDeEstudo;
-  aluno->nota1 = nota1;
-  aluno->nota2 = nota2;
-
-  return aluno;
 }
 
 void registro_inserir(Registros *r, Aluno* aluno){//funcao 1
@@ -66,9 +76,9 @@ void registro_inserir(Registros *r, Aluno* aluno){//funcao 1
 
 int registro_remover(Registros *r, int IDdoAluno){//funcao 2
     // TODO função não está funcionando
-    Aluno* prev = (Aluno *)malloc(sizeof(Aluno); 
+    Aluno* prev = (Aluno *)malloc(sizeof(Aluno)); 
     prev = NULL;
-    Aluno* curr = (Aluno *)malloc(sizeof(Aluno); 
+    Aluno* curr = (Aluno *)malloc(sizeof(Aluno)); 
     curr = r->inicio;
     int i = 0;
     char encontrou = 0;
@@ -139,5 +149,5 @@ void horas_de_estudo(Registros *r){//funcao 5
     printf("Tempo médio de estudo da turma: %f.\n", somaDasNotas/qntdAlunos);
   }
   else
-    printf("Não há registros."\n);
+    printf("Não há registros.\n");
 }
