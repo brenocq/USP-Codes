@@ -16,7 +16,13 @@ struct _registros{
     int tamanho;
 };
 
+bool registro_vazio(Registros* r){
+    return(r->cabeca->prox == NULL);
+}
 
+bool registro_cheio(Registros* r){
+    return(r->tamanho == TAM_MAX);
+}
 
 Registros* registro_criar(void){
     // Criar um registro vazio
@@ -25,8 +31,7 @@ Registros* registro_criar(void){
       printf("Não foi possível criar o registro, memória cheia.\n");
       return NULL;
     }
-    Aluno *cabeca = aluno_criar(-1,0,0,0);
-    
+    Aluno *cabeca = aluno_criar(-1,0,0,0);    
     r->cabeca = cabeca;
     r->fim = NULL;
     r->tamanho = 0;
@@ -51,20 +56,20 @@ Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2){
     return aluno;
 }
 
-bool registro_deletar(Registros *r){//funcao 6
-  // Deleta o registro
-  if(r==NULL){
-    return false;
-  }
-    Aluno* curr = r->cabeca;
-    Aluno* prox;
-    while(curr!=NULL){
-        prox = curr->prox;
-        free(curr);
-        curr = prox;
+Aluno *registro_busca(Registros *r, int IDdoAluno){
+    // Retorna o primeiro aluno com este ID
+    Aluno* curr = r->cabeca->prox; 
+  
+    if(r==NULL){
+      return NULL;
     }
-    free(r);
-    return true;                               
+    while(curr!=NULL){
+        if(curr->id==IDdoAluno){
+            return curr;
+        }
+        curr=curr->prox;
+    }
+    return NULL;
 }
 
 bool registro_inserir(Registros *r, Aluno* aluno){//funcao 1
@@ -72,18 +77,20 @@ bool registro_inserir(Registros *r, Aluno* aluno){//funcao 1
   if(r==NULL || aluno==NULL){
     return false;
   }
-  if(r->tamanho>0){
-    r->fim->prox = aluno;
-    aluno->prox = NULL;
-    aluno->prev = r->fim;
-  }else{
-    r->cabeca->prox = aluno;
-    aluno->prox = NULL;
-    aluno->prev = r->cabeca;
+  if(!registro_cheio(r)){
+      if(!registro_vazio(r)){
+        r->fim->prox = aluno;
+        aluno->prox = NULL;
+        aluno->prev = r->fim;
+      }else{
+        r->cabeca->prox = aluno;
+        aluno->prox = NULL;
+        aluno->prev = r->cabeca;
+      }
   }
-
   r->fim = aluno;
   r->tamanho++;
+  return true;
 }
 
 bool registro_remover(Registros *r, int IDdoAluno){//funcao 2
@@ -111,22 +118,6 @@ bool registro_remover(Registros *r, int IDdoAluno){//funcao 2
     return true;
 }
 
-Aluno *registro_busca(Registros *r, int IDdoAluno){
-    // Retorna o primeiro aluno com este ID
-    Aluno* curr = r->cabeca->prox; 
-  
-    if(r==NULL){
-      return NULL;
-    }
-    while(curr!=NULL){
-        if(curr->id==IDdoAluno){
-            return curr;
-        }
-        curr=curr->prox;
-    }
-    return NULL;
-}
-
 void registro_imprimir(Registros *r){//funcao 3
   // Imprime todas as informações registradas
   Aluno* curr = r->cabeca->prox; 
@@ -144,8 +135,23 @@ void registro_imprimir(Registros *r){//funcao 3
     printf("Não há registros.\n");
 }
 
-void relatorio_de_aprovacoes(Registros *r);//funcao 4
-
+void relatorio_de_aprovacoes(Registros *r){//funcao 4
+  Aluno* curr = r->cabeca->prox; 
+  if(r!=NULL){
+    while(curr!=NULL){
+      printf("id: %d -> ",curr->id);
+      if((curr->nota1 + curr->nota2)/2 >= 5)
+          printf("APROVADO.")
+      else 
+          printf("REPROVADO.");
+      printf("\n");
+      curr=curr->prox;
+    }
+  }
+  else 
+    printf("Não há registros.\n");
+}
+    
 void horas_de_estudo(Registros *r){//funcao 5
   // Imprimi a quantidade de horas de estudo
   Aluno *curr = r->cabeca->prox; 
@@ -161,4 +167,21 @@ void horas_de_estudo(Registros *r){//funcao 5
   }
   else
     printf("Não há registros.\n");
+}
+
+bool registro_deletar(Registros **r){//funcao 6
+  // Deleta o registro
+  if((*r)==NULL){
+    return false;
+  }
+    Aluno* curr = (*r)->cabeca;
+    Aluno* prox;
+    while(curr!=NULL){
+        prox = curr->prox;
+        free(curr);
+        curr = prox;
+    }
+    free(*r);
+    (*r) = NULL;
+    return true;                               
 }
