@@ -4,10 +4,12 @@
 
 
 int main(int argc, char const *argv[]) {
+    Registros *registro = registro_criar();
   while(1){
     int funcao;
+    
     printf("MENU\n");
-    printf("Escolha uma das funções abaixo colocando o número correspondente:\n);
+    printf("Escolha uma das funções abaixo colocando o número correspondente:\n");
     printf("Função 1: Inserir Registro\n");
     printf("Função 2: Remover Registro\n");
     printf("Função 3: Imprimir Registros\n");
@@ -16,10 +18,36 @@ int main(int argc, char const *argv[]) {
     printf("Função 6: Sair\n");
     switch(scanf("%d", &funcao)){
       case 1: 
-      
-          break;
+            int id;
+            float horasDeEstudo;
+            float nota1, nota2;
+            printf("\n\n\n----- Inserir Registro -----\n");
+            printf("Insira os dados do aluno abaixo\n");
+            printf("Id: ");
+            scanf("%d", &id);
+            printf("Horas de estudo: ");
+            scanf("%f", &horasDeEstudo);
+            printf("Primeira nota: ");
+            scanf("%f", &nota1);
+            printf("Segunda nota: ");
+            scanf("%f", &nota2);
+            Aluno* aluno = aluno_criar(id,horasDeEstudo,nota1,nota2);
+            if(registro_inserir(registro, aluno)==true){
+                printf("Aluno adicionado com sucesso.\n");
+            }else{
+                printf("Erro ao inserir. Por favor tente novamente.\n");
+            }
+            break;
       case 2:
-      
+            int id;
+            printf("\n\n\n----- Remover Registro -----\n");
+            printf("Insira id do aluno para remover: ");
+            scanf("%d", &id);
+            if(registro_remover(registro, id)==true){
+                printf("Aluno removido com sucesso.\n");
+            }else{
+                printf("Erro ao remover. Por favor tente novamente.\n");
+            }
           break;
       
       case 3:
@@ -36,11 +64,11 @@ int main(int argc, char const *argv[]) {
       
       case 6:
       
-          exit(1);
+            registro_deletar(&registro);
+            exit(1);
     }
   }
-  Registros *registro = registro_criar();
-  Aluno* aluno1 = aluno_criar(0,5,10,9);
+  
   Aluno* aluno2 = aluno_criar(4,5,10,9);
   Aluno* aluno3 = aluno_criar(1,5,10,9);
 

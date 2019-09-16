@@ -14,7 +14,7 @@ bool registro_cheio(Registros *r);
 bool registro_vazio(Registros *r);
 Registros* registro_criar();// Criar um registro vazio
 Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2);// Cria elemento de aluno
-bool registro_deletar(Registros *r);// Deleta o registro
+bool registro_deletar(Registros **r);// Deleta o registro
 bool registro_inserir(Registros *r, Aluno* aluno);// Insere novo aluno nos registros
 bool registro_remover(Registros *r, int IDdoAluno);// Remove aluno dos registros
 Aluno* registro_busca(Registros *r, int IDdoAluno);// Retorna o primeiro aluno com este ID
