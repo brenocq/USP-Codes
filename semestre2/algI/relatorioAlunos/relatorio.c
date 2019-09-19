@@ -31,7 +31,7 @@ Registros* registro_criar(void){
       printf("Não foi possível criar o registro, memória cheia.\n");
       return NULL;
     }
-    Aluno *cabeca = aluno_criar(-1,0,0,0);    
+    Aluno *cabeca = aluno_criar(-1,0,0,0);
     r->cabeca = cabeca;
     r->fim = NULL;
     r->tamanho = 0;
@@ -45,7 +45,7 @@ Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2){
       printf("Não foi possível criar Aluno de id %d, memória cheia.\n", id);
       return NULL;
     }
-      
+
     aluno->id = id;
     aluno->horasDeEstudo = horasDeEstudo;
     aluno->nota1 = nota1;
@@ -58,8 +58,8 @@ Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2){
 
 Aluno *registro_busca(Registros *r, int IDdoAluno){
     // Retorna o primeiro aluno com este ID
-    Aluno* curr = r->cabeca->prox; 
-  
+    Aluno* curr = r->cabeca->prox;
+
     if(r==NULL){
       return NULL;
     }
@@ -120,41 +120,41 @@ bool registro_remover(Registros *r, int IDdoAluno){//funcao 2
 
 void registro_imprimir(Registros *r){//funcao 3
   // Imprime todas as informações registradas
-  Aluno* curr = r->cabeca->prox; 
+  Aluno* curr = r->cabeca->prox;
   if(r!=NULL){
     while(curr!=NULL){
-      printf("id: %d\n",curr->id);
-      printf("Horas de estudo: %f\n", curr->horasDeEstudo);
-      printf("Nota da primeira avaliação: %f\n", curr->nota1);
-      printf("Nota da segunda avaliação: %f\n", curr->nota2);
+      printf("ID: %d\n",curr->id);
+      printf("Horas de estudo: %.1f\n", curr->horasDeEstudo);
+      printf("Nota da primeira avaliação: %.1f\n", curr->nota1);
+      printf("Nota da segunda avaliação: %.1f\n", curr->nota2);
       printf("\n");
       curr=curr->prox;
     }
   }
-  else 
+  else
     printf("Não há registros.\n");
 }
 
 void relatorio_de_aprovacoes(Registros *r){//funcao 4
-  Aluno* curr = r->cabeca->prox; 
+  Aluno* curr = r->cabeca->prox;
   if(r!=NULL){
     while(curr!=NULL){
       printf("id: %d -> ",curr->id);
       if((curr->nota1 + curr->nota2)/2 >= 5)
-          printf("APROVADO.")
-      else 
+          printf("APROVADO.");
+      else
           printf("REPROVADO.");
       printf("\n");
       curr=curr->prox;
     }
   }
-  else 
+  else
     printf("Não há registros.\n");
 }
-    
+
 void horas_de_estudo(Registros *r){//funcao 5
   // Imprimi a quantidade de horas de estudo
-  Aluno *curr = r->cabeca->prox; 
+  Aluno *curr = r->cabeca->prox;
   int qntdAlunos = 0;
   float somaDasNotas = 0;
   if(r!=NULL){
@@ -163,7 +163,7 @@ void horas_de_estudo(Registros *r){//funcao 5
       qntdAlunos++;
       curr = curr->prox;
     }
-    printf("Tempo médio de estudo da turma: %f.\n", somaDasNotas/qntdAlunos);
+    printf("Tempo médio de estudo da turma: %.2f horas.\n", somaDasNotas/qntdAlunos);
   }
   else
     printf("Não há registros.\n");
@@ -173,6 +173,7 @@ bool registro_deletar(Registros **r){//funcao 6
   // Deleta o registro
   if((*r)==NULL){
     return false;
+    printf("Não foi possível deletar os registros.\n");
   }
     Aluno* curr = (*r)->cabeca;
     Aluno* prox;
@@ -183,5 +184,5 @@ bool registro_deletar(Registros **r){//funcao 6
     }
     free(*r);
     (*r) = NULL;
-    return true;                               
+    return true;
 }
