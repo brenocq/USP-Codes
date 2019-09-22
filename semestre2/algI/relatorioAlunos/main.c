@@ -4,11 +4,11 @@
 
 
 int main(int argc, char const *argv[]) {
-    Registros *registro = registro_criar();
-    int id;
-    float horasDeEstudo;
-    float nota1, nota2;
-    int funcao;
+    Registros *registro = registro_criar();// Cria um registro vazio
+    int id;// Auxiliar para receber o id do aluno
+    float horasDeEstudo;// Auxiliar para receber as horas de estudo
+    float nota1, nota2;// Auxiliares para receber as notas digitadas
+    int funcao;// Auxiliar para receber a função desejada
   while(1){
     printf("\n\n\n----- MENU -----\n");
     printf("Escolha uma das funções abaixo colocando o número correspondente:\n");

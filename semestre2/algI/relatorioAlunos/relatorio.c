@@ -31,6 +31,7 @@ Registros* registro_criar(void){
       printf("Não foi possível criar o registro, memória cheia.\n");
       return NULL;
     }
+    // Cria nó cabeça do tipo aluno
     Aluno *cabeca = aluno_criar(-1,0,0,0);
     r->cabeca = cabeca;
     r->fim = NULL;
@@ -39,7 +40,7 @@ Registros* registro_criar(void){
 }
 
 Aluno* aluno_criar(int id, float horasDeEstudo, float nota1, float nota2){
-    // Cria elemento de aluno
+    // Cria elemento do tipo Aluno
     Aluno* aluno = (Aluno*)malloc(sizeof(Aluno));
     if(aluno==NULL){
       printf("Não foi possível criar Aluno de id %d, memória cheia.\n", id);
@@ -98,8 +99,9 @@ bool registro_remover(Registros *r, int IDdoAluno){//funcao 2
     if(r==NULL){
       return false;
     }
-
+    // Busca se existe algum aluno com este id
     Aluno *aluno = registro_busca(r, IDdoAluno);
+    // Se não existir retorna false, se existir remove e retorna true
     if(aluno==NULL)
       return false;
 
@@ -136,6 +138,7 @@ void registro_imprimir(Registros *r){//funcao 3
 }
 
 void relatorio_de_aprovacoes(Registros *r){//funcao 4
+  // Imprime quais alunos foram aprovados/reprovados
   Aluno* curr = r->cabeca->prox;
   if(r!=NULL){
     while(curr!=NULL){
@@ -153,7 +156,7 @@ void relatorio_de_aprovacoes(Registros *r){//funcao 4
 }
 
 void horas_de_estudo(Registros *r){//funcao 5
-  // Imprimi a quantidade de horas de estudo
+  // Imprime a quantidade média de horas de estudo
   Aluno *curr = r->cabeca->prox;
   int qntdAlunos = 0;
   float somaDasNotas = 0;
@@ -170,7 +173,7 @@ void horas_de_estudo(Registros *r){//funcao 5
 }
 
 bool registro_deletar(Registros **r){//funcao 6
-  // Deleta o registro
+  // Deleta o registro e os alunos liberando o espaço alocado
   if((*r)==NULL){
     return false;
     printf("Não foi possível deletar os registros.\n");
