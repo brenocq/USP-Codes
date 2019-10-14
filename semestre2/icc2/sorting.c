@@ -8,22 +8,65 @@ void quicksort(int *vec, int began, int end);
 void mergeSort(int *vec, int subVecSize);
 void bubbleSort(int *vec);
 
+void heapSort(int *vec);
+void rearranja(int *vec, int index, int size);
+void montarHeap(int *vec);
+
 #define SIZE 10
 int main(int argc, char const *argv[]) {
   int vec[SIZE]={9,8,7,6,5,4,3,2,1,0};
 
   for (int i = 0; i < SIZE; i++)
     printf("%s%d%s",i==0?"(":"",vec[i],i==SIZE-1?")\n":", ");
-  
+
   //bubbleSort(vec);
   //quicksort(vec, 0, SIZE);
-  shellSort(vec);
+  heapSort(vec);
 
   for (int i = 0; i < SIZE; i++)
     printf("%s%d%s",i==0?"(":"",vec[i],i==SIZE-1?")\n":", ");
 
   return 0;
 }
+
+void heapSort(int *vec){
+  int i, aux, heapSize=SIZE;
+  montarHeap(vec);
+  for (i = heapSize-1; i>0; i--) {
+    aux = vec[0];
+    vec[0]=vec[i];
+    vec[i]=aux;
+    heapSize--;
+    rearranja(vec,0,heapSize);
+  }
+}
+
+void rearranja(int *vec, int index, int size){
+  int max = vec[index];
+  int indexMaior=index;
+  int esq = index*2+1, dir = index*2+2;
+  if(esq<size && vec[esq]>max){
+      max = vec[esq];
+      indexMaior = esq;
+  }
+  if(dir<size && vec[dir]>max){
+      max = vec[dir];
+      indexMaior = dir;
+  }
+
+  if(indexMaior!=index){
+    vec[indexMaior] = vec[index];
+    vec[index] = max;
+    rearranja(vec, indexMaior,size);
+  }
+}
+
+void montarHeap(int *vec){
+  for (int i = SIZE/2; i >= 0; i--) {
+    rearranja(vec, i, SIZE);
+  }
+}
+
 
 void bubbleSort(int *vec){
   // Melhor caso: ordenado O(n)
@@ -43,7 +86,6 @@ void bubbleSort(int *vec){
     }
   }
 }
-
 
 void quicksort(int *vec, int began, int end) {
   // Melhor caso: divide no meio (nlogn)
@@ -92,73 +134,73 @@ void shellSort(int *vec){
   }
 }
 
-void merge(int arr[], int l, int m, int r) 
-{ 
-    int i, j, k; 
-    int n1 = m - l + 1; 
-    int n2 =  r - m; 
-  
+void merge(int arr[], int l, int m, int r)
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 =  r - m;
+
     /* create temp arrays */
-    int L[n1], R[n2]; 
-  
+    int L[n1], R[n2];
+
     /* Copy data to temp arrays L[] and R[] */
-    for (i = 0; i < n1; i++) 
-        L[i] = arr[l + i]; 
-    for (j = 0; j < n2; j++) 
-        R[j] = arr[m + 1+ j]; 
-  
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1+ j];
+
     /* Merge the temp arrays back into arr[l..r]*/
-    i = 0; // Initial index of first subarray 
-    j = 0; // Initial index of second subarray 
-    k = l; // Initial index of merged subarray 
-    while (i < n1 && j < n2) 
-    { 
-        if (L[i] <= R[j]) 
-        { 
-            arr[k] = L[i]; 
-            i++; 
-        } 
+    i = 0; // Initial index of first subarray
+    j = 0; // Initial index of second subarray
+    k = l; // Initial index of merged subarray
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            arr[k] = L[i];
+            i++;
+        }
         else
-        { 
-            arr[k] = R[j]; 
-            j++; 
-        } 
-        k++; 
-    } 
-  
-    /* Copy the remaining elements of L[], if there 
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    /* Copy the remaining elements of L[], if there
        are any */
-    while (i < n1) 
-    { 
-        arr[k] = L[i]; 
-        i++; 
-        k++; 
-    } 
-  
-    /* Copy the remaining elements of R[], if there 
+    while (i < n1)
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    /* Copy the remaining elements of R[], if there
        are any */
-    while (j < n2) 
-    { 
-        arr[k] = R[j]; 
-        j++; 
-        k++; 
-    } 
-} 
-  
-/* l is for left index and r is right index of the 
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+/* l is for left index and r is right index of the
    sub-array of arr to be sorted */
-void mergeSort(int arr[], int l, int r) 
-{ 
-    if (l < r) 
-    { 
-        // Same as (l+r)/2, but avoids overflow for 
-        // large l and h 
-        int m = l+(r-l)/2; 
+void mergeSort(int arr[], int l, int r)
+{
+    if (l < r)
+    {
+        // Same as (l+r)/2, but avoids overflow for
+        // large l and h
+        int m = l+(r-l)/2;
 
-        // Sort first and second halves 
-        mergeSort(arr, l, m); 
-        mergeSort(arr, m+1, r); 
+        // Sort first and second halves
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
 
-        merge(arr, l, m, r); 
-    } 
-} 
+        merge(arr, l, m, r);
+    }
+}
