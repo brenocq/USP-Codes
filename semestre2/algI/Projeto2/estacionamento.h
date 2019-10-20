@@ -1,6 +1,7 @@
 #ifndef ESTACIONAMENTO_H
 #define ESTACIONAMENTO_H
 
+#include "carro.h"
 #include <stdbool.h>
 
 typedef struct _estacionamento Estacionamento;

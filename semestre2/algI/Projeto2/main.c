@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "carro.h"
+#include "estacionamento.h"
 
 
 int main(int argc, char const *argv[]) {
@@ -31,14 +32,14 @@ int main(int argc, char const *argv[]) {
       case 3:{
 
       }break;
-      case default:{
-        printf("Esta não é uma opção. Por favor escolha novamente.\n", );
+      default:{
+        printf("Esta não é uma opção. Por favor escolha novamente.\n");
       }break;
     }
 
   }while(selecao!=3);
 
-  estacionamento_deletar(*e);
+  estacionamento_deletar(&e);
 
   return 0;
 }

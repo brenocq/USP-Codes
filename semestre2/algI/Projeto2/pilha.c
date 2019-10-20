@@ -23,15 +23,6 @@ Pilha* pilha_criar(){
   return p;
 }
 
-Item* item_criar(Carro *c){
-  Item *i = (Item *)malloc(sizeof(Item));
-  if(i != NULL){
-    i->carro = c;
-    i->prev = NULL;
-  }
-  return i;
-}
-
 void pilha_deletar(Pilha **p){
   Item *i = (*p)->topo;
   while(n != NULL){

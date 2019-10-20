@@ -4,16 +4,18 @@
 
 #define MAX 50
 
+struct _item{
+  Carro *carro;
+  struct _item *prox;
+};
+
+typedef struct _item Item;
+
 struct _fila{
   Item *frente;
   Item *fundo;// Colocamos um ponteiro para o ultimo para melhorar o cadastro dos carros
   int tamanho;
-}
-
-struct _item{
-  Carro *carro;
-  struct _item *prox;
-}
+};
 
 Fila* fila_criar(){
     Fila* fila = (Fila*)malloc(sizeof(Fila));
@@ -31,7 +33,7 @@ Item* item_criar(Carro *c){
 }
 
 void fila_deletar(Fila **f){
-    Item* curr = *f->frente;
+    Item* curr = (*f)->frente;
     while(curr!=NULL){
         Item* prox = curr->prox;
         free(curr);
@@ -41,7 +43,7 @@ void fila_deletar(Fila **f){
 }
 
 bool fila_inserir(Fila *f, Carro* carro){
-    if(fila_cheia(f))
+    if(f==NULL || fila_cheia(f))
         return false;
 
     Item* novo = item_criar(carro);
@@ -62,16 +64,16 @@ bool fila_inserir(Fila *f, Carro* carro){
 }
 
 Carro* fila_remover(Fila *f){
-    if(fila_vazia(f))
+    if(f==NULL || fila_vazia(f))
         return NULL;
 
-    Carro* res = fila->frente;
+    Item* res = f->frente;
 
-    fila->frente = fila->frente->prox;
+    f->frente = f->frente->prox;
     res->prox = NULL;
 
     f->tamanho--;
-    return res;
+    return res->carro;
 }
 
 bool fila_cheia(Fila *f){
@@ -83,22 +85,32 @@ bool fila_vazia(Fila *f){
 }
 
 Carro* fila_fundo(Fila *f){
-    if(fila_vazia(f))
+    if(f==NULL || fila_vazia(f))
         return NULL;
 
-    return f->fundo;
+    return f->fundo->carro;
 }
 
 Carro* fila_frente(Fila *f){
-    if(fila_vazia(f))
+    if(f==NULL || fila_vazia(f))
         return NULL;
 
-    return f->frente;
+    return f->frente->carro;
+}
+
+bool fila_busca(Fila *f, int placa){
+    Item* curr = f->frente;
+    while(curr!=NULL){
+        if(carro_get_placa(curr->carro) == placa){
+            return true;
+        }
+        curr = curr->prox;
+    }
+    return false;
 }
 
 void fila_checkout(Fila *f, int horaSaida){
-    while(fila_frente(f)->horaSaida>=horaSaida){
-        carro_imprimir(curr->carro);//TODO fazer o que pede
-        fila_remover(f);
+    while(carro_get_hSaida(fila_frente(f))>=horaSaida){
+        carro_imprimir(fila_remover(f));//TODO fazer o que pede
     }
 }
