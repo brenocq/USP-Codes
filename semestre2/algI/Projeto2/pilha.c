@@ -6,10 +6,6 @@ Pilha* pilha_criar(){
 
 }
 
-Item* item_criar(Carro *c){
-
-}
-
 void pilha_deletar(Pilha **p){
 
 }

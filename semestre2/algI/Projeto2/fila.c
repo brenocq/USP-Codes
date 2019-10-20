@@ -4,15 +4,17 @@
 
 #define MAX 50
 
+struct _item{
+  Carro *carro;
+  struct _item *prox;
+};
+
+typedef struct _item Item;
+
 struct _fila{
   Item *frente;
   Item *fundo;// Colocamos um ponteiro para o ultimo para melhorar o cadastro dos carros
   int tamanho;
-};
-
-struct _item{
-  Carro *carro;
-  struct _item *prox;
 };
 
 Fila* fila_criar(){
@@ -94,6 +96,17 @@ Carro* fila_frente(Fila *f){
         return NULL;
 
     return f->frente->carro;
+}
+
+bool fila_busca(Fila *f, int placa){
+    Item* curr = f->frente;
+    while(curr!=NULL){
+        if(carro_get_placa(curr->carro) == placa){
+            return true;
+        }
+        curr = curr->prox;
+    }
+    return false;
 }
 
 void fila_checkout(Fila *f, int horaSaida){

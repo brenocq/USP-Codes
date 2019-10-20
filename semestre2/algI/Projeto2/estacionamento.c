@@ -4,6 +4,8 @@
 #include "fila.h"
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 
  struct _estacionamento{
    Pilha* pilha;
@@ -18,8 +20,8 @@ Estacionamento* estacionamento_criar(){
 }
 
 void estacionamento_deletar(Estacionamento** e){
-  pilha_deletar(*e->pilha);
-  fila_deletar(*e->fila);
+  pilha_deletar(&((*e)->pilha));
+  fila_deletar(&((*e)->fila));
   free(*e);
 }
 
@@ -46,6 +48,7 @@ Carro* estacionamento_checkin(Estacionamento* e){
   }
 
   Carro *carro = carro_criar(placa, horaChegada, horaSaida, desconto);
+  
   return carro;
 }
 
@@ -69,7 +72,7 @@ bool estacionamento_disponibilidade(Estacionamento* e, Carro* carro){
     pilha_inserir(e->pilha, carro);
     return true;
   }else if(!pilha_vazia && fila_vazia){
-    fila_adicionar(e->pilha, carro);
+    fila_inserir(e->fila, carro);
     return true;
   }else if(!pilha_vazia && !fila_vazia){
     Carro *ultimoPilha = pilha_topo(e->pilha);
@@ -78,7 +81,7 @@ bool estacionamento_disponibilidade(Estacionamento* e, Carro* carro){
       pilha_inserir(e->pilha, carro);
       return true;
     }else if(carro_get_hSaida(carro)>=carro_get_hSaida(ultimoFila) && !fila_cheia(e->fila)){
-      fila_inserir(e->pilha, carro);
+      fila_inserir(e->fila, carro);
       return true;
     }
   }
