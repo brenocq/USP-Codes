@@ -99,7 +99,7 @@ DoisItens* lista_busca(Lista* l, int id){
         prev = curr;
         curr = curr->prox;
     }
-    
+
     if(curr!=sentinela){
         DoisItens* resultado = (DoisItens*)malloc(sizeof(DoisItens));
         resultado->prev = prev;
