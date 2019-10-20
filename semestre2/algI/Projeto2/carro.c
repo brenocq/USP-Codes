@@ -1,14 +1,16 @@
 #include "carro.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 struct _carro{
   int placa;
   int horaChegada;
   int horaSaida;
   float desconto;
-}
+};
 
-Carro* carro_criar(int placa, int horaChegada, int horaSaida, float desconto){
-  Carro* carro = (Carro*)malloc(sizeof(Carro));
+Carro *carro_criar(int placa, int horaChegada, int horaSaida, float desconto){
+  Carro *carro = (Carro*)malloc(sizeof(Carro));
   carro->placa = placa;
   carro->horaChegada = horaChegada;
   carro->horaSaida = horaSaida;
@@ -38,5 +40,5 @@ float carro_get_desconto(Carro *carro){
 }
 
 void carro_imprimir(Carro *carro){
-    
+
 }
