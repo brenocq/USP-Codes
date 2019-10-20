@@ -9,8 +9,9 @@ typedef struct _pilha Pilha;
 Pilha* pilha_criar();
 void pilha_deletar(Pilha **p);
 
-Carro* pilha_inserir(Pilha *p);
+bool pilha_inserir(Pilha *p, Carro *c);
 Carro* pilha_remover(Pilha *p);
+bool pilha_busca(Pilha *p, int placa);
 
 bool pilha_vazia(Pilha *p);
 bool pilha_cheia(Pilha *p);
