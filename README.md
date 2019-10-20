@@ -1,2 +1,2 @@
-# USP-myCodes
-Some of my codes
+# USP-Codes
+Some code exercises from the University of São Paulo
