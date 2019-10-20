@@ -69,5 +69,17 @@ Carro* pilha_topo(Pilha *p){
 }
 
 void pilha_checkout(Pilha *p, int horaSaida){
+  while(pilha_topo(p)->horaSaida>=horaSaida){
+      carro_imprimir(curr->carro);//TODO fazer o que pede
+      pilha_remover(p);
+  }
+}
 
+bool pilha_busca(Pilha *p, int placa){
+  Item *curr = p->topo;
+  while(curr != NULL){
+    if(curr->carro->placa == placa) return TRUE;
+    curr = curr->prev;
+  }
+  return FALSE;
 }
