@@ -24,18 +24,25 @@ Pilha* pilha_criar(){
 }
 
 void pilha_deletar(Pilha **p){
-  Item *i = (*p)->topo;
-  while(n != NULL){
-    Item *prox = i->prev;
-    free(i);
-    n = next;
+  Item *curr = (*p)->topo;
+  while(curr != NULL){
+    Item *prox = curr->prev;
+    free(curr);
+    curr = next;
   }
   free(*p);
   *p = NULL;
 }
 
+Item* item_criar(Carro *c){
+    Item* item = (Item*)malloc(sizeof(Item));
+    item->carro = c;
+    item->prev = NULL;
+    return item;
+}
+
 bool pilha_inserir(Pilha *p, Carro *c){
-  if(pilha_cheia) return FALSE;
+  if(pilha_cheia(p)) return FALSE;
   Item *i = item_criar(c);
   if(i != NULL){
     i->prev = p->topo;
@@ -47,7 +54,7 @@ bool pilha_inserir(Pilha *p, Carro *c){
 }
 
 Carro* pilha_remover(Pilha *p){
-  if(fila_vazia) return NULL;
+  if(fila_vazia(p)) return NULL;
   Item *i = p->topo;
   p->topo = p->topo->prev;
   i->prev = NULL;
@@ -64,7 +71,7 @@ bool pilha_cheia(Pilha *p){
 }
 
 Carro* pilha_topo(Pilha *p){
-  if(pilha_vazia) return NULL;
+  if(pilha_vazia(p)) return NULL;
   return p->topo->carro;
 }
 

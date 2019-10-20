@@ -5,9 +5,11 @@
 #include <stdbool.h>
 
 typedef struct _pilha Pilha;
+typedef struct _item Item;
 
 Pilha* pilha_criar();
 void pilha_deletar(Pilha **p);
+Item* item_criar(Carro *c);
 
 bool pilha_inserir(Pilha *p, Carro *c);
 Carro* pilha_remover(Pilha *p);
