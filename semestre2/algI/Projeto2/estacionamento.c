@@ -63,10 +63,10 @@ bool estacionamento_disponibilidade(Estacionamento* e, Carro* carro){
     return false;
 
   if(pilha_vazia && fila_vazia){
-    pilha_adicionar(e->pilha, carro);
+    pilha_inserir(e->pilha, carro);
     return true;
   }else if(pilha_vazia && !fila_vazia){
-    pilha_adicionar(e->pilha, carro);
+    pilha_inserir(e->pilha, carro);
     return true;
   }else if(!pilha_vazia && fila_vazia){
     fila_adicionar(e->pilha, carro);
@@ -75,10 +75,10 @@ bool estacionamento_disponibilidade(Estacionamento* e, Carro* carro){
     Carro *ultimoPilha = pilha_topo(e->pilha);
     Carro *ultimoFila = fila_fundo(e->fila);
     if(carro_get_hSaida(carro)<=carro_get_hSaida(ultimoPilha) && !pilha_cheia(e->pilha)){
-      pilha_adicionar(e->pilha, carro);
+      pilha_inserir(e->pilha, carro);
       return true;
     }else if(carro_get_hSaida(carro)>=carro_get_hSaida(ultimoFila) && !fila_cheia(e->fila)){
-      fila_adicionar(e->pilha, carro);
+      fila_inserir(e->pilha, carro);
       return true;
     }
   }

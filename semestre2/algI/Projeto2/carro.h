@@ -11,4 +11,6 @@ int carro_get_hChegada(Carro *carro);
 int carro_get_hSaida(Carro *carro);
 float carro_get_desconto(Carro *carro);
 
+void carro_imprimir(Carro *carro);
+
 #endif// CARRO_H

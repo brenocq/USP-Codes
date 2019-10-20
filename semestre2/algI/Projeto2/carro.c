@@ -36,3 +36,7 @@ int carro_get_hSaida(Carro *carro){
 float carro_get_desconto(Carro *carro){
   return carro->desconto;
 }
+
+void carro_imprimir(Carro *carro){
+    
+}

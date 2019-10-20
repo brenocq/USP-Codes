@@ -11,7 +11,7 @@ Fila* fila_criar();
 Item* item_criar(Carro *c);
 void fila_deletar(Fila **f);
 
-Carro* fila_inserir(Fila *f);
+bool fila_inserir(Fila *f, Carro* carro);
 Carro* fila_remover(Fila *f);
 
 bool fila_cheia(Fila *f);
