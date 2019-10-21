@@ -2,40 +2,54 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MAX 50
+#define MAX 10
 
-struct _item{
+struct _itemFila{
   Carro *carro;
-  struct _item *prox;
+  struct _itemFila *prox;
 };
 
-typedef struct _item Item;
+typedef struct _itemFila ItemFila;
 
 struct _fila{
-  Item *frente;
-  Item *fundo;// Colocamos um ponteiro para o ultimo para melhorar o cadastro dos carros
+  ItemFila *frente;
+  ItemFila *fundo;// Colocamos um ponteiro para o ultimo para melhorar o cadastro dos carros
   int tamanho;
 };
 
 Fila* fila_criar(){
     Fila* fila = (Fila*)malloc(sizeof(Fila));
+    if(fila==NULL){
+        printf("Memória cheia, o programa será encerrado.\n");
+        exit(1);
+    }
+
     fila->frente = NULL;
     fila->fundo = NULL;
     fila->tamanho = 0;
     return fila;
 }
 
-Item* item_criar(Carro *c){
-    Item* item = (Item*)malloc(sizeof(Item));
+ItemFila* item_fila_criar(Carro *c){
+    ItemFila* item = (ItemFila*)malloc(sizeof(ItemFila));
+    if(item==NULL){
+        printf("Memória cheia, o programa será encerrado.\n");
+        exit(1);
+    }
+
     item->carro = c;
     item->prox = NULL;
     return item;
 }
 
+int fila_tamanho(Fila *f){
+    return f->tamanho;
+}
+
 void fila_deletar(Fila **f){
-    Item* curr = (*f)->frente;
+    ItemFila* curr = (*f)->frente;
     while(curr!=NULL){
-        Item* prox = curr->prox;
+        ItemFila* prox = curr->prox;
         free(curr);
         curr = prox;
     }
@@ -46,7 +60,7 @@ bool fila_inserir(Fila *f, Carro* carro){
     if(f==NULL || fila_cheia(f))
         return false;
 
-    Item* novo = item_criar(carro);
+    ItemFila* novo = item_fila_criar(carro);
 
     if(novo==NULL)
         return false;
@@ -67,7 +81,7 @@ Carro* fila_remover(Fila *f){
     if(f==NULL || fila_vazia(f))
         return NULL;
 
-    Item* res = f->frente;
+    ItemFila* res = f->frente;
 
     f->frente = f->frente->prox;
     res->prox = NULL;
@@ -99,7 +113,7 @@ Carro* fila_frente(Fila *f){
 }
 
 bool fila_busca(Fila *f, int placa){
-    Item* curr = f->frente;
+    ItemFila* curr = f->frente;
     while(curr!=NULL){
         if(carro_get_placa(curr->carro) == placa){
             return true;
@@ -110,7 +124,26 @@ bool fila_busca(Fila *f, int placa){
 }
 
 void fila_checkout(Fila *f, int horaSaida){
-    while(carro_get_hSaida(fila_frente(f))>=horaSaida){
+    while(fila_frente(f)!=NULL &&  carro_get_hSaida(fila_frente(f))<=horaSaida){
+        printf("\nCarro saindo do pátio 2: ");
         carro_imprimir(fila_remover(f));//TODO fazer o que pede
     }
+}
+
+void fila_imprimir(Fila *f){
+    ItemFila* curr = f->frente;
+    while(curr!=NULL){
+        carro_imprimir(curr->carro);
+        curr = curr->prox;
+    }
+}
+
+void fila_sorteio(Fila *f, int index){
+    ItemFila* curr = f->frente;
+    int cont=0;
+    while(cont<index){
+        curr=curr->prox;
+        cont++;
+    }
+    carro_set_desconto(curr->carro, 0.1);
 }

@@ -3,9 +3,12 @@
 #include "pilha.h"
 #include "fila.h"
 
+#include <time.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+#define MAX_EST 15
 
  struct _estacionamento{
    Pilha* pilha;
@@ -13,9 +16,13 @@
  };
 
 Estacionamento* estacionamento_criar(){
-  Estacionamento* e;
-  e->pilha = pilha_criar();
+  Estacionamento* e = (Estacionamento*)malloc(sizeof(Estacionamento));
+  if(e==NULL){
+      printf("Memória cheia, o programa será encerrado.\n");
+      exit(1);
+  }
   e->fila = fila_criar();
+  e->pilha = pilha_criar();
   return e;
 }
 
@@ -39,8 +46,8 @@ Carro* estacionamento_checkin(Estacionamento* e){
   scanf("%d", &horaSaida);
 
   // Procura se o carro com esta placa já está estacionado
-  bool resPilha = pilha_busca(placa);
-  bool resFila = fila_busca(placa)
+  bool resPilha = pilha_busca(e->pilha, placa);
+  bool resFila = fila_busca(e->fila, placa);
 
   if(resPilha || resFila){
     printf("Este carro já está estacionado no pátio.\n");
@@ -48,33 +55,33 @@ Carro* estacionamento_checkin(Estacionamento* e){
   }
 
   Carro *carro = carro_criar(placa, horaChegada, horaSaida, desconto);
-  
+
   return carro;
 }
 
 void estacionamento_checkout(Estacionamento* e, Carro* carro){
-  int horaSaida = carro_get_hSaida(carro);
+  int horaSaida = carro_get_hChegada(carro);
   pilha_checkout(e->pilha, horaSaida);
   fila_checkout(e->fila, horaSaida);
 }
 
 bool estacionamento_disponibilidade(Estacionamento* e, Carro* carro){
-  bool pilha_vazia = pilha_vazia(e->pilha);
-  bool fila_vazia = fila_vazia(e->fila);
+  bool pilhaVazia = pilha_vazia(e->pilha);
+  bool filaVazia = fila_vazia(e->fila);
 
   if(carro_get_hSaida(carro)<8 || carro_get_hSaida(carro)>22)
     return false;
 
-  if(pilha_vazia && fila_vazia){
+  if(pilhaVazia && filaVazia){
     pilha_inserir(e->pilha, carro);
     return true;
-  }else if(pilha_vazia && !fila_vazia){
+  }else if(pilhaVazia && !filaVazia){
     pilha_inserir(e->pilha, carro);
     return true;
-  }else if(!pilha_vazia && fila_vazia){
+  }else if(!pilhaVazia && filaVazia){
     fila_inserir(e->fila, carro);
     return true;
-  }else if(!pilha_vazia && !fila_vazia){
+  }else if(!pilhaVazia && !filaVazia){
     Carro *ultimoPilha = pilha_topo(e->pilha);
     Carro *ultimoFila = fila_fundo(e->fila);
     if(carro_get_hSaida(carro)<=carro_get_hSaida(ultimoPilha) && !pilha_cheia(e->pilha)){
@@ -90,15 +97,44 @@ bool estacionamento_disponibilidade(Estacionamento* e, Carro* carro){
 
 void estacionamento_rejeicao(Estacionamento* e, Carro* carro, bool disponibilidade){
   if(pilha_cheia(e->pilha) && fila_cheia(e->fila)){
-    printf("Não foi possível adicionar o carro. O estacionamento está lotado.\n");
+    printf("\nNão foi possível adicionar o carro. O estacionamento está lotado.\n");
     return;
   }
-  if(carro_get_hSaida(carro)<8 || carro_get_hSaida(carro)>22){
-    printf("Não foi possível adicionar o carro. Não estamos em horário de funcionamento (8h às 22h).\n");
+  if(carro_get_hSaida(carro)<8 || carro_get_hSaida(carro)>22 || carro_get_hChegada(carro)<8 || carro_get_hChegada(carro)>22){
+    printf("\nNão foi possível adicionar o carro. Não estamos em horário de funcionamento (8h às 22h).\n");
     return;
   }
   if(!disponibilidade){
-    printf("Não foi possível adicionar o carro. O estacionamento não está disponível no momento.\n");
+    printf("\nNão foi possível adicionar o carro. O estacionamento não está disponível no momento.\n");
     return;
   }
+}
+
+void estacionamento_imprimir(Estacionamento* e){
+    printf("Carros estacionados no pátio 1:\n");
+    pilha_imprimir(e->pilha);
+    printf("Carros estacionados no pátio 2:\n");
+    fila_imprimir(e->fila);
+}
+
+void estacionamento_sorteio(Estacionamento* e, Carro* carro){
+    int qtdCarrosPatio1 = pilha_tamanho(e->pilha);
+    int qtdCarrosPatio2 = fila_tamanho(e->fila);
+    int horasSorteio[4] = {9,12,15,18};
+    int i;
+    srand((unsigned) time(NULL));
+
+    if((qtdCarrosPatio1+qtdCarrosPatio2)>=MAX_EST*0.25){
+        for(i=0;i<4;i++){
+            if(carro_get_hChegada(carro)==horasSorteio[i]){
+                int random = rand()%100;
+                random = random%(qtdCarrosPatio1+qtdCarrosPatio2);
+                if(random<qtdCarrosPatio1){
+                    pilha_sorteio(e->pilha, random);
+                }else{
+                    fila_sorteio(e->fila, random-qtdCarrosPatio1);
+                }
+            }
+        }
+    }
 }

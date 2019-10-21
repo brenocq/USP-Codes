@@ -40,5 +40,10 @@ float carro_get_desconto(Carro *carro){
 }
 
 void carro_imprimir(Carro *carro){
+    float valor = (carro->horaSaida-carro->horaChegada)*3;
+    printf("Carro %d: R$%.2f\n", carro->placa, valor-(valor*carro->desconto));
+}
 
+void carro_set_desconto(Carro *carro, float _desconto){
+    carro->desconto = _desconto;
 }

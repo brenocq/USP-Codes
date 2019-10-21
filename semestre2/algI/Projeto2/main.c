@@ -21,16 +21,14 @@ int main(int argc, char const *argv[]) {
         bool disponibilidade;
         if(carro!=NULL){
           estacionamento_checkout(e, carro);
+          estacionamento_sorteio(e, carro);
           disponibilidade = estacionamento_disponibilidade(e, carro);
           estacionamento_rejeicao(e, carro, disponibilidade);
         }
 
       }break;
       case 2:{
-
-      }break;
-      case 3:{
-
+          estacionamento_imprimir(e);
       }break;
       default:{
         printf("Esta não é uma opção. Por favor escolha novamente.\n");
