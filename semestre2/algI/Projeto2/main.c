@@ -17,6 +17,7 @@ int main(int argc, char const *argv[]) {
 
     switch (selecao) {
       case 1:{
+          // Registrar Carro
         Carro* carro = estacionamento_checkin(e);
         bool disponibilidade;
         if(carro!=NULL){
@@ -28,16 +29,20 @@ int main(int argc, char const *argv[]) {
 
       }break;
       case 2:{
+          // Imprimir Carros:
           estacionamento_imprimir(e);
       }break;
-      default:{
+      case 3:{
+          // Sair
+          estacionamento_deletar(&e);
+      }default:{
         printf("Esta não é uma opção. Por favor escolha novamente.\n");
       }break;
     }
 
   }while(selecao!=3);
 
-  estacionamento_deletar(&e);
+
 
   return 0;
 }

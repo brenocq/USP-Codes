@@ -124,14 +124,16 @@ bool fila_busca(Fila *f, int placa){
 }
 
 void fila_checkout(Fila *f, int horaSaida){
+    // Verifica quais carros deveriam sair até aquela hora e realiza o checkout desses carros
     while(fila_frente(f)!=NULL &&  carro_get_hSaida(fila_frente(f))<=horaSaida){
         printf("\nCarro saindo do pátio 2: ");
-        carro_imprimir(fila_remover(f));//TODO fazer o que pede
+        carro_imprimir(fila_remover(f));
     }
 }
 
 void fila_imprimir(Fila *f){
     ItemFila* curr = f->frente;
+    // Imprime cada um dos carros estacionados
     while(curr!=NULL){
         carro_imprimir(curr->carro);
         curr = curr->prox;
@@ -141,6 +143,7 @@ void fila_imprimir(Fila *f){
 void fila_sorteio(Fila *f, int index){
     ItemFila* curr = f->frente;
     int cont=0;
+    // Escolhe o carro de index sorteado
     while(cont<index){
         curr=curr->prox;
         cont++;

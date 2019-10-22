@@ -49,6 +49,7 @@ Carro* estacionamento_checkin(Estacionamento* e){
   bool resPilha = pilha_busca(e->pilha, placa);
   bool resFila = fila_busca(e->fila, placa);
 
+  // Se o carro já estiver estacionado no pátio, imprime uma mensagem
   if(resPilha || resFila){
     printf("Este carro já está estacionado no pátio.\n");
     return NULL;
@@ -61,6 +62,8 @@ Carro* estacionamento_checkin(Estacionamento* e){
 
 void estacionamento_checkout(Estacionamento* e, Carro* carro){
   int horaSaida = carro_get_hChegada(carro);
+
+  // Realiza o checkout nos dois pátios
   pilha_checkout(e->pilha, horaSaida);
   fila_checkout(e->fila, horaSaida);
 }
@@ -124,14 +127,20 @@ void estacionamento_sorteio(Estacionamento* e, Carro* carro){
     int i;
     srand((unsigned) time(NULL));
 
+    // Verifica se a lotação está maior que 25% das vagas
     if((qtdCarrosPatio1+qtdCarrosPatio2)>=MAX_EST*0.25){
+        // Compara para cada horário em que o sorteio será reliazado
         for(i=0;i<4;i++){
+            // Se for hora de sorteio
             if(carro_get_hChegada(carro)==horasSorteio[i]){
                 int random = rand()%100;
                 random = random%(qtdCarrosPatio1+qtdCarrosPatio2);
+                
                 if(random<qtdCarrosPatio1){
+                    // Se o número sorteado foi de um carro no pátio um
                     pilha_sorteio(e->pilha, random);
                 }else{
+                    // Se o número sorteado foi de um carro no pátio dois
                     fila_sorteio(e->fila, random-qtdCarrosPatio1);
                 }
             }

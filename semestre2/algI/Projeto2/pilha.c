@@ -94,11 +94,11 @@ Carro* pilha_topo(Pilha *p){
 }
 
 void pilha_checkout(Pilha *p, int horaSaida){
-
-  while(pilha_topo(p)!=NULL && carro_get_hSaida(pilha_topo(p))<=horaSaida){
+    // Verifica quais carros deveriam sair até aquela hora e realiza o checkout desses carros
+    while(pilha_topo(p)!=NULL && carro_get_hSaida(pilha_topo(p))<=horaSaida){
       printf("\nCarro saindo do pátio 1: ");
       carro_imprimir(pilha_remover(p));
-  }
+    }
 }
 
 bool pilha_busca(Pilha *p, int placa){
@@ -112,6 +112,7 @@ bool pilha_busca(Pilha *p, int placa){
 
 void pilha_imprimir(Pilha *p){
     ItemPilha* curr = p->topo;
+    // Imprime cada um dos carros estacionados
     while(curr!=NULL){
         carro_imprimir(curr->carro);
         curr = curr->prev;
@@ -121,6 +122,7 @@ void pilha_imprimir(Pilha *p){
 void pilha_sorteio(Pilha *p, int index){
     ItemPilha* curr = p->topo;
     int cont=0;
+    // Escolhe o carro de index sorteado
     while(cont<index){
         curr=curr->prev;
         cont++;
