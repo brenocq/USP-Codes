@@ -149,4 +149,6 @@ void fila_sorteio(Fila *f, int index){
         cont++;
     }
     carro_set_desconto(curr->carro, 0.1);
+    printf("Sorteio realizado!\nCarro ganhador: ");
+    carro_imprimir(curr->carro);
 }

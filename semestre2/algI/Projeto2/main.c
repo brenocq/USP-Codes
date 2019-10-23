@@ -35,6 +35,7 @@ int main(int argc, char const *argv[]) {
       case 3:{
           // Sair
           estacionamento_deletar(&e);
+          exit(0);
       }default:{
         printf("Esta não é uma opção. Por favor escolha novamente.\n");
       }break;

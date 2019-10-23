@@ -72,9 +72,9 @@ bool estacionamento_disponibilidade(Estacionamento* e, Carro* carro){
   bool pilhaVazia = pilha_vazia(e->pilha);
   bool filaVazia = fila_vazia(e->fila);
 
-  if(carro_get_hSaida(carro)<8 || carro_get_hSaida(carro)>22)
+  if(carro_get_hSaida(carro)<8 || carro_get_hSaida(carro)>22 || carro_get_hChegada(carro)<8 || carro_get_hChegada(carro)>22){
     return false;
-
+  }
   if(pilhaVazia && filaVazia){
     pilha_inserir(e->pilha, carro);
     return true;
@@ -135,7 +135,7 @@ void estacionamento_sorteio(Estacionamento* e, Carro* carro){
             if(carro_get_hChegada(carro)==horasSorteio[i]){
                 int random = rand()%100;
                 random = random%(qtdCarrosPatio1+qtdCarrosPatio2);
-                
+
                 if(random<qtdCarrosPatio1){
                     // Se o número sorteado foi de um carro no pátio um
                     pilha_sorteio(e->pilha, random);

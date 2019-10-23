@@ -1,0 +1,7 @@
+Projeto 2
+
+Breno Cunha Queiroz - 11218991
+Maria Eduarda Kawakami Moreira - 11218751
+
+Para compilar e executar:
+make run
