@@ -25,7 +25,7 @@ int existe_lista(Colecao* c, int valor);
 int existe_arvore(Colecao* c, int valor);
 
 
-Colecao* cria_colecao(int estrutura_id) 
+Colecao* cria_colecao(int estrutura_id)
 {
 	Colecao* col = (Colecao*)malloc(sizeof(Colecao));
 	col->inicio = NULL;
@@ -61,7 +61,7 @@ void adiciona(Colecao* c, int valor)
 		break;
 		case ARVORE_AVL:
 			//arvore_avl_adiciona(c, valor);
-		break;	
+		break;
 	}
 }
 
@@ -80,17 +80,30 @@ int existe(Colecao* c, int valor)
 	}
 	return 0;
 }
-void destroi(Colecao* c)
+void destroi(Colecao** c)
 {
-    // Implementar
+    if(*c == NULL) return;
+    destroi_aux((*c)->inicio);
+    free(*c);
+    *c = NULL;
+}
+
+void destroi_aux(No *curr){
+  if(curr != NULL){
+    if(curr->dir != NULL)
+      destroi_aux(curr->dir);
+    curr->esq = NULL;
+    free(curr);
+    curr = NULL;
+  }
 }
 
 //--------------------------------------//
 //-------------- Lista -----------------//
 //--------------------------------------//
 int existe_lista_ord(Colecao* c, int valor){
-	No* curr = c->inicio;
-	
+	No* curr = c->inicio->dir;
+
 	while(curr!=NULL && curr->valor<valor)
 		curr = curr->dir;
 
@@ -101,8 +114,8 @@ int existe_lista_ord(Colecao* c, int valor){
 	return 0;
 }
 int existe_lista(Colecao* c, int valor){
-	No* curr = c->inicio;
-	
+	No* curr = c->inicio->dir;
+
 	while(curr!=NULL && curr->valor!=valor)
 		curr = curr->dir;
 
@@ -114,11 +127,11 @@ int existe_lista(Colecao* c, int valor){
 //---------- Lista ordenada ------------//
 void lista_ord_adiciona(Colecao* c, int valor){
 	No* novo = cria_no(valor);
-	No* curr = c->inicio;
+	No* curr = c->inicio->dir;
 
-	if(curr==NULL){
-		c->inicio = novo;
-	}else{
+	//if(curr==NULL){
+		//c->inicio = novo;
+	//}else{
 		while(curr->dir!=NULL && curr->dir->valor<=valor){
 			curr = curr->dir;
 		}
@@ -128,36 +141,35 @@ void lista_ord_adiciona(Colecao* c, int valor){
 		}
 		curr->dir = novo;
 		novo->esq = curr;
-	}
+	//}
 }
 //----------- Lista ultimo ------------//
 void lista_ultimo_adiciona(Colecao* c, int valor){
 	No* novo = cria_no(valor);
-	No* curr = c->inicio;
+	No* curr = c->inicio->dir;
 
-	if(curr==NULL){
-		c->inicio = novo;
-	}else{
+	//if(curr==NULL){
+		//c->inicio = novo;
+	//}else{
 		while(curr->dir!=NULL){
 			curr = curr->dir;
 		}
 		curr->dir = novo;
 		novo->esq = curr;
-	}
+	//}
 }
 
 //---------- Lista primeiro  ----------//
 void lista_primeiro_adiciona(Colecao* c, int valor){
 	No* novo = cria_no(valor);
-	No* curr = c->inicio;
-
-	if(curr==NULL){
-		c->inicio = novo;
-	}else{
+	No* curr = c->inicio->dir;
+  //if(curr==NULL){
+		//c->inicio = novo;
+	//}else{
 		c->inicio = novo;
 		novo->dir = curr;
 		curr->esq = novo;
-	}
+	//}
 }
 //--------------------------------------//
 //-------------- Arvore ----------------//
@@ -180,7 +192,7 @@ int existe_arvore(Colecao* c, int valor){
 }
 //---------- Arvore binaria -----------//
 void arvore_binaria_adiciona(Colecao* c, int valor){
-	
+
 }
 //------------ Arvore AVL -------------//
 void arvore_avl_adiciona(Colecao* c, int valor){
