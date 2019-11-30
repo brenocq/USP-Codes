@@ -25,7 +25,7 @@ void arvore_binaria_adiciona(Colecao* c, int valor);
 void arvore_avl_adiciona(Colecao* c, int valor);
 void arvore_binaria_adiciona_aux(No *ini, int valor);
 No *insere_filho(int filho, No *no, int valor);
-
+No* arvore_avl_adiciona_aux(No* raiz, int valor);
 //----- Existe -----//
 int existe_lista_ord(Colecao* c, int valor);
 int existe_lista(Colecao* c, int valor);
@@ -72,7 +72,7 @@ void adiciona(Colecao* c, int valor)
 			lista_primeiro_adiciona(c, valor);
 		break;
 		case ARVORE_BINARIA:
-			//arvore_binaria_adiciona(c, valor);
+			arvore_binaria_adiciona(c, valor);
 		break;
 		case ARVORE_AVL:
 			//arvore_avl_adiciona(c, valor);
@@ -99,20 +99,32 @@ int existe(Colecao* c, int valor)
 
 void destroi(Colecao *c)
 {
-    if(c == NULL) return;
-    destroi_aux(c->inicio);
-    free(c);
-    c = NULL;
+  if(c == NULL) return;  
+ 	int estrutura_id = c->estrutura_id;
+
+	No *curr = c->inicio;
+	if(estrutura_id==LISTA_ORDENADO || estrutura_id==LISTA_ULTIMO || estrutura_id==LISTA_PRIMEIRO)
+	{
+		while(curr!=NULL)
+		{
+			No* aux = curr->dir;
+			free(curr);
+			curr = aux;
+		}
+	}else
+	{
+		destroi_aux(curr);
+	}
+	free(c);
+	c = NULL;
 }
 
 void destroi_aux(No *curr)
 {
   if(curr != NULL)
 	{
-    if(curr->dir != NULL)
-      destroi_aux(curr->dir);
-    if(curr->esq != NULL)
-      destroi_aux(curr->esq);
+    destroi_aux(curr->dir);
+    destroi_aux(curr->esq);
     free(curr);
     curr = NULL;
   }
@@ -208,7 +220,7 @@ void arvore_binaria_adiciona(Colecao* c, int valor){
   arvore_binaria_adiciona_aux(c->inicio, valor);
 }
 /*
-As duas abaixo funcões são auxiliares para a função
+As duas funcões abaixo são auxiliares para a função
 arvore_binaria_adiciona.
 */
 No *insere_filho(int filho, No *no, int valor){
@@ -240,6 +252,25 @@ void arvore_binaria_adiciona_aux(No *ini, int valor){
 
 
 //------------ Arvore AVL -------------//
-void arvore_avl_adiciona(Colecao* c, int valor){
+void arvore_avl_adiciona(Colecao* c, int valor)
+{
+	if(c==NULL)return;
+	arvore_avl_adiciona_aux(c->inicio, valor);
+}
 
+No* arvore_avl_adiciona_aux(No* raiz, int valor)
+{
+	if(raiz==NULL)
+	{
+		raiz = cria_no(valor);
+		raiz->altura= 0;
+	}else if(valor > raiz->valor)
+	{
+		raiz->dir = arvore_avl_adiciona_aux(raiz->dir, valor);
+		// Checa rotação
+	}else if(valor < raiz->valor)
+	{
+		raiz->esq = arvore_avl_adiciona_aux(raiz->esq, valor);
+		//Checa rotação
+	}
 }
