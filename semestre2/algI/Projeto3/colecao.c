@@ -2,6 +2,9 @@
 #include <stdio.h>// DELETAR (somente para debug)
 #include "colecao.h"
 
+#define ESQ 0
+#define DIR 1
+
 struct _no {
     int valor;
     struct _no* esq;
@@ -20,6 +23,9 @@ void lista_ultimo_adiciona(Colecao* c, int valor);
 void lista_primeiro_adiciona(Colecao* c, int valor);
 void arvore_binaria_adiciona(Colecao* c, int valor);
 void arvore_avl_adiciona(Colecao* c, int valor);
+void arvore_binaria_adiciona_aux(No *ini, int valor);
+No *insere_filho(int filho, No *no, int valor);
+
 //----- Existe -----//
 int existe_lista_ord(Colecao* c, int valor);
 int existe_lista(Colecao* c, int valor);
@@ -32,14 +38,13 @@ Colecao* cria_colecao(int estrutura_id)
 	Colecao* col = (Colecao*)malloc(sizeof(Colecao));
 	col->inicio = NULL;
 	col->estrutura_id = estrutura_id;
-
-	if(estrutura_id==LISTA_ORDENADO || estrutura_id==LISTA_ULTIMO || estrutura_id==LISTA_PRIMEIRO)
+  if(estrutura_id==LISTA_ORDENADO || estrutura_id==LISTA_ULTIMO || estrutura_id==LISTA_PRIMEIRO)
 	{
-		// Cria o nó cabeça se for uma lista
-		No* cabeca = cria_no(-1);
-		col->inicio = cabeca;
-	}
-	return col;
+		// Cria o nó cabeça para lista e a raiz para árvore
+	   No* ini = cria_no(-1);
+	   col->inicio = ini;
+  }
+  return col;
 }
 
 No* cria_no(int valor)
@@ -92,12 +97,12 @@ int existe(Colecao* c, int valor)
 	return 0;
 }
 
-void destroi(Colecao** c)
+void destroi(Colecao *c)
 {
-    if(*c == NULL) return;
-    destroi_aux((*c)->inicio);
-    free(*c);
-    *c = NULL;
+    if(c == NULL) return;
+    destroi_aux(c->inicio);
+    free(c);
+    c = NULL;
 }
 
 void destroi_aux(No *curr)
@@ -118,7 +123,7 @@ void destroi_aux(No *curr)
 //--------------------------------------//
 int existe_lista_ord(Colecao* c, int valor)
 {
-	No* curr = c->inicio->dir;
+	No* curr = c->inicio;
 
 	while(curr!=NULL && curr->valor<valor)
 		curr = curr->dir;
@@ -131,7 +136,7 @@ int existe_lista_ord(Colecao* c, int valor)
 }
 int existe_lista(Colecao* c, int valor)
 {
-	No* curr = c->inicio->dir;
+	No* curr = c->inicio;
 
 	while(curr!=NULL && curr->valor!=valor)
 		curr = curr->dir;
@@ -145,49 +150,34 @@ int existe_lista(Colecao* c, int valor)
 void lista_ord_adiciona(Colecao* c, int valor){
 	No* novo = cria_no(valor);
 	No* curr = c->inicio;
-
-	//if(curr==NULL){
-		//c->inicio = novo;
-	//}else{
-		while(curr->dir!=NULL && curr->dir->valor<=valor){
-			curr = curr->dir;
-		}
-		if(curr->dir!=NULL){
-			curr->dir->esq = novo;
-			novo->dir = curr->dir;
-		}
-		curr->dir = novo;
-		novo->esq = curr;
-	//}
+  while(curr->dir!=NULL && curr->dir->valor<=valor){
+		curr = curr->dir;
+	}
+	if(curr->dir!=NULL){
+		curr->dir->esq = novo;
+		novo->dir = curr->dir;
+	}
+	curr->dir = novo;
+	novo->esq = curr;
 }
 //----------- Lista ultimo ------------//
 void lista_ultimo_adiciona(Colecao* c, int valor)
 {
 	No* novo = cria_no(valor);
 	No* curr = c->inicio;
-
-	//if(curr==NULL){
-		//c->inicio = novo;
-	//}else{
-		while(curr->dir!=NULL){
-			curr = curr->dir;
-		}
-		curr->dir = novo;
-		novo->esq = curr;
-	//}
+	while(curr->dir!=NULL){
+		curr = curr->dir;
+	}
+	curr->dir = novo;
+	novo->esq = curr;
 }
-
 //----------- Lista primeiro ----------//
 void lista_primeiro_adiciona(Colecao* c, int valor){
 	No* novo = cria_no(valor);
-	No* curr = c->inicio->dir;
-  //if(curr==NULL){
-		//c->inicio = novo;
-	//}else{
-		c->inicio = novo;
-		novo->dir = curr;
-		curr->esq = novo;
-	//}
+	No* curr = c->inicio;
+	c->inicio = novo;
+	novo->dir = curr;
+  curr->esq = novo;
 }
 //--------------------------------------//
 //-------------- Arvore ----------------//
@@ -210,8 +200,45 @@ int existe_arvore(Colecao* c, int valor){
 }
 //---------- Arvore binaria -----------//
 void arvore_binaria_adiciona(Colecao* c, int valor){
-
+  No *novo = cria_no(valor);
+  if(c->inicio == NULL){
+    c->inicio = novo;
+    return;
+  }
+  arvore_binaria_adiciona_aux(c->inicio, valor);
 }
+/*
+As duas abaixo funcões são auxiliares para a função
+arvore_binaria_adiciona.
+*/
+No *insere_filho(int filho, No *no, int valor){
+  No *novo = cria_no(valor);
+  if(novo != NULL){
+    if(filho == ESQ)
+      no->esq = novo;
+    else
+      no->dir = novo;
+  }
+  return novo;
+}
+
+void arvore_binaria_adiciona_aux(No *ini, int valor){
+  if(valor == ini->valor) return;
+  if(valor < ini->valor){
+    if(ini->esq == NULL)
+      insere_filho(ESQ, ini, valor);
+    else
+      arvore_binaria_adiciona_aux(ini->esq, valor);
+  }
+  else{
+    if(ini->dir == NULL)
+      insere_filho(DIR, ini, valor);
+    else
+      arvore_binaria_adiciona_aux(ini->dir, valor);
+  }
+}
+
+
 //------------ Arvore AVL -------------//
 void arvore_avl_adiciona(Colecao* c, int valor){
 
