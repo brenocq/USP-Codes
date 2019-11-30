@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>// DELETAR (somente para debug)
 #include "colecao.h"
 
 struct _no {
@@ -23,19 +24,27 @@ void arvore_avl_adiciona(Colecao* c, int valor);
 int existe_lista_ord(Colecao* c, int valor);
 int existe_lista(Colecao* c, int valor);
 int existe_arvore(Colecao* c, int valor);
-
+//----- Existe -----//
+void destroi_aux(No *curr);
 
 Colecao* cria_colecao(int estrutura_id)
 {
 	Colecao* col = (Colecao*)malloc(sizeof(Colecao));
 	col->inicio = NULL;
 	col->estrutura_id = estrutura_id;
+
+	if(estrutura_id==LISTA_ORDENADO || estrutura_id==LISTA_ULTIMO || estrutura_id==LISTA_PRIMEIRO)
+	{
+		// Cria o nó cabeça se for uma lista
+		No* cabeca = cria_no(-1);
+		col->inicio = cabeca;
+	}
 	return col;
 }
 
 No* cria_no(int valor)
 {
-    No* no = (No*)malloc(sizeof(No));
+  No* no = (No*)malloc(sizeof(No));
 	no->valor = valor;
 	no->esq = NULL;
 	no->dir = NULL;
@@ -46,7 +55,8 @@ No* cria_no(int valor)
 void adiciona(Colecao* c, int valor)
 {
 	if(c==NULL)return;
-	switch(c->estrutura_id){
+	switch(c->estrutura_id)
+	{
 		case LISTA_ORDENADO:
 			lista_ord_adiciona(c, valor);
 		break;
@@ -68,7 +78,8 @@ void adiciona(Colecao* c, int valor)
 int existe(Colecao* c, int valor)
 {
 	if(c==NULL)return 0;
-	switch(c->estrutura_id){
+	switch(c->estrutura_id)
+	{
 		case LISTA_ORDENADO:
 			return existe_lista_ord(c, valor);
 		case LISTA_ULTIMO: case LISTA_PRIMEIRO:
@@ -80,6 +91,7 @@ int existe(Colecao* c, int valor)
 	}
 	return 0;
 }
+
 void destroi(Colecao** c)
 {
     if(*c == NULL) return;
@@ -88,11 +100,14 @@ void destroi(Colecao** c)
     *c = NULL;
 }
 
-void destroi_aux(No *curr){
-  if(curr != NULL){
+void destroi_aux(No *curr)
+{
+  if(curr != NULL)
+	{
     if(curr->dir != NULL)
       destroi_aux(curr->dir);
-    curr->esq = NULL;
+    if(curr->esq != NULL)
+      destroi_aux(curr->esq);
     free(curr);
     curr = NULL;
   }
@@ -101,7 +116,8 @@ void destroi_aux(No *curr){
 //--------------------------------------//
 //-------------- Lista -----------------//
 //--------------------------------------//
-int existe_lista_ord(Colecao* c, int valor){
+int existe_lista_ord(Colecao* c, int valor)
+{
 	No* curr = c->inicio->dir;
 
 	while(curr!=NULL && curr->valor<valor)
@@ -113,7 +129,8 @@ int existe_lista_ord(Colecao* c, int valor){
 		return 1;
 	return 0;
 }
-int existe_lista(Colecao* c, int valor){
+int existe_lista(Colecao* c, int valor)
+{
 	No* curr = c->inicio->dir;
 
 	while(curr!=NULL && curr->valor!=valor)
@@ -127,7 +144,7 @@ int existe_lista(Colecao* c, int valor){
 //---------- Lista ordenada ------------//
 void lista_ord_adiciona(Colecao* c, int valor){
 	No* novo = cria_no(valor);
-	No* curr = c->inicio->dir;
+	No* curr = c->inicio;
 
 	//if(curr==NULL){
 		//c->inicio = novo;
@@ -144,9 +161,10 @@ void lista_ord_adiciona(Colecao* c, int valor){
 	//}
 }
 //----------- Lista ultimo ------------//
-void lista_ultimo_adiciona(Colecao* c, int valor){
+void lista_ultimo_adiciona(Colecao* c, int valor)
+{
 	No* novo = cria_no(valor);
-	No* curr = c->inicio->dir;
+	No* curr = c->inicio;
 
 	//if(curr==NULL){
 		//c->inicio = novo;
@@ -159,7 +177,7 @@ void lista_ultimo_adiciona(Colecao* c, int valor){
 	//}
 }
 
-//---------- Lista primeiro  ----------//
+//----------- Lista primeiro ----------//
 void lista_primeiro_adiciona(Colecao* c, int valor){
 	No* novo = cria_no(valor);
 	No* curr = c->inicio->dir;
