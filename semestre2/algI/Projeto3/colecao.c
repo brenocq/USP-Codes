@@ -43,6 +43,11 @@ int max(int a, int b);
 Colecao* cria_colecao(int estrutura_id)
 {
 	Colecao* col = (Colecao*)malloc(sizeof(Colecao));
+	if(col==NULL)
+	{
+		printf("Não foi possível criar a coleção. O programa será encerrado.");
+		exit(0);
+	}
 	col->inicio = NULL;
 	col->estrutura_id = estrutura_id;
   if(estrutura_id==LISTA_ORDENADO || estrutura_id==LISTA_ULTIMO || estrutura_id==LISTA_PRIMEIRO)
@@ -57,6 +62,11 @@ Colecao* cria_colecao(int estrutura_id)
 No* cria_no(int valor)
 {
   No* no = (No*)malloc(sizeof(No));
+	if(no==NULL)
+	{
+		printf("Não foi possível criar o nó. O programa será encerrado.");
+		exit(0);
+	}
 	no->valor = valor;
 	no->esq = NULL;
 	no->dir = NULL;
