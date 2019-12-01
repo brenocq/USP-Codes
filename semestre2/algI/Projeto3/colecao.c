@@ -37,7 +37,7 @@ int existe_lista(Colecao* c, int valor);
 int existe_arvore(Colecao* c, int valor);
 //----- Existe -----//
 void destroi_aux(No *curr);
-//----- Existe -----//
+//----- Auxiliar -----//
 int max(int a, int b);
 
 Colecao* cria_colecao(int estrutura_id)
@@ -93,8 +93,7 @@ int existe(Colecao* c, int valor)
 	switch(c->estrutura_id)
 	{
 		case LISTA_ORDENADO:
-			return existe_lista_ord(c, valor);
-		case LISTA_ULTIMO: case LISTA_PRIMEIRO:
+			return existe_lista_ord(c, valor); case LISTA_ULTIMO: case LISTA_PRIMEIRO:
 			return existe_lista(c, valor);
 		break;
 		case ARVORE_BINARIA: case ARVORE_AVL:
@@ -289,7 +288,7 @@ No *rodar_esq_dir(No *raiz){
 
 void arvore_avl_adiciona(Colecao* c, int valor)
 {
-	arvore_avl_adiciona_aux(c->inicio, valor);
+	c->inicio = arvore_avl_adiciona_aux(c->inicio, valor);
 }
 
 No* arvore_avl_adiciona_aux(No* raiz, int valor)
@@ -297,7 +296,6 @@ No* arvore_avl_adiciona_aux(No* raiz, int valor)
 	if(raiz==NULL)
 	{
 		raiz = cria_no(valor);
-		//raiz->altura= 0; cria_no já coloca altura = 0
 	}else if(valor > raiz->valor)
 	{
 		raiz->dir = arvore_avl_adiciona_aux(raiz->dir, valor);
