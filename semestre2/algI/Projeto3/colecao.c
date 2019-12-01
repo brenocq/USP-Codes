@@ -26,6 +26,11 @@ void arvore_avl_adiciona(Colecao* c, int valor);
 void arvore_binaria_adiciona_aux(No *ini, int valor);
 No *insere_filho(int filho, No *no, int valor);
 No* arvore_avl_adiciona_aux(No* raiz, int valor);
+No *rodar_dir(No *raiz);
+No *rodar_esq(No *raiz);
+No *rodar_dir_esq(No *raiz);
+No *rodar_esq_dir(No *raiz);
+int arvore_avl_altura(No* raiz);
 //----- Existe -----//
 int existe_lista_ord(Colecao* c, int valor);
 int existe_lista(Colecao* c, int valor);
@@ -33,7 +38,8 @@ int existe_arvore(Colecao* c, int valor);
 //----- Existe -----//
 void destroi_aux(No *curr);
 //----- Existe -----//
-int max(int a, int b)
+int max(int a, int b);
+
 Colecao* cria_colecao(int estrutura_id)
 {
 	Colecao* col = (Colecao*)malloc(sizeof(Colecao));
@@ -41,7 +47,7 @@ Colecao* cria_colecao(int estrutura_id)
 	col->estrutura_id = estrutura_id;
   if(estrutura_id==LISTA_ORDENADO || estrutura_id==LISTA_ULTIMO || estrutura_id==LISTA_PRIMEIRO)
 	{
-		// Cria o nó cabeça para lista e a raiz para árvore
+		// Cria o nó cabeça para lista
 	   No* ini = cria_no(-1);
 	   col->inicio = ini;
   }
@@ -76,7 +82,7 @@ void adiciona(Colecao* c, int valor)
 			arvore_binaria_adiciona(c, valor);
 		break;
 		case ARVORE_AVL:
-			//arvore_avl_adiciona(c, valor);
+			arvore_avl_adiciona(c, valor);
 		break;
 	}
 }
@@ -100,7 +106,7 @@ int existe(Colecao* c, int valor)
 
 void destroi(Colecao *c)
 {
-  if(c == NULL) return;  
+  if(c == NULL) return;
  	int estrutura_id = c->estrutura_id;
 
 	No *curr = c->inicio;
@@ -138,7 +144,7 @@ int existe_lista_ord(Colecao* c, int valor)
 {
 	No* curr = c->inicio;
 
-	while(curr!=NULL && curr->valor<valor)
+	while((curr!=NULL) && (curr->valor<valor))
 		curr = curr->dir;
 
 	if(curr==NULL)
@@ -253,9 +259,36 @@ void arvore_binaria_adiciona_aux(No *ini, int valor){
 
 
 //------------ Arvore AVL -------------//
+No *rodar_esq(No *raiz){
+  No *aux = raiz->dir;
+  raiz->dir = aux->esq;
+  aux->esq = raiz;
+  raiz->altura = max(arvore_avl_altura(raiz->esq), arvore_avl_altura(raiz->dir)) + 1;
+  aux->altura = max(arvore_avl_altura(aux->dir), raiz->altura) + 1;
+  return aux;
+}
+
+No *rodar_dir(No *raiz){
+  No *aux = raiz->esq;
+  raiz->esq = aux->dir;
+  aux->dir = raiz;
+  raiz->altura = max(arvore_avl_altura(raiz->esq), arvore_avl_altura(raiz->dir)) + 1;
+  aux->altura = max(arvore_avl_altura(aux->esq), raiz->altura) + 1;
+  return aux;
+}
+
+No *rodar_dir_esq(No *raiz){
+  raiz->dir = rodar_dir(raiz->dir);
+  return rodar_esq(raiz);
+}
+
+No *rodar_esq_dir(No *raiz){
+  raiz->esq = rodar_esq(raiz->esq);
+  return rodar_dir(raiz);
+}
+
 void arvore_avl_adiciona(Colecao* c, int valor)
 {
-	if(c==NULL)return;
 	arvore_avl_adiciona_aux(c->inicio, valor);
 }
 
@@ -264,11 +297,11 @@ No* arvore_avl_adiciona_aux(No* raiz, int valor)
 	if(raiz==NULL)
 	{
 		raiz = cria_no(valor);
-		raiz->altura= 0;
+		//raiz->altura= 0; cria_no já coloca altura = 0
 	}else if(valor > raiz->valor)
 	{
 		raiz->dir = arvore_avl_adiciona_aux(raiz->dir, valor);
-		if(arvore_avl_altura(raiz->esq) - arvore_avl_altura(raiz->dir == -2))
+		if(arvore_avl_altura(raiz->esq) - arvore_avl_altura(raiz->dir) == -2)
 		{
 			if(valor > raiz->dir->valor)
 			{
@@ -281,7 +314,7 @@ No* arvore_avl_adiciona_aux(No* raiz, int valor)
 	}else if(valor < raiz->valor)
 	{
 		raiz->esq = arvore_avl_adiciona_aux(raiz->esq, valor);
-		if(arvore_avl_altura(raiz->esq) - arvore_avl_altura(raiz->dir == 2))
+		if(arvore_avl_altura(raiz->esq) - arvore_avl_altura(raiz->dir) == 2)
 		{
 			if(valor < raiz->esq->valor)
 			{
@@ -293,6 +326,7 @@ No* arvore_avl_adiciona_aux(No* raiz, int valor)
 		}
 	}
 	raiz->altura = max(arvore_avl_altura(raiz->esq), arvore_avl_altura(raiz->dir))+1;
+  return raiz;
 }
 
 int arvore_avl_altura(No* raiz)
