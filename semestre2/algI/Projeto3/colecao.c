@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>// DELETAR (somente para debug)
 #include "colecao.h"
 
 #define ESQ 0
@@ -117,7 +116,6 @@ void destroi(Colecao *c)
 {
   if(c == NULL) return;
  	int estrutura_id = c->estrutura_id;
-
 	No *curr = c->inicio;
 	if(estrutura_id==LISTA_ORDENADO || estrutura_id==LISTA_ULTIMO || estrutura_id==LISTA_PRIMEIRO)
 	{
@@ -162,6 +160,7 @@ int existe_lista_ord(Colecao* c, int valor)
 		return 1;
 	return 0;
 }
+
 int existe_lista(Colecao* c, int valor)
 {
 	No* curr = c->inicio;
@@ -265,7 +264,6 @@ void arvore_binaria_adiciona_aux(No *ini, int valor){
       arvore_binaria_adiciona_aux(ini->dir, valor);
   }
 }
-
 
 //------------ Arvore AVL -------------//
 No *rodar_esq(No *raiz){
