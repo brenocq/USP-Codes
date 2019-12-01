@@ -32,7 +32,8 @@ int existe_lista(Colecao* c, int valor);
 int existe_arvore(Colecao* c, int valor);
 //----- Existe -----//
 void destroi_aux(No *curr);
-
+//----- Existe -----//
+int max(int a, int b)
 Colecao* cria_colecao(int estrutura_id)
 {
 	Colecao* col = (Colecao*)malloc(sizeof(Colecao));
@@ -267,10 +268,40 @@ No* arvore_avl_adiciona_aux(No* raiz, int valor)
 	}else if(valor > raiz->valor)
 	{
 		raiz->dir = arvore_avl_adiciona_aux(raiz->dir, valor);
-		// Checa rotação
+		if(arvore_avl_altura(raiz->esq) - arvore_avl_altura(raiz->dir == -2))
+		{
+			if(valor > raiz->dir->valor)
+			{
+				raiz = rodar_esq(raiz);
+			}else
+			{
+				raiz = rodar_dir_esq(raiz);
+			}
+		}
 	}else if(valor < raiz->valor)
 	{
 		raiz->esq = arvore_avl_adiciona_aux(raiz->esq, valor);
-		//Checa rotação
+		if(arvore_avl_altura(raiz->esq) - arvore_avl_altura(raiz->dir == 2))
+		{
+			if(valor < raiz->esq->valor)
+			{
+				raiz = rodar_dir(raiz);
+			}else
+			{
+				raiz = rodar_esq_dir(raiz);
+			}
+		}
 	}
+	raiz->altura = max(arvore_avl_altura(raiz->esq), arvore_avl_altura(raiz->dir))+1;
+}
+
+int arvore_avl_altura(No* raiz)
+{
+	if(raiz==NULL) return -1;
+	else return raiz->altura;
+}
+
+int max(int a, int b)
+{
+	return a>b?a:b;
 }
