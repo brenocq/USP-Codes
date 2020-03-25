@@ -10,13 +10,12 @@ public class Exercicio1 {
 		Double guess = entTec.leDouble();	
 
 		// Calculate root
-		Double lastGuess = guess;	
-		guess = (lastGuess+(x/lastGuess))/2;
-		while(Math.abs(guess-lastGuess)>=0.00000001) {
+		double lastGuess = 0;
+		do{
 			lastGuess = guess;
 			guess = (lastGuess+(x/lastGuess))/2;
 			System.out.printf("%f %f %f\n",lastGuess, guess, lastGuess-guess);
-		}
+		}while(Math.abs(guess-lastGuess)>=0.00000001);
 
 		System.out.printf("Your result is: %f\n", guess);
 
