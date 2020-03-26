@@ -1,37 +1,87 @@
 #Trabalho 1 - Calculadora
-#Breno Cunha Queiroz - 11219551
+#Breno Cunha Queiroz - 11218991
 #Maria Eduarda Kawakami Moreira - 11218751
 #23/03/2020
 
 .data
-	operation .asciiz "\n\tWrite the number of the operation:\n\t1: Addition\n\t2:Subtraction\n\t3: Multiplication\n\t4: Division\n\t5: Potentiation\n\t6: Square Root\n\t7: Multiplication Table\n\t8: Factorial\n\t9:Fibonacci\n\t10: Fibonacci Sequence\n\t"
-	menu_option .asciiz "\n\tWrite the letter of the procedure:\n\tM: Memory\n\tC: Calculate\n\t"
-	menu .asciiz "\n\t-----MENU----\n\t"
+	menu_main: .asciiz "\n\t-----MENU----\n\tEscreva a letra da operação:\n\tM: Memory\n\tC: Calculate\n\t"
+	menu_calc: .asciiz "\n\t-----MENU CALCULO----\n\tEscreva o número da operação:\n\t1:  Adição\n\t2:  Subtração\n\t3:  Multiplicação\n\t4:  Divisão\n\t5:  Potenciação\n\t6:  Raiz quadrada\n\t7:  Tabela multiplicação\n\t8:  Fatorial\n\t9:  Fibonacci\n\t10: Sequência Fibonacci\n\t"
+	menu_mem: .asciiz "\n\t-----MENU MEMORIA----\n\tEscolha e a memória que você quer consultar:\n\tM1: Memória 1\n\tM2: Memória 2\n\tM3: Memória 3\n\t"
 .text
 
 .globl main
 main:
 	li $v0, 4
-	la $a0, menu
+	la $a0, menu_main
 	syscall
 	
+	li $v0, 12
+	syscall
+	
+	addi $a0, $v0, 0
+	
+	#choose M or C
+	li $t0, 'C'
+	beq $a0, $t0, calculate
+	li $t0, 'M'
+	beq $a0, $t0, memory
+	
+	# Exit program
+	j exit
+	
+#################################################
+################## SEC MENUS ####################
+#################################################
+calculate:
 	li $v0, 4
-	la $a0, menu_option
+	la $a0, menu_calc
 	syscall
 	
 	li $v0, 5
 	syscall
 	
-	addi $a0, $v0, 0
-	#choose M or C, idk yet how to do that
-	#breno, isso eu tava só testando, pode ignorar e fazer certo KKKK
-	li $t0, 'C'
-	beq $a0, $t0, calculate
-	li $t0, 'M'
-	beq $a0, $t0, memory
-	#switch for each operation, i think i know how
+	beq $a0, 1, addition
 	
+	j main
+
+memory:
+	li $v0, 4
+	la $a0, menu_mem
+	syscall
 	
+	j main
+
+#################################################
+################## OPERATIONS ###################
+#################################################
+
+################### Addition ####################
+addition:
+	li $v0, 5
+	syscall
+	
+	li $v0, 5
+	syscall
+	
+	j main
+	
+################# Subtraction ###################
+
+################ Multiplication #################
+
+################## Division #####################
+
+################ Potentiation ###################
+
+################# Square Root ###################
+
+############# Multiplication Table ##############
+
+################## Factorial ####################
+
+################## Fibonacci ####################
+
+############# Fibonacci Sequence ################
 
 fact:
 	sub $sp, $sp, 8 
