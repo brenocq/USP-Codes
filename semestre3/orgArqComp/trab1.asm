@@ -4,7 +4,7 @@
 #23/03/2020
 
 .data
-	menu_main: .asciiz "\n\n\t-----MENU----\n\tEscreva a letra da operação:\n\tM: Memory\n\tC: Calculate\n\t"
+	menu_main: .asciiz "\n\n\t-----MENU----\n\tEscreva a letra da operação:\n\tM: Memória\n\tC: Cálculo\n\t"
 	menu_calc: .asciiz "\n\n\t-----MENU CALCULO----\n\tEscreva o número da operação:\n\t1:  Adição\n\t2:  Subtração\n\t3:  Multiplicação\n\t4:  Divisão\n\t5:  Potenciação\n\t6:  Raiz quadrada\n\t7:  Tabela multiplicação\n\t8:  Fatorial\n\t9:  Fibonacci\n\t10: Sequência de Fibonacci\n\t"
 	menu_mem: .asciiz "\n\n\t-----MENU MEMORIA----\n\tEscolha a memória que você quer consultar:\n\tM1: Memória 1\n\tM2: Memória 2\n\tM3: Memória 3\n\t"
 	addition_header: .asciiz "\n\t-----ADIÇÃO----\n"
@@ -17,8 +17,11 @@
 	factorial_header: .asciiz "\n\t-----FATORIAL----\n"
 	fibonacci_header: .asciiz "\n\t-----FIBONACCI----\n"
 	fibonacci_sequence_header: .asciiz "\n\t-----SEQUÊNCIA DE FIBONACCI----\n"
+	num: .asciiz "\tNúmero: "
 	first_num: .asciiz "\tPrimeiro número:"
 	second_num: .asciiz "\tSegundo número:"
+	base: .asciiz "\tBase:"
+	expoent: .asciiz "\tExpoent:"
 	result: .asciiz "\tResultado:"
 	m1_result: .asciiz "\n\tValor de M1:"
 	m2_result: .asciiz "\n\tValor de M2:"
@@ -63,6 +66,7 @@ calculate:
 	beq $v0, 2, subtraction
 	beq $v0, 3, multiplication
 	beq $v0, 4, division
+	beq $v0, 5, potentiation_main
 	
 	j main
 
@@ -272,14 +276,104 @@ division:
 	j main
 	
 ################ Potentiation ###################
+potentiation_main:
+	# Show header
+        li $v0, 4
+        la $a0, potentiation_header
+        syscall
+
+        # Read base
+        li $v0, 4
+        la $a0, base
+        syscall
+
+        li $v0, 5
+        syscall
+
+        move $t0, $v0
+
+        # Read expoent
+        li $v0, 4
+        la $a0, expoent
+        syscall
+
+        li $v0, 5
+        syscall
+
+        move $t1, $v0
+	
+	jal potentiation
+	
+	li $v0, 1
+	la $a0, ($t2)
+	syscall
+	
+potentiation:
+	sub $sp, $sp, 8
+	sw $ra, 4($sp)
+	sub $t1, $t1, 1
+	beq $t1, 0, potentiation_return
+	jal potentiation
+	lw $t3, 0($sp)
+	mul $t2, $t0, $t3
+	addi $sp, $sp, 8
+	sw $t2, 0($sp)
+	lw $t3, 4($sp)
+	jr $t3
+	
+potentiation_return:
+	sw $t0, 0($sp)
+	lw $ra, 4($sp)
+	jr $ra
 
 ################# Square Root ###################
 
+	
 ############# Multiplication Table ##############
+
+mult_table:
+	#show header
+        li $v0, 4
+        la $a0, mult_table
+        syscall
+
+        #ask for number
+        li $v0, 4
+        la $a0, num
+        syscall
+	
+	sub $sp, $sp, 8
+	sw $ra, 4($sp) #store $ra
+	sw $a0, 0($sp) #store n
+	
+	li $t1, 10 #counter
+	
+	slti $t0, $t1, 1 #t0 = 1 if counter < 1
+
+
 
 ################## Factorial ####################
 
+fact_main:
+	#show header
+	li $v0, 4
+	la $a0, factorial_header
+	syscall
+	
+	#ask for number
+	li $v0, 4
+        la $a0, num
+        syscall
+	
+	jal fact
+	
+	addi $a0, $v0, 0
+	
+	li $v0, 1
+	syscall
+
 fact:
+	
 	sub $sp, $sp, 8 
  	sw $ra, 4($sp) #store $ra
  	sw $a0, 0($sp) #store n
@@ -298,7 +392,28 @@ fact_rec:
  	mul $v0, $a0, $v0 #return n * fact(n-1)
  	jr $ra
 ################## Fibonacci ####################
+
+fib_main:
+	
+	#show header
+        li $v0, 4
+        la $a0, fibonacci_header
+        syscall
+
+        #ask for number
+        li $v0, 4
+        la $a0, num
+        syscall
+        
+        jal fib
+	
+	addi $a0, $v0, 0
+	
+	li $v0, 1
+	syscall
+
 fib:
+	
 	sub $sp, $sp, 12
 	sw $ra, 4($sp) 
 	sw $a0, 0($sp) #save n
