@@ -1,0 +1,873 @@
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	M
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M1
+	Valor de M1:Nenhum valor salvo
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M2
+	Valor de M2:Nenhum valor salvo
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M3
+	Valor de M3:Nenhum valor salvo
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	..
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	1
+
+	-----ADIÇÃO----
+	Primeiro número:20
+	Segundo número:1
+	Resultado:21
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	M
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M1
+	Valor de M1:21
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M2
+	Valor de M2:Nenhum valor salvo
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	..
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	1
+
+	-----ADIÇÃO----
+	Primeiro número:5
+	Segundo número:-10
+	Resultado:-5
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	2
+
+	-----SUBTRAÇÃO----
+	Primeiro número:100
+	Segundo número:-10
+	Resultado:110
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	3
+
+	-----MULTIPLICAÇÃO----
+	Primeiro número:-1
+	Segundo número:22
+	Resultado:-22
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	M
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M1
+	Valor de M1:-22
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M3
+	Valor de M3:-5
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	..
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	4
+
+	-----DIVISÃO----
+	Primeiro número:4
+	Segundo número:2
+	Resultado:2
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	4
+
+	-----DIVISÃO----
+	Primeiro número:5
+	Segundo número:0
+	O segundo número não pode ser zero. Tente novamente.
+	-----DIVISÃO----
+	Primeiro número:10
+	Segundo número:100
+	Resultado:0
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	5
+
+	-----POTENCIAÇÃO----
+	Base:3
+	Expoente:2
+	Resultado:9
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	5
+
+	-----POTENCIAÇÃO----
+	Base:100
+	Expoente:0
+	Resultado:1
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	5
+
+	-----POTENCIAÇÃO----
+	Base:-33
+	Expoente:0
+	Resultado:-1
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	5
+
+	-----POTENCIAÇÃO----
+	Base:20
+	Expoente:-1
+	Resultado:0
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	5
+
+	-----POTENCIAÇÃO----
+	Base:1
+	Expoente:-1
+	Resultado:1
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	6
+
+	-----RAIZ QUADRADA----
+	Número: 81
+	Resultado:9
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	6
+
+	-----RAIZ QUADRADA----
+	Número: 8
+	O resultado a seguir não é exato (raiz não natural).
+	Resultado:2
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	6
+
+	-----RAIZ QUADRADA----
+	Número: -2
+	Não existe raiz real de número negativo. Tente novamente.
+	-----RAIZ QUADRADA----
+	Número: 0
+	Resultado:0
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	7
+
+	-----TABELA MULTIPLICAÇÃO----
+	Número: 1
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	7
+
+	-----TABELA MULTIPLICAÇÃO----
+	Número: 5
+
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	7
+
+	-----TABELA MULTIPLICAÇÃO----
+	Número: -10
+
+-10
+-20
+-30
+-40
+-50
+-60
+-70
+-80
+-90
+-100
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	8
+
+	-----FATORIAL----
+	Número: 10
+	Resultado:3628800
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	8
+
+	-----FATORIAL----
+	Número: 5
+	Resultado:120
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	8
+
+	-----FATORIAL----
+	Número: 0
+	Resultado:1
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	8
+
+	-----FATORIAL----
+	Número: -2
+	Por favor insira um valor não negativo.
+	-----FATORIAL----
+	Número: 2
+	Resultado:2
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	9
+
+	-----FIBONACCI----
+	Número: 5
+	Resultado:8
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	9
+
+	-----FIBONACCI----
+	Número: 10
+	Resultado:89
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	9
+
+	-----FIBONACCI----
+	Número: -10
+	Por favor insira um valor não negativo.
+	-----FIBONACCI----
+	Número: 0
+	Resultado:1
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	10
+
+	-----SEQUÊNCIA DE FIBONACCI----
+	Primeiro numero(menor):1
+	Segundo numero(maior):10
+
+	1
+	2
+	3
+	5
+	8
+	13
+	21
+	34
+	55
+	89
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	10
+
+	-----SEQUÊNCIA DE FIBONACCI----
+	Primeiro numero(menor):10
+	Segundo numero(maior):5
+	O primeiro número deve ser menor ou igual ao segundo. Tente novamente.
+	-----SEQUÊNCIA DE FIBONACCI----
+	Primeiro numero(menor):4
+	Segundo numero(maior):4
+
+	5
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	C
+
+	-----MENU CALCULO----
+	Escreva o número da operação:
+	1:  Adição
+	2:  Subtração
+	3:  Multiplicação
+	4:  Divisão
+	5:  Potenciação
+	6:  Raiz quadrada
+	7:  Tabela multiplicação
+	8:  Fatorial
+	9:  Fibonacci
+	10: Sequência de Fibonacci
+	10
+
+	-----SEQUÊNCIA DE FIBONACCI----
+	Primeiro numero(menor):-10
+	Segundo numero(maior):10
+	Um intervalo não pode conter números negativos. Tente novamente.
+	-----SEQUÊNCIA DE FIBONACCI----
+	Primeiro numero(menor):0
+	Segundo numero(maior):10
+
+	1
+	1
+	2
+	3
+	5
+	8
+	13
+	21
+	34
+	55
+	89
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	M
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M1
+	Valor de M1:1
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M2
+	Valor de M2:55
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	M3
+	Valor de M3:5
+
+	-----MENU MEMORIA----
+	Escolha a memória que você quer consultar:
+	M1: Memória 1
+	M2: Memória 2
+	M3: Memória 3
+	..
+
+	-----MENU----
+	Escreva a letra da operação:
+	M: Memória
+	C: Cálculo
+	x
