@@ -22,10 +22,16 @@
 	second_num: .asciiz "\tSegundo número:"
 	base: .asciiz "\tBase:"
 	expoent: .asciiz "\tExpoente:"
-	not_natural: .asciiz "Raiz quadrada não natural"
+	not_exact: .asciiz "\tO resultado a seguir não é exato (raiz não natural).\n"
 	first_num_fib: .asciiz "\tPrimeiro numero(menor):"
 	second_num_fib: .asciiz "\tSegundo numero(maior):"
+	number_negative: .asciiz "\tPor favor insira um valor não negativo."
+	square_root_negative: .asciiz "\tNão existe raiz real de número negativo. Tente novamente."
+	fib_seq_error_sequence: .asciiz "\tO primeiro número deve ser menor ou igual ao segundo. Tente novamente."
+	fib_seq_error_negative: .asciiz "\tUm intervalo não pode conter números negativos. Tente novamente."
+	division_error_input: .asciiz "\tO segundo número não pode ser zero. Tente novamente."
 	nl: .asciiz "\n"
+	nlt: .asciiz "\n\t"
 	result: .asciiz "\tResultado:"
 	m1_result: .asciiz "\n\tValor de M1:"
 	m2_result: .asciiz "\n\tValor de M2:"
@@ -71,6 +77,7 @@ calculate:
 	li $v0, 5
 	syscall
 	
+	# Check each option
 	beq $v0, 1, addition
 	beq $v0, 2, subtraction
 	beq $v0, 3, multiplication
@@ -98,8 +105,8 @@ memory:
 	
 	# Load second char to t0
 	la $a0, memory_selected
-	# Load char 1,2,3 to compare
 	lb $t0, 1($a0)
+	# Load char 1,2,3 to compare
         li $t1, '1'
         li $t2, '2'
         li $t3, '3'
@@ -129,8 +136,8 @@ addition:
 	
 	li $v0, 5
 	syscall
-	
 	move $t0, $v0
+	
 	# Read second num
 	li $v0, 4
 	la $a0, second_num
@@ -138,7 +145,6 @@ addition:
 	
 	li $v0, 5
 	syscall
-	
 	move $t1, $v0
 	
 	# Calculate result
@@ -173,8 +179,8 @@ subtraction:
 	
 	li $v0, 5
 	syscall
-	
 	move $t0, $v0
+	
 	# Read second num
 	li $v0, 4
 	la $a0, second_num
@@ -182,7 +188,6 @@ subtraction:
 	
 	li $v0, 5
 	syscall
-	
 	move $t1, $v0
 	
 	# Calculate result
@@ -216,8 +221,8 @@ multiplication:
 	
 	li $v0, 5
 	syscall
-	
 	move $t0, $v0
+	
 	# Read second num
 	li $v0, 4
 	la $a0, second_num
@@ -225,7 +230,6 @@ multiplication:
 	
 	li $v0, 5
 	syscall
-	
 	move $t1, $v0
 	
 	# Calculate result
@@ -260,8 +264,8 @@ division:
 	
 	li $v0, 5
 	syscall
-	
 	move $t0, $v0
+	
 	# Read second num
 	li $v0, 4
 	la $a0, second_num
@@ -269,8 +273,15 @@ division:
 	
 	li $v0, 5
 	syscall
-	
 	move $t1, $v0
+	
+	# Check division by 0
+	bnez $t1 continue_div
+		li $v0, 4
+		la $a0, division_error_input
+		syscall
+		j division
+	continue_div:
 	
 	# Calculate result
 	div $t2, $t0, $t1
@@ -304,7 +315,6 @@ potentiation_main:
 
         li $v0, 5
         syscall
-
         move $t0, $v0
 
         # Read expoent
@@ -314,10 +324,35 @@ potentiation_main:
 
         li $v0, 5
         syscall
-
         move $t1, $v0
 	
+	# Deal with expoent equal 0 and negative expoent
+	
+	# If expoent==0, show 1 or -1
+	bnez $t1, potentiation_check_negative
+		# If base<0
+		bgez $t0, potentiaion_equal_one
+			addi $t2, $zero, -1
+			j show_potentiation_result
+		# Else
+		potentiaion_equal_one:
+			addi $t2, $zero, 1
+			j show_potentiation_result
+	potentiation_check_negative:
+	# If expoent<0
+	bgtz $t1, calculate_potentiation
+		# If base<=1, result=base
+		bgt $t0, 1, potentiation_result_zero
+			add $t2, $t0, $zero
+			j show_potentiation_result
+		potentiation_result_zero:
+		# Else result=0
+			add $t2, $zero, $zero
+			j show_potentiation_result
+	# Else, calculate potentiation
+	calculate_potentiation:
 	jal potentiation
+	show_potentiation_result:
 	
 	# Show result
 	li $v0, 4
@@ -369,42 +404,40 @@ square_root_main:
         li $v0, 5
         syscall
         
+        # Check negative
+        bltz $v0, square_root_error_negative
+        
+        # Calculate square root
         jal square_root
         move $t1, $v0
+	
+        # Show result not exact
+        bne $v1, 1, square_root_display_exact# If not exact
+		# Display not exact
+		li $v0, 4
+		la $a0, not_exact
+		syscall
+	square_root_display_exact:
         
         # Show "result:"
 	li $v0, 4
 	la $a0, result
 	syscall
         
-        # Show result number/not natural
-        bne $t1, -1, square_root_display_natural# If natural
-        beq $t1, -1, square_root_display_not_natural# If not natural
-        
-        square_root_display_natural:
-       		# Display number
-		li $v0, 1
-		move $a0, $t1
-		syscall
+        # Display number
+	li $v0, 1
+	move $a0, $t1
+	syscall
 		
-		# Save result memory
-		jal shift_memory
-		move $s5, $a0
-		j square_root_display_end
-	square_root_display_not_natural:
-		# Display not natural
-		li $v0, 4
-		la $a0, not_natural
-		syscall
-		j square_root_display_end
-	
-	square_root_display_end:
+	# Save result memory
+	jal shift_memory
+	move $s5, $a0
         
 	# Return to main
 	j main
 
 square_root:
-        # Init ariables
+        # Init variables
         add $t0, $v0, $zero   # goal x*x
         
         addi $t1, $zero, 1    
@@ -418,24 +451,33 @@ square_root:
         	add $t2, $t2, $t1 # t2=x+mask
         	mul $t3, $t2, $t2 # t3=t2*t2
         	
-        	ble $t3, $t0, square_root_continue # If x*x>goal
-        		sub $t2, $t2, $t1 # t2=x-mask
+        	ble $t3, $t0, square_root_continue # If x*x>goal (number bigger than goal)
+        		sub $t2, $t2, $t1 # t2=x-mask (remove mask, try with lower number)
         	square_root_continue:
-        	beq $t3, $t0, square_root_end # If x*x==goal
-        	
+        	beq $t3, $t0, square_root_end # If x*x==goal (mask>>1)
 		srl $t1, $t1, 1
-		beqz $t1, square_root_end # If x*x==goal not found
+		
+		beqz $t1, square_root_end # If x*x==goal not found (not natural)
 		
         	j square_root_while
         square_root_end:
         
-	bnez $t1, square_root_natural # If square root not natural
-		addi, $t2, $zero, -1
+        # $v1 is as flag to square root not exact
+        addi, $v1, $zero, 0
+	bnez $t1, square_root_natural 
+		addi, $v1, $zero, 1
 	square_root_natural:
      
      	move $v0, $t2
      	
         jr $ra
+        
+square_root_error_negative:
+	li $v0, 4
+	la $a0, square_root_negative
+	syscall
+	j square_root_main
+
 ############# Multiplication Table ##############
 
 mult_table:
@@ -461,12 +503,12 @@ mult_table:
 		addi $t1, $t1, 1
 		mul $t2, $t1, $t0
 		
-		li $v0, 1
-		la $a0, ($t2)
+		li $v0, 4
+		la $a0, nlt
 		syscall
 		
-		li $v0, 4
-		la $a0, nl
+		li $v0, 1
+		la $a0, ($t2)
 		syscall
 		
 		j mult_table_loop
@@ -489,11 +531,12 @@ fact_main:
         
         li $v0, 5
 	syscall 
-	
 	move $a0, $v0
 	
+	# Check negative
+        bltz $a0, fact_error_negative
+        
 	jal fact
-	
 	move $t1, $v0
 	
 	# Show result
@@ -529,10 +572,14 @@ fact_rec:
  	add $sp, $sp, 8 #free stack
  	mul $v0, $a0, $v0 #return n * fact(n-1)
  	jr $ra
+ 	
+fact_error_negative:
+	li $v0, 4
+	la $a0, number_negative
+	syscall
+	j fact_main
 ################## Fibonacci ####################
-
 fib_main:
-	
 	#show header
         li $v0, 4
         la $a0, fibonacci_header
@@ -547,6 +594,9 @@ fib_main:
         syscall
         
         move $a0, $v0
+        
+        # Check negative
+        bltz $a0, fib_error_negative
         
         jal fib
 	
@@ -594,9 +644,12 @@ fib_rec:
 	add $sp, $sp, 12 #tear down stack
 	jr $ra		
 	
-
+fib_error_negative:
+	li $v0, 4
+	la $a0, number_negative
+	syscall
+	j fib_main
 ############# Fibonacci Sequence ################
-
 fib_seq_main:
 	# Show header
 	li $v0, 4
@@ -611,7 +664,7 @@ fib_seq_main:
 	# Get first num
 	li $v0, 5
 	syscall
-	move $t0, $v0
+	move $t6, $v0
 	
 	move $t0, $v0
 	# Ask second num
@@ -622,11 +675,51 @@ fib_seq_main:
 	# Get second num
 	li $v0, 5
 	syscall
-	move $t1, $v0
+	move $t7, $v0
+	
+	# Ask again if t6>t7
+	ble $t6 $t7 continue_fib_seq
+		li $v0, 4
+		la $a0, fib_seq_error_sequence
+		syscall
+		j fib_seq_main
+	continue_fib_seq:
+	
+	# Ask again if t6<0 or t7<0
+	bltz $t6, error_negative_fib_seq
+	bltz $t7, error_negative_fib_seq
+	
+	# While t6<=t7
+	while_fib_seq:
+		# Call fib
+		move $a0, $t6
+        	jal fib
+		move $t2, $v0
+		
+		# Print \n\t
+		li $v0, 4
+		la $a0, nlt
+		syscall
+		
+		# Print number
+		li $v0, 1
+		move $a0, $t2
+		syscall
+		
+		# t6++
+		addi $t6, $t6, 1
+		# If t6<=t7, continue
+		ble, $t6, $t7, while_fib_seq
 	
 	# Nothing to save to memory
 	# Return to main
 	j main
+	
+error_negative_fib_seq:
+	li $v0, 4
+	la $a0, fib_seq_error_negative
+	syscall
+	j fib_seq_main
 
 #################################################
 ################# SHOW MEMORY ###################
@@ -637,7 +730,7 @@ show_m1:
 	la $a0, m1_result
 	syscall
 	
-	beq $s5, -1, show_m1_empty #If not empty
+	beq $s5, -32768, show_m1_empty #If not empty
 		# Show value
 		li $v0, 1
 		move $a0, $s5
@@ -657,7 +750,7 @@ show_m2:
 	li $v0, 4
 	la $a0, m2_result
 	syscall
-	beq $s6, -1, show_m2_empty #If not empty
+	beq $s6, -32768, show_m2_empty #If not empty
 		# Show value
 		li $v0, 1
 		move $a0, $s6
@@ -678,7 +771,7 @@ show_m3:
 	la $a0, m3_result
 	syscall
 	
-	beq $s6, -1, show_m3_empty #If not empty
+	beq $s7, -32768, show_m3_empty #If not empty
 		# Show value
 		li $v0, 1
 		move $a0, $s7
@@ -697,13 +790,16 @@ show_m3:
 ################# AUXILIARIES ###################
 #################################################
 init_empty_memory:
-	addi $s5, $zero, -1# M1
-	addi $s6, $zero, -1# M2
-	addi $s7, $zero, -1# M3
+	addi $s5, $zero, -32768# M1 = empty
+	addi $s6, $zero, -32768# M2 = empty
+	addi $s7, $zero, -32768# M3 = empty
 	
 	jr $ra
 	
 shift_memory:
+	# M2 -> M3
+	# M1 -> M2
+	# M1 = 0
 	move $s7, $s6
 	move $s6, $s5
 	add $s5, $zero, $zero
