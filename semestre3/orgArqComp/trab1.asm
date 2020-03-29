@@ -25,6 +25,7 @@
 	not_natural: .asciiz "Raiz quadrada não natural"
 	first_num_fib: .asciiz "\tPrimeiro numero(menor):"
 	second_num_fib: .asciiz "\tSegundo numero(maior):"
+	nl: .asciiz "\n"
 	result: .asciiz "\tResultado:"
 	m1_result: .asciiz "\n\tValor de M1:"
 	m2_result: .asciiz "\n\tValor de M2:"
@@ -440,7 +441,7 @@ square_root:
 mult_table:
 	#show header
         li $v0, 4
-        la $a0, mult_table
+        la $a0, mult_table_header
         syscall
 
         #ask for number
@@ -448,16 +449,31 @@ mult_table:
         la $a0, num
         syscall
 	
-	sub $sp, $sp, 8
-	sw $ra, 4($sp) #store $ra
-	sw $a0, 0($sp) #store n
+	li $v0, 5
+	syscall
 	
-	li $t1, 10 #counter
+	move $t0, $v0
 	
-	slti $t0, $t1, 1 #t0 = 1 if counter < 1
+	li $t1, 0 #counter
+	
+	mult_table_loop:
+		beq $t1, 10, mult_table_return
+		addi $t1, $t1, 1
+		mul $t2, $t1, $t0
+		
+		li $v0, 1
+		la $a0, ($t2)
+		syscall
+		
+		li $v0, 4
+		la $a0, nl
+		syscall
+		
+		j mult_table_loop
 
-
-
+	mult_table_return:
+		j main
+		
 ################## Factorial ####################
 
 fact_main:
@@ -470,17 +486,23 @@ fact_main:
 	li $v0, 4
         la $a0, num
         syscall
+        
+        li $v0, 5
+	syscall 
+	
+	move $a0, $v0
 	
 	jal fact
+	
+	move $t1, $v0
 	
 	# Show result
 	li $v0, 4
 	la $a0, result
 	syscall
 	
-	addi $a0, $v0, 0
-	
 	li $v0, 1
+	la $a0, ($t1)
 	syscall
 	
 	# Save result memory
@@ -490,7 +512,6 @@ fact_main:
 	j main
 
 fact:
-	
 	sub $sp, $sp, 8 
  	sw $ra, 4($sp) #store $ra
  	sw $a0, 0($sp) #store n
@@ -522,16 +543,22 @@ fib_main:
         la $a0, num
         syscall
         
+        li $v0, 5
+        syscall
+        
+        move $a0, $v0
+        
         jal fib
+	
+	move $t1, $v0
 	
 	# Show result
 	li $v0, 4
 	la $a0, result
 	syscall
 	
-	addi $a0, $v0, 0
-	
 	li $v0, 1
+	la $a0, ($t1)	
 	syscall
 	
 	# Save result memory
@@ -541,7 +568,7 @@ fib_main:
 	j main
 
 fib:
-	
+
 	sub $sp, $sp, 12
 	sw $ra, 4($sp) 
 	sw $a0, 0($sp) #save n
@@ -566,7 +593,10 @@ fib_rec:
 	lw $ra, 4($sp) #restore $ra
 	add $sp, $sp, 12 #tear down stack
 	jr $ra		
+	
+
 ############# Fibonacci Sequence ################
+
 fib_seq_main:
 	# Show header
 	li $v0, 4
