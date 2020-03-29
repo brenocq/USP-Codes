@@ -1,7 +1,7 @@
 #Trabalho 1 - Calculadora
 #Breno Cunha Queiroz - 11218991
 #Maria Eduarda Kawakami Moreira - 11218751
-#23/03/2020
+#30/03/2020
 
 .data
 	menu_main: .asciiz "\n\n\t-----MENU----\n\tEscreva a letra da operação:\n\tM: Memória\n\tC: Cálculo\n\t"
@@ -308,20 +308,22 @@ potentiation_main:
         la $a0, potentiation_header
         syscall
 
-        # Read base
+        # Ask for base
         li $v0, 4
         la $a0, base
         syscall
 
+	#Read base
         li $v0, 5
         syscall
         move $t0, $v0
 
-        # Read expoent
+        #Ask for expoent
         li $v0, 4
         la $a0, expoent
         syscall
 
+	#Read expoent
         li $v0, 5
         syscall
         move $t1, $v0
@@ -371,21 +373,24 @@ potentiation_main:
 	j main
 	
 potentiation:
-	sub $sp, $sp, 8
+	sub $sp, $sp, 8 
 	sw $ra, 4($sp)
-	sub $t1, $t1, 1
-	beq $t1, 0, potentiation_return
+	
+	sub $t1, $t1, 1 #expoent--
+	beq $t1, 0, potentiation_return #stops when expoent = 0
+	
 	jal potentiation
+	
 	lw $t3, 0($sp)
-	mul $t2, $t0, $t3
-	addi $sp, $sp, 8
-	sw $t2, 0($sp)
-	lw $t3, 4($sp)
-	jr $t3
+	mul $t2, $t0, $t3 #(last call of potentiation) * base
+	addi $sp, $sp, 8 
+	sw $t2, 0($sp) #save new result 
+	lw $ra, 4($sp) 
+	jr $ra
 	
 potentiation_return:
 	sw $t0, 0($sp)
-	lw $ra, 4($sp)
+	lw $ra, 4($sp) 
 	jr $ra
 
 ################# Square Root ###################
@@ -499,19 +504,21 @@ mult_table:
 	li $t1, 0 #counter
 	
 	mult_table_loop:
-		beq $t1, 10, mult_table_return
-		addi $t1, $t1, 1
-		mul $t2, $t1, $t0
+		beq $t1, 10, mult_table_return # stops when conteur = 10
+		addi $t1, $t1, 1 #counter++
+		mul $t2, $t1, $t0 #counter*n
 		
+		#print \n
 		li $v0, 4
-		la $a0, nlt
+		la $a0, nl
 		syscall
 		
+		#print result
 		li $v0, 1
 		la $a0, ($t2)
 		syscall
 		
-		j mult_table_loop
+		j mult_table_loop 
 
 	mult_table_return:
 		j main
