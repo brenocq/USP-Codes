@@ -377,14 +377,14 @@ potentiation:
 	sw $ra, 4($sp)
 	
 	sub $t1, $t1, 1 #expoent--
-	beq $t1, 0, potentiation_return #stops when expoent = 0
+	beq $t1, 0, potentiation_return
 	
 	jal potentiation
 	
 	lw $t3, 0($sp)
 	mul $t2, $t0, $t3 #(last call of potentiation) * base
 	addi $sp, $sp, 8 
-	sw $t2, 0($sp) #save new result 
+	sw $t2, 0($sp) #result is saved in $t2
 	lw $ra, 4($sp) 
 	jr $ra
 	
@@ -417,6 +417,7 @@ square_root_main:
         move $t1, $v0
 	
         # Show result not exact
+        beq $t1, 0, square_root_display_exact
         bne $v1, 1, square_root_display_exact# If not exact
 		# Display not exact
 		li $v0, 4
@@ -629,9 +630,9 @@ fib:
 	sub $sp, $sp, 12
 	sw $ra, 4($sp) 
 	sw $a0, 0($sp) #save n
-	slti $t0, $a0, 3 # $t0 = 1 if n < 3
- 	beq $t0, $zero, fib_rec #if n >= 3, call fib_rec
-	li $v0, 1 #if n < 3 return 1 #base case
+	slti $t0, $a0, 2 # $t0 = 1 if n < 2
+ 	beq $t0, $zero, fib_rec #if n >= 2, call fib_rec
+	li $v0, 1 #if n < 2 return 1 #base case
 	add $sp, $sp, 12
 	jr $ra
 
