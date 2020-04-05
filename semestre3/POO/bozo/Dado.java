@@ -1,3 +1,4 @@
+import java.util.*;
 /**
  * Simula um dado de número de lados variados. 
  * Ao criar o objeto é possível estabelecer o número de lados. 
@@ -45,6 +46,7 @@ public class Dado {
 	 */
 	public int rolar() {
 		lado = rand.getIntRand(numLados)+1;
+		return lado;
 	}
 
 	/**
@@ -63,23 +65,18 @@ public class Dado {
 		{
 			case 1:
 				return "+-----+\n|     |\n|  *  |\n|     |\n+-----+\n";
-				break;
 			case 2:
 				return "+-----+\n|*    |\n|     |\n|    *|\n+-----+\n";
-				break;
 			case 3:
 				return "+-----+\n|*    |\n|  *  |\n|    *|\n+-----+\n";
-				break;
 			case 4:
 				return "+-----+\n|*   *|\n|     |\n|*   *|\n+-----+\n";
-				break;
 			case 5:
 				return "+-----+\n|*   *|\n|  *  |\n|*   *|\n+-----+\n";
-				break;
 			case 6:
-				return "+-----+\n|*   *|\n|*   *|\n|*   *|\n+-----+\n";
-				break;
+				return "+-----+\n|* * *|\n|     |\n|* * *|\n+-----+\n";
 		}
+		return "";
 	}
 }
 

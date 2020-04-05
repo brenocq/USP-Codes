@@ -1,18 +1,27 @@
+import java.util.*;
 /**
  * Gerador simples de números aleatórios.
  * @author Breno Cunha Queiroz
  */
 public class Random {
-	private long p = 3648L;
-	private long m = 7094L;
-	private long a = 35039L;
-	public long semente = 1023;// Seed
+	private long p = 343346L;
+	private long m = 740554L;
+	private long a = 35039345L;
+	private long semente = 1023;// Seed
 
 	/**
 	 * Construtor que usa uma semente aleatória, adquerida usando o método Calendar.getTimeInMillis().
 	 */
 	public Random() {
+		Calendar cal = Calendar.getInstance();
+		semente = cal.getTimeInMillis(); 
 
+		// No meu pc estava dando os mesmos valores
+		try {
+			Thread.sleep(10);
+		} catch (Exception e) {
+		 	 e.printStackTrace();
+		}
 	}
 
 	/**
@@ -38,8 +47,8 @@ public class Random {
 	 * @return O número gerado
 	 */
 	public double getRand() {
-		xi = (a+m*xi)%p;
-		return (double)xi/p;
+		semente = (a+m*semente)%p;
+		return (double)semente/p;
 	}
 	
 
@@ -49,6 +58,6 @@ public class Random {
 	 * @param semente O valor da nova semente de geração
 	 */
 	public void setSemente(int semente){
-		this.semente = semente
+		this.semente = semente;
 	}
 }

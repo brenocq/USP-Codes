@@ -1,11 +1,12 @@
+import java.util.*;
+
 /**
  * Esta classe representa o placar de um jogo de Bozó. 
  * Permite que combinações de dados sejam alocadas às posições e mantém o escore de um jogador.
  * @author Breno Cunha Queiroz
  */
 public class Placar {
-	private int score;
-	private int[] pontos = new int[10]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+	private int[] pontos = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 	/**
 	 * Adiciona uma sequencia de dados em uma determinada posição do placar.
 	 * @param posicao Posição a ser preenchida. 
@@ -18,14 +19,15 @@ public class Placar {
 	 * Não é feita nenhuma verificação quanto ao tamanho do array nem quanto ao seu conteúdo.
 	 */
 	public void add(int posicao, int[] dados) throws java.lang.IllegalArgumentException {
-		if(pontos[posicao-1]!=0)	
+		if(posicao<=0 || posicao>10 || pontos[posicao-1]!=-1)	
 		{
-			throw new IllegalArgumentException("A posição não pode já estar preenchida");
+			throw new IllegalArgumentException("Esta posição é inválida");
 		}
 		else
 		{
-			if(posicao<=10)
+			if(posicao<=6)
 			{
+				pontos[posicao-1] = 0;
 				for(int i=0;i<dados.length;i++)
 				{
 					if(dados[i]==posicao)
@@ -33,22 +35,20 @@ public class Placar {
 						pontos[posicao-1]+=posicao;
 					}
 				}
-				if(pontos[posicao-1]==-1)
-					pontos[posicao-1] = 0;
 			}
 			else
 			{
-				int[] somaDados= new int[5];
+				int[] somaDados= new int[6];
 				for(int i=0;i<dados.length;i++)
 				{
 					somaDados[dados[i]-1]++;
 				}
 				switch(posicao)
 				{
-					case 11:
+					case 7:
 						boolean iguais2 = false;// Dois dados mesmo número
 						boolean iguais3 = false;// Tres dados mesmo número
-						for(int i=0;i<dados.length;i++)
+						for(int i=0;i<6;i++)
 						{
 							if(somaDados[i]==2)
 								iguais2=true;
@@ -57,21 +57,21 @@ public class Placar {
 						}
 						if(iguais2 && iguais3)
 						{
-							pontos[10]=15;
+							pontos[6]=15;
 						}
 						else
 						{
-							pontos[10]=0;
+							pontos[6]=0;
 						}
 						break;
-					case 12:
+					case 8:
 						boolean dados1a5 = true;
 						boolean dados2a6 = true;
 						if(somaDados[0]!=0)
 							dados1a5 = false;
 						if(somaDados[5]!=0)
 							dados2a6 = false;
-						for(int i=0;i<dados.length;i++)
+						for(int i=0;i<6;i++)
 						{
 							if(somaDados[i]>=2)
 							{
@@ -81,43 +81,43 @@ public class Placar {
 						}
 						if(dados1a5 || dados2a6)
 						{
-							pontos[11]=20;
+							pontos[7]=20;
 						}
 						else
 						{
-							pontos[11]=0;
+							pontos[7]=0;
 						}
 						break;
-					case 13:
+					case 9:
 						boolean iguais4 = false;// Quatro dados mesmo número
-						for(int i=0;i<dados.length;i++)
+						for(int i=0;i<6;i++)
 						{
 							if(somaDados[i]==4)
 								iguais4=true;
 						}
 						if(iguais4)
 						{
-							pontos[12]=30;
+							pontos[8]=30;
 						}
 						else
 						{
-							pontos[12]=0;
+							pontos[8]=0;
 						}
 						break;
-					case 14:
+					case 10:
 						boolean iguais5 = false;// Cinco dados mesmo número
-						for(int i=0;i<dados.length;i++)
+						for(int i=0;i<6;i++)
 						{
 							if(somaDados[i]==5)
 								iguais5=true;
 						}
 						if(iguais5)
 						{
-							pontos[13]=40;
+							pontos[9]=40;
 						}
 						else
 						{
-							pontos[13]=0;
+							pontos[9]=0;
 						}
 						break;
 				}
@@ -130,7 +130,12 @@ public class Placar {
 	 * @return O valor da soma.
 	 */
 	public int getScore() {
-
+		int score = 0;
+		for(int i=0;i<pontos.length;i++)
+		{
+			score+=pontos[i];
+		}
+		return score;
 	}
 
 	/**
@@ -149,7 +154,34 @@ public class Placar {
 	 */
 	@Override
 	public String toString() {
+		String str;
+		String[] pontuacao = {"(1)","(2)","(3)","(4)","(5)","(6)","(7)","(8)","(9)","(10)"};
 
+		// Converte pontuacao para string 
+		for(int i=0;i<10;i++)
+		{
+			if(pontos[i]!=-1)
+			{
+				pontuacao[i] = Integer.toString(pontos[i]);
+				pontuacao[i] += " ";
+				if(pontos[i]<10)
+					pontuacao[i] += " ";
+				if(i==9)
+					pontuacao[i] += " ";
+			}
+		}
+
+
+		str = String.format("%s    |   %s    |   %s\n", pontuacao[0], pontuacao[6], pontuacao[3]);
+		str+="--------------------------\n";
+		str+= String.format("%s    |   %s    |   %s\n", pontuacao[1], pontuacao[7], pontuacao[4]);
+		str+="--------------------------\n";
+		str+= String.format("%s    |   %s    |   %s\n", pontuacao[2], pontuacao[8], pontuacao[5]);
+		str+="--------------------------\n";
+		str+= String.format("       |   %s   |      \n", pontuacao[9]);
+		str+="       +----------+      \n";
+
+		return str;
 	}
 }
 

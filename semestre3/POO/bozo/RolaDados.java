@@ -1,11 +1,12 @@
-import java.util.Vector;
+import java.util.*;
+
 /**
  * Essa é uma classe auxiliar que permite gerencia um conjunto de vários dados simultaneamente.
  * Operações como rolar alguns dos dados ou exibir o resultado de todos eles, são implementadas.
  * @author Breno Cunha Queiroz
  */
 public class RolaDados {
-	private Vector dados;
+	private Vector<Dado> dados = new Vector<Dado>();
 
 	/**
 	 * Construtor que cria e armazena vários objetos do tipo Dado.
@@ -16,7 +17,8 @@ public class RolaDados {
 	public RolaDados(int n) {
 		for(int i=0;i<n;i++)
 		{
-			dados.addElement(new Dado(6));
+			Dado dado = new Dado(6);
+			dados.addElement(dado);
 		}
 	}
 
@@ -29,7 +31,7 @@ public class RolaDados {
 		int[] results = new int[dados.size()];
 		for(int i=0;i<dados.size();i++)
 		{
-			results[i] = dados[i].rolar();
+			results[i] = dados.get(i).rolar();
 		}
 		return results;
 	}
@@ -44,15 +46,15 @@ public class RolaDados {
 	 */
 	public int[] rolar(boolean[] quais) {
 		int[] results = new int[dados.size()];
-		for(int i=0;i<quais.length;i++)
+		for(int i=0;i<dados.size();i++)
 		{
 			if(quais[i])
 			{
-				results[i] = dados[i].rolar();
+				results[i] = dados.get(i).rolar();
 			}
 			else
 			{
-				returns[i] = dados[i].getLado();
+				results[i] = dados.get(i).getLado();
 			}
 		}
 		return results;
@@ -74,13 +76,13 @@ public class RolaDados {
 		for(int i=0;i<split.length;i++)
 		{
 			int index = Integer.parseInt(split[i]);
-			results[index] = dados[index].rolar();
+			results[index] = dados.get(index).rolar();
 		}
 		// Guarda o lado dos que não foram rolados
 		for(int i=0;i<results.length;i++)
 		{
 			if(results[i]==0)
-				results[i] = dados[i].getLado();
+				results[i] = dados.get(i).getLado();
 		}
 		return results;
 	}
@@ -98,19 +100,20 @@ public class RolaDados {
 	 */
 	@Override
 	public String toString() {
+		String result = "";
 		String[] dadosStr = new String[dados.size()];
 		// Recebe string de cada dado
 		for(int i=0;i<dados.size();i++)
 		{
-			System.out(dado+1);
-			dadosStr[i] = dados[i].toString();
+			result += Integer.toString(i+1)+"          ";
+			dadosStr[i] = dados.get(i).toString();
 		}
 		// Imprime header
 		for(int dado=0;dado<dadosStr.length;dado++)
 		{
-			System.out("\t\t");
+			result+="\t\t";
 		}
-		System.out("\n");
+		result+="\n";
 
 		// Imprime linha por linha
 		for(int row=0;row<5;row++)
@@ -118,11 +121,10 @@ public class RolaDados {
 			for(int dado=0;dado<dadosStr.length;dado++)
 			{
 				String[] split = dadosStr[dado].split("\n");
-				System.out(split[row]);
-				System.out("\t");
+				result+=split[row]+"    ";
 			}
-			System.out("\n");
+			result+="\n";
 		}
+		return result;
 	}
 }
-
