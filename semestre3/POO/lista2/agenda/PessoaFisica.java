@@ -24,4 +24,17 @@ public class PessoaFisica extends Contato
 	public String getEstadoCivil() {
 		return estadoCivil;
 	}
+
+	@Override
+	public String toString() {
+		String result = "";
+		result+="Nome: " + getNome() + "\n";
+		result+="Email: " + getEmail() + "\n";
+		result+="Endereço: " + getEndereco() + "\n";
+		result+="CPF: " + getCPF() + "\n";
+		result+="Nascimento: " + getNascimento() + "\n";
+		result+="Estado Civil: " + getEstadoCivil() + "\n";
+		return result;
+	}
 }
+

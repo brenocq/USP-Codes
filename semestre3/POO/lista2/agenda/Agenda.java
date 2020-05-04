@@ -10,9 +10,9 @@ public class Agenda
 		int opcao = 0;
 		Agenda agenda = new Agenda();
 		
-		while (opcao != 5) {
-        	System.out.println("1) Adicionar Contato\n2) Remover Contato\n3) Pesquisar Contato\n4) Imprimir contatos\n5) Sair");
-			opcao = agenda.leOpcao(5);
+		while (opcao != 6) {
+        	System.out.println("1) Adicionar Contato\n2) Remover Contato\n3) Pesquisar Contato\n4) Imprimir contatos\n5) Ordena\n6) Sair");
+			opcao = agenda.leOpcao(6);
 			switch (opcao)
 			{
 			case 1: 
@@ -32,6 +32,10 @@ public class Agenda
 				agenda.imprimirContatos();
 				break;
 			case 5:
+				System.out.println("************ Ordena contatos **************");
+				agenda.ordena();
+				break;
+			case 6:
 				System.out.println("Terminando o programa...");
 				return;
 			}
@@ -49,7 +53,7 @@ public class Agenda
 
 		int opcao = -1;
         System.out.println("1) Pessoa física\n2) Pessoa jurídica\n");
-		opcao = leOpcao(5);
+		opcao = leOpcao(2);
 		String nome, email, endereco;
 
 		switch(opcao) {
@@ -60,6 +64,9 @@ public class Agenda
 				email = leInput("Email: ");
 				endereco = leInput("Endereco: ");
 				cpf = leInput("CPF: ");
+				cpf = cpf.replace("-","");
+				cpf = cpf.replace(" ","");
+				cpf = cpf.replace(".","");
 				nascimento = leInput("Nascimento: ");
 				estadoCivil = leInput("Estado Civil: ");
 
@@ -74,6 +81,10 @@ public class Agenda
 				email = leInput("Email: ");
 				endereco = leInput("Endereco: ");
 				cnpj = leInput("CNPJ: ");
+				cnpj = cnpj.replace("-","");
+				cnpj = cnpj.replace(" ","");
+				cnpj = cnpj.replace(".","");
+				cnpj = cnpj.replace("/","");
 				inscricaoEstadual = leInput("Inscrição Estadual: ");
 				razaoSocial = leInput("Razão Social: ");
 
@@ -104,22 +115,11 @@ public class Agenda
         }
 		// Mostra contato
 		if(contatos[id] instanceof PessoaFisica) {
-			System.out.println("\nId: " + id);
-			System.out.println("Nome: " + ((PessoaFisica)contatos[id]).getNome());
-			System.out.println("Nome: " + ((PessoaFisica)contatos[id]).getNome());
-			System.out.println("Email: " + ((PessoaFisica)contatos[id]).getEmail());
-			System.out.println("Endereço: " + ((PessoaFisica)contatos[id]).getEndereco());
-			System.out.println("CPF: " + ((PessoaFisica)contatos[id]).getCPF());
-			System.out.println("Nascimento: " + ((PessoaFisica)contatos[id]).getNascimento());
-			System.out.println("Estado Civil: " + ((PessoaFisica)contatos[id]).getEstadoCivil());
+			System.out.println("Id: " + id);
+			System.out.println(((PessoaFisica)contatos[id]));
 		}else if(contatos[id] instanceof PessoaJuridica) {
-			System.out.println("\nId: " + id);
-			System.out.println("Nome: " + ((PessoaJuridica)contatos[id]).getNome());
-			System.out.println("Email: " + ((PessoaJuridica)contatos[id]).getEmail());
-			System.out.println("Endereço: " + ((PessoaJuridica)contatos[id]).getEndereco());
-			System.out.println("CNPJ: " + ((PessoaJuridica)contatos[id]).getCNPJ());
-			System.out.println("Inscrição Estadual: " + ((PessoaJuridica)contatos[id]).getInscricaoEstadual());
-			System.out.println("Razão Social: " + ((PessoaJuridica)contatos[id]).getRazaoSocial());
+			System.out.println("Id: " + id);
+			System.out.println(((PessoaJuridica)contatos[id]));
 		}
 		// Confirmação para deletar
 		String confirmacao;
@@ -154,25 +154,14 @@ public class Agenda
 				if(((PessoaFisica)contatos[i]).getNome().contains(pesquisa) || 
 					((PessoaFisica)contatos[i]).getCPF().contains(pesquisa)) {
 						System.out.println("Id: " + i);
-						System.out.println("Nome: " + ((PessoaFisica)contatos[i]).getNome());
-						System.out.println("Nome: " + ((PessoaFisica)contatos[i]).getNome());
-						System.out.println("Email: " + ((PessoaFisica)contatos[i]).getEmail());
-						System.out.println("Endereço: " + ((PessoaFisica)contatos[i]).getEndereco());
-						System.out.println("CPF: " + ((PessoaFisica)contatos[i]).getCPF());
-						System.out.println("Nascimento: " + ((PessoaFisica)contatos[i]).getNascimento());
-						System.out.println("Estado Civil: " + ((PessoaFisica)contatos[i]).getEstadoCivil());
+						System.out.println(((PessoaFisica)contatos[i]));
 						System.out.println("");
 					}
 			}else if(contatos[i] instanceof PessoaJuridica) {
 				if(((PessoaJuridica)contatos[i]).getNome().contains(pesquisa) || 
 					((PessoaJuridica)contatos[i]).getCNPJ().contains(pesquisa)) {
 						System.out.println("Id: " + i);
-						System.out.println("Nome: " + ((PessoaJuridica)contatos[i]).getNome());
-						System.out.println("Email: " + ((PessoaJuridica)contatos[i]).getEmail());
-						System.out.println("Endereço: " + ((PessoaJuridica)contatos[i]).getEndereco());
-						System.out.println("CNPJ: " + ((PessoaJuridica)contatos[i]).getCNPJ());
-						System.out.println("Inscrição Estadual: " + ((PessoaJuridica)contatos[i]).getInscricaoEstadual());
-						System.out.println("Razão Social: " + ((PessoaJuridica)contatos[i]).getRazaoSocial());
+						System.out.println(((PessoaJuridica)contatos[i]));
 						System.out.println("");
 					}
 			}
@@ -183,24 +172,39 @@ public class Agenda
 		for(int i=0;i<nContatos;i++) {
 			if(contatos[i] instanceof PessoaFisica) {
 				System.out.println("Id: " + i);
-				System.out.println("Nome: " + ((PessoaFisica)contatos[i]).getNome());
-				System.out.println("Email: " + ((PessoaFisica)contatos[i]).getEmail());
-				System.out.println("Endereço: " + ((PessoaFisica)contatos[i]).getEndereco());
-				System.out.println("CPF: " + ((PessoaFisica)contatos[i]).getCPF());
-				System.out.println("Nascimento: " + ((PessoaFisica)contatos[i]).getNascimento());
-				System.out.println("Estado Civil: " + ((PessoaFisica)contatos[i]).getEstadoCivil());
+				System.out.println(((PessoaFisica)contatos[i]));
 				System.out.println("");
 			}else if(contatos[i] instanceof PessoaJuridica) {
 				System.out.println("Id: " + i);
-				System.out.println("Nome: " + ((PessoaJuridica)contatos[i]).getNome());
-				System.out.println("Email: " + ((PessoaJuridica)contatos[i]).getEmail());
-				System.out.println("Endereço: " + ((PessoaJuridica)contatos[i]).getEndereco());
-				System.out.println("CNPJ: " + ((PessoaJuridica)contatos[i]).getCNPJ());
-				System.out.println("Inscrição Estadual: " + ((PessoaJuridica)contatos[i]).getInscricaoEstadual());
-				System.out.println("Razão Social: " + ((PessoaJuridica)contatos[i]).getRazaoSocial());
+				System.out.println(((PessoaJuridica)contatos[i]));
 				System.out.println("");
 			}
 		}
+	}
+
+	private void ordena() {
+		for(int i=0;i<this.nContatos;i++) {
+			for(int j=i+1;j<this.nContatos;j++) {
+				if(contatos[j] instanceof PessoaFisica && contatos[i] instanceof PessoaJuridica){
+					Contato temp = contatos[j];
+					contatos[j] = contatos[i];
+					contatos[i] = temp;
+				}else if(contatos[j] instanceof PessoaFisica && contatos[i] instanceof PessoaFisica &&
+					((PessoaFisica)contatos[j]).getCPF().compareTo(((PessoaFisica)contatos[i]).getCPF())<0){
+
+					PessoaFisica temp = (PessoaFisica)contatos[j];
+					contatos[j] = contatos[i];
+					contatos[i] = temp;
+				}else if(contatos[j] instanceof PessoaJuridica && contatos[i] instanceof PessoaJuridica &&
+					((PessoaJuridica)contatos[j]).getCNPJ().compareTo(((PessoaJuridica)contatos[i]).getCNPJ())<0){
+
+					PessoaJuridica temp = (PessoaJuridica)contatos[j];
+					contatos[j] = contatos[i];
+					contatos[i] = temp;
+				}
+			}
+		}
+		System.out.println("Os contatos foram ordenados!");
 	}
 
 	private static String leInput(String text) {

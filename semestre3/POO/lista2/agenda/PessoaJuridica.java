@@ -28,12 +28,12 @@ public class PessoaJuridica extends Contato
 	@Override
 	public String toString() {
 		String result = "";
-		result+="Nome: " + getNome();
-		result+="Email: " + getEmail();
-		result+="Endereço: " + getEndereco();
-		result+="CPF: " + getCPF();
-		result+="Nascimento: " + getNascimento();
-		result+="Estado Civil: " + getEstadoCivil();
+		result+="Nome: " + getNome() + "\n";
+		result+="Email: " + getEmail() + "\n";
+		result+="Endereço: " + getEndereco() + "\n";
+		result+="CNPJ: " + getCNPJ() + "\n";
+		result+="Inscricao estadual: " + getInscricaoEstadual() + "\n";
+		result+="Razao social: " + getRazaoSocial() + "\n";
 		return result;
 	}
 }
