@@ -43,7 +43,7 @@ public class Placar {
 				{
 					somaDados[dados[i]-1]++;
 				}
-				switch(posicao)
+				switch(posicao)// Posicao sempre estará entre [7,10]
 				{
 					case 7:
 						boolean iguais2 = false;// Dois dados mesmo número
@@ -133,7 +133,8 @@ public class Placar {
 		int score = 0;
 		for(int i=0;i<pontos.length;i++)
 		{
-			score+=pontos[i];
+			if(pontos[i]!=-1)
+				score+=pontos[i];
 		}
 		return score;
 	}

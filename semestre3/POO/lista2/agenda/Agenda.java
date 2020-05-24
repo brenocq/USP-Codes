@@ -54,12 +54,14 @@ public class Agenda
 		int opcao = -1;
         System.out.println("1) Pessoa física\n2) Pessoa jurídica\n");
 		opcao = leOpcao(2);
+		System.out.println(opcao);
 		String nome, email, endereco;
 
 		switch(opcao) {
 			case 1:
 				String cpf, nascimento, estadoCivil;
         		System.out.println("************ Criar pessoa física ************");
+				// Recebe campos da pessoa física
 				nome = leInput("Nome: ");
 				email = leInput("Email: ");
 				endereco = leInput("Endereco: ");
@@ -70,6 +72,7 @@ public class Agenda
 				nascimento = leInput("Nascimento: ");
 				estadoCivil = leInput("Estado Civil: ");
 
+				// Insere nova pessoa física
 				PessoaFisica pf = new PessoaFisica(nome, email, endereco, cpf, nascimento, estadoCivil);
 				contatos[nContatos++] = pf;
 				System.out.println("\n" + nome + " adicionado com sucesso!");
@@ -77,6 +80,7 @@ public class Agenda
 			case 2:
 				String cnpj, inscricaoEstadual, razaoSocial;
         		System.out.println("************ Criar pessoa jurídica ************");
+				// Recebe campos da pessoa jurídica
 				nome = leInput("Nome: ");
 				email = leInput("Email: ");
 				endereco = leInput("Endereco: ");
@@ -88,6 +92,7 @@ public class Agenda
 				inscricaoEstadual = leInput("Inscrição Estadual: ");
 				razaoSocial = leInput("Razão Social: ");
 
+				// Insere nova pessoa jurídica
 				PessoaJuridica pj = new PessoaJuridica(nome, email, endereco, cnpj, inscricaoEstadual, razaoSocial);
 				contatos[nContatos++] = pj;
 				System.out.println("\n" + nome + " adicionado com sucesso!");
@@ -150,6 +155,7 @@ public class Agenda
 	private void pesquisarContato() {
 		String pesquisa = leInput("Pesquisar por uma parte do nome ou CPF/CNPJ: ");
 		for(int i=0;i<nContatos;i++) {
+			// Checa se string inserida faz parte do nome/cpf/cnpj de algum dos contatos
 			if(contatos[i] instanceof PessoaFisica) {
 				if(((PessoaFisica)contatos[i]).getNome().contains(pesquisa) || 
 					((PessoaFisica)contatos[i]).getCPF().contains(pesquisa)) {
@@ -210,6 +216,7 @@ public class Agenda
 	private static String leInput(String text) {
 		String result;
 
+		// Lê input até inserir uma string válida
 		while(true) {
         	try {
 				System.out.print(text);
@@ -228,6 +235,7 @@ public class Agenda
 
 	private static int leOpcao(int numOpcoes) {
         int opcao = -1;
+		// Lê input até inserir um inteiro
         while (true)
         {
         	System.out.print("Digite a opção desejada ===> ");

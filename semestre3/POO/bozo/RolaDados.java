@@ -75,8 +75,9 @@ public class RolaDados {
 		// Guarda o lado dos que foram rolados
 		for(int i=0;i<split.length;i++)
 		{
-			int index = Integer.parseInt(split[i]);
-			results[index] = dados.get(index).rolar();
+			int index = Integer.parseInt(split[i])-1;
+			if(index>=0 && index<dados.size())
+				results[index] = dados.get(index).rolar();
 		}
 		// Guarda o lado dos que não foram rolados
 		for(int i=0;i<results.length;i++)
