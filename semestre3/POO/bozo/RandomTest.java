@@ -27,6 +27,11 @@ public class RandomTest {
 		// Testa random com semente randomica
 		Random r1 = new Random();
 		r1 = null;
+		
+		Thread.currentThread().interrupt();
+		Random r2 = new Random();
+		r2 = null;
+		Thread.currentThread().start();
 	}
 
 	@Test

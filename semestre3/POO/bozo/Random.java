@@ -16,7 +16,7 @@ public class Random {
 		Calendar cal = Calendar.getInstance();
 		semente = cal.getTimeInMillis(); 
 
-		// No meu pc estava dando os mesmos valores
+		// Impede que os dados tenham o mesmo valor
 		try {
 			Thread.sleep(10);
 		} catch (Exception e) {
