@@ -7,6 +7,8 @@ Course SCC0251 - USP
 '''
 import numpy as np
 import imageio
+import matplotlib.pyplot as plt
+import time
 
 def DFT2D(f):
     '''
@@ -91,14 +93,47 @@ threshold = float(input())
 # Read image
 img = imageio.imread(file)
 
+# Show image
+#plt.figure(figsize=(8,8))
+#plt.subplot(151)
+#plt.imshow(img, cmap="gray")
+#plt.axis('off')
+
 # Compute 2D discrete fourier transform
 Fimg = DFT2D(img)
+
+# the power spectrum
+#plt.subplot(152)
+#plt.imshow(np.log(1+np.fft.fftshift(np.abs(Fimg))), cmap="gray")
+#plt.axis('off')
 
 # Remove values below threshold
 Fzero, imgThreshold, qtyFiltered = setPixelsToZero(Fimg, threshold)
 
+#plt.subplot(153)
+#plt.imshow(np.log(1+np.fft.fftshift(np.abs(Fzero))), cmap="gray")
+#plt.axis('off')
+
 # Inverse discrete fourier transform
 filtered = IDFT2D(Fzero)
+
+#plt.subplot(154)
+#plt.imshow(filtered, cmap="gray")
+#plt.axis('off')
+
+#w,h = img.shape[0:2]
+#newImg = np.zeros(img.shape, dtype=np.int32)
+#for y in np.arange(h):
+#    for x in np.arange(w):
+#        if img[y][x] != filtered[y][x]:
+#            print("Diff %f %f"%(img[y][x] , filtered[y][x]))
+#            newImg[y][x] = 255
+#plt.subplot(155)
+#plt.imshow(newImg, cmap="gray")
+#plt.axis('off')
+#
+#plt.show()
+
 
 # Show output
 print("Threshold=%.4f" % (imgThreshold))
