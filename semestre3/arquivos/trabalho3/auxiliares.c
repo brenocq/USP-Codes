@@ -93,6 +93,35 @@ char abreBinario(char nomeArquivoBinario[], FILE **fp, Cabecalho* cabecalho)
 	return 0;
 }
 
+char abreBinarioIndice(char nomeArquivoBinario[], FILE **fp, CabecalhoIndice *cabecalho)
+{
+	*fp = fopen(nomeArquivoBinario, "r+b");
+
+	if(*fp==NULL) 
+	{
+		printf("Falha no processamento do arquivo.\n");
+		return 1;
+	}
+	
+	// Le o cabecalho (retorna 0 se houve erro na leitura)
+	if(leCabecalhoIndice(*fp, cabecalho) == 0)
+		return 1;
+	return 0;
+}
+
+char criaBinario(char nomeArquivoBinario[], FILE **fp)
+{
+	*fp = fopen(nomeArquivoBinario, "w+b");
+
+	if(*fp==NULL) 
+	{
+		printf("Falha no processamento do arquivo.\n");
+		return 1;
+	}
+
+	return 0;
+}
+
 void statusInconsistente(FILE* fp, Cabecalho* cabecalho)
 {
 	// Coloca status como inconsistente
@@ -101,7 +130,23 @@ void statusInconsistente(FILE* fp, Cabecalho* cabecalho)
 	fwrite(&cabecalho->status, sizeof(char), 1, fp);
 }
 
+void statusInconsistenteIndice(FILE* fp, CabecalhoIndice* cabecalho)
+{
+	// Coloca status como inconsistente
+	cabecalho->status ='0';
+	fseek(fp, OFFSET_STATUS, SEEK_SET);
+	fwrite(&cabecalho->status, sizeof(char), 1, fp);
+}
+
 void statusConsistente(FILE* fp, Cabecalho* cabecalho)
+{
+	// Coloca status como consistente
+	cabecalho->status = '1';
+	fseek(fp, OFFSET_STATUS, SEEK_SET);
+	fwrite(&cabecalho->status, sizeof(char), 1, fp);
+}
+
+void statusConsistenteIndice(FILE* fp, CabecalhoIndice* cabecalho)
 {
 	// Coloca status como consistente
 	cabecalho->status = '1';
@@ -190,6 +235,26 @@ char leCabecalho(FILE *fp, Cabecalho *cabecalho)
 	fread(&cabecalho->numeroRegistrosInseridos, sizeof(int), 1, fp);
 	fread(&cabecalho->numeroRegistrosRemovidos, sizeof(int), 1, fp);
 	fread(&cabecalho->numeroRegistrosAtualizados, sizeof(int), 1, fp);
+
+	// Checa consistencia do arquivo
+	if(cabecalho->status=='0')
+	{
+		printf("Falha no processamento do arquivo.\n");
+		fclose(fp);
+		return 0;
+	}
+	return 1;
+}
+
+char leCabecalhoIndice(FILE *fp, CabecalhoIndice *cabecalho)
+{
+	// Move para o inicio e le o cabecalho
+	fseek(fp, OFFSET_STATUS, SEEK_SET);
+	fread(&cabecalho->status, sizeof(char), 1, fp);
+	fread(&cabecalho->noRaiz, sizeof(int), 1, fp);
+	fread(&cabecalho->nroNiveis, sizeof(int), 1, fp);
+	fread(&cabecalho->proxRRN, sizeof(int), 1, fp);
+	fread(&cabecalho->nroChaves, sizeof(int), 1, fp);
 
 	// Checa consistencia do arquivo
 	if(cabecalho->status=='0')
@@ -315,6 +380,26 @@ void escreveCabecalho(FILE* fp, Cabecalho cabecalho)
 	fwrite(&cabecalho.numeroRegistrosInseridos, sizeof(int), 1, fp);
 	fwrite(&cabecalho.numeroRegistrosRemovidos, sizeof(int), 1, fp);
 	fwrite(&cabecalho.numeroRegistrosAtualizados, sizeof(int), 1, fp);
+
+	// Imprime o que resta para completar o registro com '$'
+	while(tamCabecalho--)
+		fwrite("$", sizeof(char), 1, fp);
+}
+
+void escreveCabecalhoIndice(FILE* fp, CabecalhoIndice cabecalho)
+{
+	int tamCabecalho = TAM_CABECALHO_INDICE;
+	// Tamanho total menos quantidade de bytes escritos
+	tamCabecalho -= (sizeof(int)*4 + sizeof(char)*1);
+
+	// Move para o inicio do arquivo
+	fseek(fp, 0, SEEK_SET);
+	// Imprime campos do registro
+	fwrite(&cabecalho.status, sizeof(char), 1, fp);
+	fwrite(&cabecalho.noRaiz, sizeof(int), 1, fp);
+	fwrite(&cabecalho.nroNiveis, sizeof(int), 1, fp);
+	fwrite(&cabecalho.proxRRN, sizeof(int), 1, fp);
+	fwrite(&cabecalho.nroChaves, sizeof(int), 1, fp);
 
 	// Imprime o que resta para completar o registro com '$'
 	while(tamCabecalho--)

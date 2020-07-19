@@ -15,18 +15,24 @@
 void stringAtPos(char str[], int pos, char out[]);
 char containsTemplate(Registro template, Registro reg);
 char abreBinario(char nomeArquivoBinario[], FILE **fp, Cabecalho *cabecalho);
+char abreBinarioIndice(char nomeArquivoBinario[], FILE **fp, CabecalhoIndice *cabecalho);
+char criaBinario(char nomeArquivoBinario[], FILE **fp);
 
 // Leitura
 int leRegistro(FILE* fp, int rrn, Registro* reg);
 void leRegistroInput(Registro* reg);
 char leCabecalho(FILE *fp, Cabecalho *cabecalho);
+char leCabecalhoIndice(FILE *fp, CabecalhoIndice *cabecalho);
 void leTemplate(Registro* template);
 
 // Escrita
 void escreveRegistro(FILE* fp, Registro reg);
 void escreveCabecalho(FILE* fp, Cabecalho cabecalho);
+void escreveCabecalhoIndice(FILE* fp, CabecalhoIndice cabecalho);
 void statusInconsistente(FILE* fp, Cabecalho* cabecalho);
+void statusInconsistenteIndice(FILE* fp, CabecalhoIndice* cabecalho);
 void statusConsistente(FILE* fp, Cabecalho* cabecalho);
+void statusConsistenteIndice(FILE* fp, CabecalhoIndice* cabecalho);
 char atualizaRegistro(FILE* fp, int rrn, Registro reg);
 
 // Remocao

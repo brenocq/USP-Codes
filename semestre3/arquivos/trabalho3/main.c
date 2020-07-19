@@ -15,6 +15,7 @@
 
 //------- Cabeçalho ------//
 Cabecalho cabecalho = {'1',0,0,0,0};
+CabecalhoIndice cabecalhoIndice = {'0',-1,0,0,0};
 //------------- Funções principais --------------//
 void opGerarBinario();
 void opMostraBinario();
@@ -23,6 +24,9 @@ void opBuscaRegistroRRN();
 void opRemoveRegistrosTemplate();
 void opInserirRegistros();
 void opAtualizarRegistros();
+void opCriaArquivoIndice();
+void opPesquisaArvoreB();
+void opInserirArvoreB();
 
 //-------------------- Main ----------------------//
 int main()
@@ -61,6 +65,15 @@ int main()
 			// Atualiza registros no binario
 			opAtualizarRegistros();
 			break;
+		case 8:
+			// Cria arquivo de indice
+			opCriaArquivoIndice();
+		case 9:
+			// Pesquisa registros pela arvore B que satisfaçam um critério
+			opPesquisaArvoreB();
+		case 10:
+			// Insere registros utilizando arvore B
+			opInserirArvoreB();
 	}
 	return 0;
 }
@@ -137,7 +150,7 @@ void opGerarBinario()
 		cabecalho.RRNproxRegistro++;
 		cabecalho.numeroRegistrosInseridos++;
 	}
-	// Escreve abecalho
+	// Escreve cabecalho
 	escreveCabecalho(bin, cabecalho);
 
 	// Fecha os dois arquivos
@@ -342,4 +355,54 @@ void opAtualizarRegistros()
 	// Fecha arquivo de leitura
 	fclose(fp);
 	binarioNaTela(binFileName);
+}
+
+void opCriaArquivoIndice()
+{
+	// Split (quer colocar o setimo): Divide em duas folhas - 3/promove/2
+	//  - Cria mais um no, cria um terceiro no para raiz
+	//  Usa -1 quando chave nao existir
+	//  Usa -1 quando o ponteiro nao existe
+	FILE *indice, *dados;
+	char indiceFileName[100];
+	char dadosFileName[100];
+
+	// Recebe nome dos arquivos
+	scanf("%s", dadosFileName);
+	scanf("%s", indiceFileName);
+
+	// Abre arquivo de dados
+	// Retorna 1 se houve erro
+	if(abreBinario(dadosFileName, &dados, &cabecalho))
+		return;
+	
+	// Cria arquivo de indice
+	// Retorna 1 se houve erro
+	if(criaBinario(indiceFileName, &indice))
+		return;
+	
+	//----- Comecar Operacao -----//
+	// Escreve cabecalho do arquivo de indice como inconsistente
+	escreveCabecalhoIndice(indice, cabecalhoIndice);
+
+	// Cria arvore B
+
+	//----- Operacao finalizada -----//
+	// Escreve cabecalho do arquivo de indice como consistente
+	statusConsistenteIndice(indice, &cabecalhoIndice);	
+
+	// Fecha arquivos de escrita/leitura
+	fclose(indice);
+	fclose(dados);
+	binarioNaTela(indiceFileName);
+}
+
+void opPesquisaArvoreB()
+{
+
+}
+
+void opInserirArvoreB()
+{
+
 }
