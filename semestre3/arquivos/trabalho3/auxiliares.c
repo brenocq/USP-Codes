@@ -132,7 +132,7 @@ void statusInconsistente(FILE* fp, Cabecalho* cabecalho)
 
 void statusInconsistenteIndice(FILE* fp, CabecalhoIndice* cabecalho)
 {
-	// Coloca status como inconsistente
+	// Coloca status do cabecalho de indice como inconsistente
 	cabecalho->status ='0';
 	fseek(fp, OFFSET_STATUS, SEEK_SET);
 	fwrite(&cabecalho->status, sizeof(char), 1, fp);
@@ -148,7 +148,7 @@ void statusConsistente(FILE* fp, Cabecalho* cabecalho)
 
 void statusConsistenteIndice(FILE* fp, CabecalhoIndice* cabecalho)
 {
-	// Coloca status como consistente
+	// Coloca status do cabecalho de indice como consistente
 	cabecalho->status = '1';
 	fseek(fp, OFFSET_STATUS, SEEK_SET);
 	fwrite(&cabecalho->status, sizeof(char), 1, fp);

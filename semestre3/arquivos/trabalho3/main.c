@@ -12,6 +12,7 @@
 #include "binarioNaTela.h"
 #include "comuns.h"
 #include "auxiliares.h"
+#include "arvoreB.h"
 
 //------- Cabeçalho ------//
 Cabecalho cabecalho = {'1',0,0,0,0};
@@ -68,12 +69,15 @@ int main()
 		case 8:
 			// Cria arquivo de indice
 			opCriaArquivoIndice();
+			break;
 		case 9:
 			// Pesquisa registros pela arvore B que satisfaçam um critério
 			opPesquisaArvoreB();
+			break;
 		case 10:
 			// Insere registros utilizando arvore B
 			opInserirArvoreB();
+			break;
 	}
 	return 0;
 }
@@ -359,10 +363,6 @@ void opAtualizarRegistros()
 
 void opCriaArquivoIndice()
 {
-	// Split (quer colocar o setimo): Divide em duas folhas - 3/promove/2
-	//  - Cria mais um no, cria um terceiro no para raiz
-	//  Usa -1 quando chave nao existir
-	//  Usa -1 quando o ponteiro nao existe
 	FILE *indice, *dados;
 	char indiceFileName[100];
 	char dadosFileName[100];
@@ -380,16 +380,53 @@ void opCriaArquivoIndice()
 	// Retorna 1 se houve erro
 	if(criaBinario(indiceFileName, &indice))
 		return;
-	
+
 	//----- Comecar Operacao -----//
 	// Escreve cabecalho do arquivo de indice como inconsistente
 	escreveCabecalhoIndice(indice, cabecalhoIndice);
 
 	// Cria arvore B
+	if(cabecalho.numeroRegistrosInseridos>0)
+	{
+		// Imprime registro
+		int currRRN = 0;
+		Registro reg;
+		fseek(dados, TAM_CABECALHO, SEEK_SET);
+		while(leRegistro(dados, currRRN, &reg))
+		{
+			currRRN += 1;
+			// Caso tenha encontrado um deletado, vai para o proximo
+			if(strcmp(reg.cidadeMae,"*")!=0)
+			{
+				//imprimeRegistro(reg);
+				//printf("Insere (%d,%d)\n", reg.idNascimento, currRRN);
+
+				// Retorna 1 se encontrou erro ao inserir
+				if(insercaoArvoreB(indice, cabecalhoIndice.noRaiz, reg.idNascimento, currRRN))
+				{
+					printf("Falha no processamento do arquivo.\n");
+					return;
+				}
+
+				//if(currRRN==26)
+				//{
+				//	int rrn = 0;
+				//	RegistroIndice page;
+				//	while(leNo(indice, rrn, &page))
+				//	{
+				//		printf("rrn: %d\t", rrn);
+				//		rrn++;
+				//		imprimeNo(page);
+				//	}
+				//}
+			}
+		}
+	}
 
 	//----- Operacao finalizada -----//
 	// Escreve cabecalho do arquivo de indice como consistente
-	statusConsistenteIndice(indice, &cabecalhoIndice);	
+	cabecalhoIndice.status = '1';
+	escreveCabecalhoIndice(indice, cabecalhoIndice);
 
 	// Fecha arquivos de escrita/leitura
 	fclose(indice);
@@ -399,10 +436,118 @@ void opCriaArquivoIndice()
 
 void opPesquisaArvoreB()
 {
+	FILE *indice, *dados;
+	char indiceFileName[100];
+	char dadosFileName[100];
+	char temp[100];
+	int chaveDeBusca;
 
+	// Recebe nome dos arquivos
+	scanf("%s", dadosFileName);
+	scanf("%s", indiceFileName);
+	scanf("%s", temp);
+	scanf("%d", &chaveDeBusca);
+
+	// Abre arquivo de dados
+	// Retorna 1 se houve erro
+	if(abreBinario(dadosFileName, &dados, &cabecalho))
+		return;
+	
+	// Cria arquivo de indice
+	// Retorna 1 se houve erro
+	if(abreBinarioIndice(indiceFileName, &indice, &cabecalhoIndice))
+		return;
+	
+	//----- Comecar Operacao -----//
+
+	int rrnEncontrado = -1;
+	int posEncontrado = -1;
+	int numAcessos = 0;
+	RegistroIndice reg;
+	// Busca chave na arvore B
+	if(buscaArvoreB(indice, cabecalhoIndice.noRaiz, chaveDeBusca, &rrnEncontrado, &posEncontrado, &reg, &numAcessos))
+	{
+		int rrnRegDados = reg.PR[posEncontrado];
+		
+		// Imprime registro
+		Registro regDados;
+		fseek(dados, TAM_CABECALHO+rrnRegDados*TAM_REGISTRO, SEEK_SET);
+		if(leRegistro(dados, rrnRegDados, &regDados))
+			imprimeRegistro(regDados);
+		else
+			printf("Registro Inexistente.\n");
+	
+		// Imprime numero acessos a disco
+		printf("Quantidade de paginas da arvore-B acessadas: %d\n", numAcessos);
+	}
+	else
+	{
+		printf("Registro inexistente.\n");
+	}
+
+	//----- Operacao finalizada -----//
+
+	// Fecha arquivos de escrita/leitura
+	fclose(indice);
+	fclose(dados);
 }
 
 void opInserirArvoreB()
 {
+	FILE *indice, *dados;
+	char indiceFileName[100];
+	char dadosFileName[100];
+	Registro reg;
+	int quantidadeRegistros;
 
+	// Recebe nome dos arquivos
+	scanf("%s", dadosFileName);
+	scanf("%s", indiceFileName);
+
+	// Abre arquivo de dados
+	// Retorna 1 se houve erro
+	if(abreBinario(dadosFileName, &dados, &cabecalho))
+		return;
+	
+	// Cria arquivo de indice
+	// Retorna 1 se houve erro
+	if(abreBinarioIndice(indiceFileName, &indice, &cabecalhoIndice))
+		return;
+	
+	// Le quantidade de registros para inserir
+	scanf("%d", &quantidadeRegistros);
+
+	//----- Comecar Operacao -----//
+	// Escreve cabecalho do arquivo de indice como inconsistente
+	statusInconsistenteIndice(indice, &cabecalhoIndice);
+	statusInconsistente(dados, &cabecalho);	
+
+	// Move o ponteiro para inserir no final do arquivo
+	fseek(dados, 0, SEEK_END);
+	while(quantidadeRegistros--)
+	{
+		leRegistroInput(&reg);
+		escreveRegistro(dados, reg);
+		if(insercaoArvoreB(indice, cabecalhoIndice.noRaiz, reg.idNascimento, cabecalho.RRNproxRegistro))
+		{
+			printf("Falha no processamento do arquivo.\n");
+			return;
+		}
+		cabecalho.numeroRegistrosInseridos++;
+		cabecalho.RRNproxRegistro++;
+	}
+
+	//----- Operacao finalizada -----//
+
+	// Retorna status para consistente e escreve cabecalho
+	cabecalho.status = '1';
+	cabecalhoIndice.status = '1';
+	escreveCabecalho(dados, cabecalho);
+	escreveCabecalhoIndice(indice, cabecalhoIndice);
+
+	// Fecha arquivo de leitura
+	fclose(dados);
+	fclose(indice);
+
+	binarioNaTela(indiceFileName);
 }

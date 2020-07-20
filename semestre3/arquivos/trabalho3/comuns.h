@@ -11,8 +11,8 @@
 
 // Info arquivo de indice
 #define TAM_CABECALHO_INDICE 72
-#define TAM_REGISTRO_INDICE 128
-#define ORDEM 6
+#define TAM_REGISTRO_INDICE 72
+#define MAXKEYS 5
 
 // Info arquivo de dados
 #define TAM_CABECALHO 128
@@ -27,9 +27,9 @@
 typedef struct _registroIndice{
 	int nivel;
 	int n;
-	int C[ORDEM-1];// Chaves ordanadas de forma crescente
-	int PR[ORDEM-1];// RRN do registro de dados
-	int P[ORDEM];// Referencia para subarvore
+	int C[MAXKEYS];// Chaves ordanadas de forma crescente
+	int PR[MAXKEYS];// RRN do registro de dados
+	int P[MAXKEYS+1];// Referencia para subarvore
 }RegistroIndice;
 
 typedef struct _cabecalhoIndice{
