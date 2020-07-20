@@ -16,46 +16,35 @@
 //----------------------------------------------//
 //------------------ ARVORE B ------------------//
 //----------------------------------------------//
+// Funcao auxiliares acessiveis somente neste arquivo
 int insercaoArvoreBRec(FILE* fp, int currRRN, int key, int rrnDado, int *promoRChild, int *promoKey, int *promoRRNdado);
 void split(int iKey, int iRRNdado, int iRRN, RegistroIndice *page, int *promoKey, int *promoRRNdado, int *promoRChild, RegistroIndice *newPage);
 void inicializaPagina(RegistroIndice* reg);
 
 //------- Cabeçalho ------//
-// Mesma variavel global de main.c para ser acessado por todas as funcao de insercao
+// Mesma variavel global de main.c, mantido assim para ser acessivel em todas 
+// as funcoes neste arquivo e nao precisar passar como parametro diversas vezes
 extern CabecalhoIndice cabecalhoIndice;
 
 int insercaoArvoreB(FILE* indice, int noRaiz, int chave, int rrnDados)
 {
-	// Implementacao do procedimento driver
+	//-- Implementacao do procedimento driver --//
 	
 	// Cria no raiz se ainda nao existir
 	if(cabecalhoIndice.noRaiz == -1)
 	{
 		RegistroIndice page;
-		//inicializaPagina(&page);
+		inicializaPagina(&page);
 		page.n = 1;
 		page.nivel = 1;
 		page.C[0] = chave;
 		page.PR[0] = rrnDados;
 
-		 Inicializa C e PR restantes como -1
-		for(int i=1; i<MAXKEYS; i++)
-		{
-			page.C[i] = -1;
-			page.PR[i] = -1;
-		}
-
-		// Inicializa ponteiros para proximos nos como -1
-		for(int i=0; i<MAXKEYS+1; i++)
-		{
-			page.P[i] = -1;
-		}
 		escreveNo(indice, 0, page);
-		//imprimeNo(page);
 		cabecalhoIndice.noRaiz = 0;
 		cabecalhoIndice.nroNiveis = 1;
 		cabecalhoIndice.proxRRN = 1;
-		//printf("Added root c:%d rrn:%d\n", chave, rrnDados);
+		cabecalhoIndice.nroChaves = 1;
 	}
 	// Adiciona chave a uma btree ja inicializada
 	else
@@ -64,9 +53,12 @@ int insercaoArvoreB(FILE* indice, int noRaiz, int chave, int rrnDados)
 		int promoKey;
 		int promoRRNdado;
 		int result;
+		// Insere com algoritmo recursivo
 		result = insercaoArvoreBRec(indice, noRaiz, chave, rrnDados, &promoRChild, &promoKey, &promoRRNdado);
+		// Se for necessario criar uma nova raiz...
 		if(result == PROMOTION)
 		{
+			// Cria registro da nova raiz
 			RegistroIndice novaRaiz;
 			inicializaPagina(&novaRaiz);
 			novaRaiz.n = 1;
@@ -76,31 +68,18 @@ int insercaoArvoreB(FILE* indice, int noRaiz, int chave, int rrnDados)
 			novaRaiz.P[0] = noRaiz;
 			novaRaiz.P[1] = promoRChild;
 			
-			//// Inicializa C e PR restantes como -1
-			//for(int i=1; i<MAXKEYS; i++)
-			//{
-			//	novaRaiz.C[i] = -1;
-			//	novaRaiz.PR[i] = -1;
-			//}
-
-			//// Inicializa ponteiros para proximos nos como -1
-			//for(int i=2; i<MAXKEYS+1; i++)
-			//{
-			//	novaRaiz.P[i] = -1;
-			//}
-
+			// Atualiza o cabecalho e escreve no nó raiz
 			cabecalhoIndice.noRaiz = cabecalhoIndice.proxRRN;
 			escreveNo(indice, cabecalhoIndice.noRaiz, novaRaiz);
 			cabecalhoIndice.proxRRN++;
 			cabecalhoIndice.nroNiveis++;
-
-			//printf("Create new root rrn:%d\n", cabecalhoIndice.noRaiz);
 		}
+		// Se ocorreu algum erro na insercao...
 		else if(result == ERROR)
 			return 1;
+		// Incrementa o numero de chaves do cabecalho
+		cabecalhoIndice.nroChaves++;
 	}
-
-	cabecalhoIndice.nroChaves++;
 	return 0;
 }
 
@@ -149,13 +128,6 @@ void split(int iKey, int iRRNdado, int iRRN, RegistroIndice *page, int *promoKey
 	tempPR[posToAdd] = iRRNdado;
 	tempP[posToAdd+1] = iRRN;
 
-	//printf("GRSDFUIZCXKNLMRFS: ");
-	//for(int i=0; i<MAXKEYS+2; i++)
-	//{
-	//	printf("%d ", tempP[i]);
-	//}
-	//printf("\n");
-
 	// Define qual chave sera promovida
 	int posMiddle = MAXKEYS/2+1;
 	*promoKey = tempC[posMiddle];
@@ -196,10 +168,6 @@ void split(int iKey, int iRRNdado, int iRRN, RegistroIndice *page, int *promoKey
 		newPage->PR[i] = -1;
 		newPage->P[i+1] = -1;
 	}
-
-	//printf("NOVAS PAGINAAAAS\n");
-	//imprimeNo(*page);
-	//imprimeNo(*newPage);
 }
 
 int insercaoArvoreBRec(FILE* fp, int currRRN, int key, int rrnDado, int *promoRChild, int *promoKey, int *promoRRNdado)
@@ -215,6 +183,7 @@ int insercaoArvoreBRec(FILE* fp, int currRRN, int key, int rrnDado, int *promoRC
 	inicializaPagina(&page);
 	inicializaPagina(&newPage);
 
+	// Chegou a um nó inexiste, inserir no nó acima
 	if(currRRN == -1)
 	{
 		*promoRChild = -1;
@@ -224,11 +193,8 @@ int insercaoArvoreBRec(FILE* fp, int currRRN, int key, int rrnDado, int *promoRC
 	}
 	else
 	{
-		// Desce na arvore ate cheagar em um no folha
+		// Desce na arvore ate chegar em um no folha
 		leNo(fp, currRRN, &page);
-		//imprimeNo(page);
-		//printf("Curr RRN: %d\n", currRRN);
-		//printf("NIVEL: %d\n", page.nivel);
 
 		// Procura a posicao para continuar a recursao
 		pos = 0;
@@ -256,17 +222,17 @@ int insercaoArvoreBRec(FILE* fp, int currRRN, int key, int rrnDado, int *promoRC
 		}
 
 		int result;
+		// Chama algoritmo recursivamente
 		result = insercaoArvoreBRec(fp, page.P[pos], key, rrnDado, &pbRRN, &pbKey, &pbRRNdado);
+
+		// Caso nao seja necessario nenhuma promocao ou ocorreu um erro
 		if(result == NO_PROMOTION || result == ERROR)
 		{
 			return result;
 		}
+		// Se o nó ainda nao esta cheio, inserir na pagina atual
 		else if(page.n<MAXKEYS)
 		{
-			//printf("CAN INSERT HERE\n");
-			//imprimeNo(page);
-			//printf("add: %d %d %d\n", pbRRNdado, pbKey, pbRRN);
-			// insert in page
 			int posToAdd = 0;
 
 			// Shift dos valores para a direita
@@ -283,28 +249,22 @@ int insercaoArvoreBRec(FILE* fp, int currRRN, int key, int rrnDado, int *promoRC
 				page.P[i+2] = page.P[i+1];
 			}
 
+			// Adiciona o valor ordenadamente na arvore
 			page.PR[posToAdd] = pbRRNdado;
 			page.C[posToAdd] = pbKey;
 			page.P[posToAdd+1] = pbRRN;
 			page.n++;
+			// Escreve o nó no arquivo
 			escreveNo(fp, currRRN, page);
 			
-			//imprimeNo(page);
 			return NO_PROMOTION;
 		}
 		else
 		{
-			//printf("promote!\n");
 			// Realiza o split
 			RegistroIndice newPage;
 			newPage.nivel = page.nivel;
 			split(pbKey, pbRRNdado, pbRRN, &page, promoKey, promoRRNdado, promoRChild, &newPage);
-			//printf("-------\nnew page\n");
-			//printf("%d\t", currRRN);
-			//imprimeNo(page);
-			//printf("%d\t", *promoRChild);
-			//imprimeNo(newPage);
-			//printf("-------\n");
 
 			// Atualiza/cria paginas em disco
 			escreveNo(fp, currRRN, page);

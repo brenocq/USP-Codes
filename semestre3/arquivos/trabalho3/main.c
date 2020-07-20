@@ -386,40 +386,28 @@ void opCriaArquivoIndice()
 	escreveCabecalhoIndice(indice, cabecalhoIndice);
 
 	// Cria arvore B
+	int regInseridos = 0;
 	if(cabecalho.numeroRegistrosInseridos>0)
 	{
-		// Imprime registro
 		int currRRN = 0;
 		Registro reg;
+		// Pula cabecalho e comeca a ler os registros de dados
 		fseek(dados, TAM_CABECALHO, SEEK_SET);
-		while(leRegistro(dados, currRRN, &reg))
+		// Insere ate percorrer todos os registros inseridos no binario de dados
+		while(leRegistro(dados, currRRN, &reg) && regInseridos<cabecalho.numeroRegistrosInseridos)
 		{
-			currRRN += 1;
 			// Caso tenha encontrado um deletado, vai para o proximo
-			if(strcmp(reg.cidadeMae,"*")!=0)
+			if(reg.cidadeMae[0] != '*')
 			{
-				//imprimeRegistro(reg);
-				//printf("Insere (%d,%d)\n", reg.idNascimento, currRRN);
-
-				// Retorna 1 se encontrou erro ao inserir
+				// Adicionar cada chave dos registros de dados na arvore B
 				if(insercaoArvoreB(indice, cabecalhoIndice.noRaiz, reg.idNascimento, currRRN))
 				{
 					printf("Falha no processamento do arquivo.\n");
 					return;
 				}
-
-				//if(currRRN==26)
-				//{
-				//	int rrn = 0;
-				//	RegistroIndice page;
-				//	while(leNo(indice, rrn, &page))
-				//	{
-				//		printf("rrn: %d\t", rrn);
-				//		rrn++;
-				//		imprimeNo(page);
-				//	}
-				//}
+				regInseridos++;
 			}
+			currRRN++;
 		}
 	}
 
@@ -482,6 +470,7 @@ void opPesquisaArvoreB()
 	}
 	else
 	{
+		// Nao foi encontrado o registro com a chave pedida
 		printf("Registro inexistente.\n");
 	}
 
@@ -518,7 +507,7 @@ void opInserirArvoreB()
 	scanf("%d", &quantidadeRegistros);
 
 	//----- Comecar Operacao -----//
-	// Escreve cabecalho do arquivo de indice como inconsistente
+	// Escreve cabecalho do arquivos como inconsistente
 	statusInconsistenteIndice(indice, &cabecalhoIndice);
 	statusInconsistente(dados, &cabecalho);	
 
@@ -526,8 +515,11 @@ void opInserirArvoreB()
 	fseek(dados, 0, SEEK_END);
 	while(quantidadeRegistros--)
 	{
+		// Adiciona no arquivo de dados
 		leRegistroInput(&reg);
 		escreveRegistro(dados, reg);
+		
+		// Adiciona no arquivo de indice
 		if(insercaoArvoreB(indice, cabecalhoIndice.noRaiz, reg.idNascimento, cabecalho.RRNproxRegistro))
 		{
 			printf("Falha no processamento do arquivo.\n");
@@ -539,13 +531,13 @@ void opInserirArvoreB()
 
 	//----- Operacao finalizada -----//
 
-	// Retorna status para consistente e escreve cabecalho
+	// Retorna status para consistente e escreve cabecalhos
 	cabecalho.status = '1';
 	cabecalhoIndice.status = '1';
 	escreveCabecalho(dados, cabecalho);
 	escreveCabecalhoIndice(indice, cabecalhoIndice);
 
-	// Fecha arquivo de leitura
+	// Fecha arquivos
 	fclose(dados);
 	fclose(indice);
 
