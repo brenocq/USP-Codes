@@ -1,12 +1,6 @@
 all: lista.o main.o
 	gcc -o prog lista.o main.c 
 
-main.o: main.c
-	gcc -c main.c
-
-lista.o: lista.c
-	gcc -c lista.c
-
 run:
 	./prog
 
