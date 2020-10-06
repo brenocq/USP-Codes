@@ -1,0 +1,8 @@
+1- Qual o valor de TH1 em ambos os micros se a taxa de comunicação é de 19200 bauds?
+	Como estamos utilizando um oscilador de 11059.2MHz, temos que TH1 = 256-2*11059200/(384*19200) = 253 (#FDh).
+
+2- Qual o valor de tensão na linha de comunicação quando esta está em repouso?
+	De acordo com o padrao RS232-C, quando estiver em repouso teremos o sinal em nível lógico alto, podendo ter tensoes que variam entre -3V a -25V.
+
+3- Qual o tamanho, em microssegundos, do Start Bit?
+	Como teremos 19200 bits por segundo, o start bit terá tamanho 1000000/19200 microssegundos = ~52.08 microssegundos.
