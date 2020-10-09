@@ -2,7 +2,7 @@
 
 //------------------------------------//
 // Author: Breno Cunha Queiroz        //
-// Date: 2020-10-05                   //
+// Date: 2020-10-06                   //
 // SCC0650 - Computação Gráfica (2020)//
 //------------------------------------//
 #include <stdlib.h>
@@ -42,6 +42,7 @@ float RATIO = float(MAIN_WINDOW_WIDTH)/MAIN_WINDOW_HEIGHT;
 #define BOLDCYAN    "\033[1m\033[36m"       /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"       /* Bold White */
 
+#define QTY_FACES 100
 //---------------------------------//
 //-------- GLOBAL VARIABLES -------//
 //---------------------------------//
@@ -128,7 +129,7 @@ void initWindow(GLFWwindow **mainWindow)
     //----- Create main window -----//
     GLFWmonitor* monitor = nullptr;
 
-    *mainWindow = glfwCreateWindow(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT, "Pyramid", monitor, nullptr);
+    *mainWindow = glfwCreateWindow(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT, "Cylinder", monitor, nullptr);
     glfwSetWindowPos(*mainWindow, mode->width/2-(MAIN_WINDOW_WIDTH)/2, 0);
 
     if(*mainWindow == nullptr)
@@ -212,31 +213,31 @@ std::vector<Point> getVertices()
 {
 	std::vector<Point> vertices;
 
-	// Bottom
-	vertices.push_back({-0.5, -0.5, 0.0});
-	vertices.push_back({0.5, -0.5, 0.0});
-	vertices.push_back({-0.5, 0.5, 0.0});
-	vertices.push_back({0.5, 0.5, 0.0});
 
-	// Face 1
-	vertices.push_back({0.5, -0.5, 0.0});
-	vertices.push_back({-0.5, -0.5, 0.0});
-	vertices.push_back({0.0, 0.0, -0.5});
+	// Bottom face
+	for(int i=0;i<QTY_FACES;i++)
+	{
+		vertices.push_back({0,0,0.0});
+		vertices.push_back({cos(2*M_PI/QTY_FACES*i),sin(2*M_PI/QTY_FACES*i),0});
+		vertices.push_back({cos(2*M_PI/QTY_FACES*(i+1)),sin(2*M_PI/QTY_FACES*(i+1)),0});
+	}
 
-	// Face 2
-	vertices.push_back({0.5, -0.5, 0.0});
-	vertices.push_back({0.5, 0.5, 0.0});
-	vertices.push_back({0.0, 0.0, -0.5});
+	// Top face
+	for(int i=0;i<QTY_FACES;i++)
+	{
+		vertices.push_back({0,0,1.0});
+		vertices.push_back({cos(2*M_PI/QTY_FACES*i),sin(2*M_PI/QTY_FACES*i),1.0});
+		vertices.push_back({cos(2*M_PI/QTY_FACES*(i+1)),sin(2*M_PI/QTY_FACES*(i+1)),1.0});
+	}
 
-	// Face 3
-	vertices.push_back({0.5, 0.5, 0.0});
-	vertices.push_back({-0.5, 0.5, 0.0});
-	vertices.push_back({0.0, 0.0, -0.5});
+	for(int i=0;i<QTY_FACES;i++)
+	{
+		vertices.push_back({cos(2*M_PI/QTY_FACES*(i+1)),sin(2*M_PI/QTY_FACES*(i+1)),1.0});
+		vertices.push_back({cos(2*M_PI/QTY_FACES*i),sin(2*M_PI/QTY_FACES*i),1.0});
+		vertices.push_back({cos(2*M_PI/QTY_FACES*(i+1)),sin(2*M_PI/QTY_FACES*(i+1)),0.0});
+		vertices.push_back({cos(2*M_PI/QTY_FACES*i),sin(2*M_PI/QTY_FACES*i),0.0});
+	}
 
-	// Face 4
-	vertices.push_back({0.0, 0.0, -0.5});
-	vertices.push_back({-0.5, -0.5, 0.0});
-	vertices.push_back({-0.5, 0.5, 0.0});
 
 	return vertices;
 }
@@ -339,20 +340,18 @@ int main(int argc, char** argv)
         loc = glGetUniformLocation(program, "model");
         glUniformMatrix4fv(loc, 1, GL_TRUE, modelMat);
 
-		glUniform4f(locColor, 1,0,0,1);// Red
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); 
+		for(int i=0;i<QTY_FACES;i++)
+		{
+			srand(i);
+			float R = (float)rand()/RAND_MAX;
+            float G = (float)rand()/RAND_MAX;
+            float B = (float)rand()/RAND_MAX;
 
-		glUniform4f(locColor, 0,1,0,1);// Green
-		glDrawArrays(GL_TRIANGLES, 4, 3); 
-
-		glUniform4f(locColor, 0,0,1,1);// Blue
-		glDrawArrays(GL_TRIANGLES, 7, 3); 
-
-		glUniform4f(locColor, 1,0,1,1);// Magenta
-		glDrawArrays(GL_TRIANGLES, 10, 3); 
-
-		glUniform4f(locColor, 1,1,0,1);// Yellow
-		glDrawArrays(GL_TRIANGLES, 13, 3); 
+			glUniform4f(locColor, R,G,B,1);// Red
+			glDrawArrays(GL_TRIANGLES, i*3, 3); 
+			glDrawArrays(GL_TRIANGLES, QTY_FACES*3+i*3, 3); 
+			glDrawArrays(GL_TRIANGLE_STRIP, QTY_FACES*6+i*4, 4); 
+		}
 
         glfwSwapBuffers(mainWindow);
     }
