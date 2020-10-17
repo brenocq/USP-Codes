@@ -23,6 +23,7 @@ TIMER_0:	CLR 	EA ; Desabilita interrupcoes
 		MOV 	TH0, #0FFh
 		MOV 	TL0, #0CDh
 		ADD	A, #1; Soma no counter a cada 50ms
+
 		SETB	EA ; Habilita interrupcoes
 		RETI
 		END
