@@ -86,7 +86,7 @@ int move(int curr, int direction)
 			int posY = i/3;
 			switch(direction)
 			{
-				case 3:// Up
+				case 0:// Up
 					if(posY>0)
 					{
 						currStr[i] = currStr[i-3];
@@ -94,7 +94,7 @@ int move(int curr, int direction)
 						moved = stoi(currStr);
 					}
 					break;
-				case 0:// Left
+				case 1:// Left
 					if(posX>0)
 					{
 						currStr[i] = currStr[i-1];
@@ -102,7 +102,7 @@ int move(int curr, int direction)
 						moved = stoi(currStr);
 					}
 					break;
-				case 1:// Down
+				case 2:// Down
 					if(posY<2)
 					{
 						currStr[i] = currStr[i+3];
@@ -110,7 +110,7 @@ int move(int curr, int direction)
 						moved = stoi(currStr);
 					}
 					break;
-				case 2:// Right
+				case 3:// Right
 					if(posX<2)
 					{
 						currStr[i] = currStr[i+1];
