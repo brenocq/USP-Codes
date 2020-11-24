@@ -1,2 +1,2 @@
-./bmpHex verilog/brasiilOut.hex
-feh verilog/brasiilOut.png
+./bmpHex verilog/icmcOut.hex
+feh verilog/icmcOut.png

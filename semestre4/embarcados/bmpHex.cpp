@@ -46,7 +46,7 @@ Image readBmp(std::string fileName)
 	for(int y=0;y<height;y++)
 		for(int x=0;x<width;x++)
 			//buffer[y*width+x] = 255;//(unsigned char)(img[y*width*3+x*3]);//float(i)/dataSize*255;//
-			buffer[(height-y-1)*width+x] = (unsigned char)(img[y*width*3+x*3+width*0.25]);//float(i)/dataSize*255;//
+			buffer[(height-y-1)*width+x] = (unsigned char)(img[y*width*3+x*3+80]);//float(i)/dataSize*255;//
 			//buffer[(height-y-1)*width+x] = (unsigned char)(127);//float(i)/dataSize*255;//
 
 	image.buffer.assign(buffer.begin(), buffer.end());

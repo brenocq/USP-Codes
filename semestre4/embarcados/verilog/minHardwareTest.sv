@@ -4,8 +4,8 @@
 // Testbench
 module test();
   
-  localparam inputImage = "brasiil.hex";
-  localparam outputImage = "brasiilOut.hex";
+  localparam inputImage = "icmc.hex";
+  localparam outputImage = "icmcOut.hex";
   integer fileIn;
   integer fileOut;
   integer read;
@@ -37,7 +37,7 @@ module test();
       $finish;
     end
     
-	for (y=0; y<3; y=y+1) begin
+	for (y=0; y<2; y=y+1) begin
 		for (x=0; x<`WIDTH; x=x+1) begin
 			in1[x] <= in2[x];
 			in2[x] <= in3[x];
@@ -46,20 +46,20 @@ module test();
 	end
 
     clk=1;
-    for (y=0; y<(`HEIGHT-3); y=y+1) begin
-		@(posedge clk) begin
-        	$display("clock");
-			for (x=0; x<`WIDTH; x=x+1) begin
-				in1[x] <= in2[x];
-				in2[x] <= in3[x];
-				read = $fscanf(fileIn,"%h",in3[x]);
-				//$display("Value: %h.", in3[x]);
-			end
-			#10 for (x=0; x<`WIDTH; x=x+1) begin
-			  $fwrite(fileOut, "%h ", out[x]);
-			end
+	y=0;
+	@(posedge clk) begin
+		y = y+1;
+		$display("clock");
+		for (x=0; x<`WIDTH; x=x+1) begin
+			in1[x] <= in2[x];
+			in2[x] <= in3[x];
+			read = $fscanf(fileIn,"%h",in3[x]);
+			//$display("Value: %h.", in3[x]);
 		end
-    end
+		for (x=0; x<`WIDTH; x=x+1) begin
+		  $fwrite(fileOut, "%h ", out[x]);
+		end
+	end
     #1 $fclose(fileIn);
     #1 $fclose(fileOut);
     $stop;
