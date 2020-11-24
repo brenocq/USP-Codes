@@ -392,6 +392,8 @@ int main(int argc, char** argv)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
+		_camera->update();
+
 		// View matrix
 		glm::mat4 viewMat = glm::lookAt(cameraPos, cameraPos+cameraFront, cameraUp);
         loc = glGetUniformLocation(program, "view");
