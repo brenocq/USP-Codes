@@ -1,0 +1,7 @@
+ADC -> 8000-8007
+DAC -> 8008
+Leds -> 8009
+Keypad -> 800A
+2 motors -> 800B 
+2 motors ->  800C
+LCD -> 800D
