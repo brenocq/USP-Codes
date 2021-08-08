@@ -1,0 +1,110 @@
+:root {
+	--card-bg-color: white;
+	--main-color: rgba(221,85,85,255);
+	--text-dark: #888;
+	--text-light: #aaa;
+}
+
+* { 
+	padding:0; 
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 100%;
+	color: var(--text-light);
+}
+
+body {
+	background-color: #eee;
+}
+
+h1{
+	color: var(--main-color);
+	font-size: 1.5em;
+}
+
+h2{
+	color: var(--text-dark);
+	font-size: 1.3em;
+}
+
+h3{
+	color: var(--text-dark);
+}
+
+p {
+	color: var(--text-light);
+	font-size: 1em;
+}
+
+p strong {
+	color: var(--text-dark);
+}
+
+a {
+	text-decoration: none;
+	color: var(--text-light);
+}
+
+button {
+	background: var(--main-color);
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	padding: 5px 10px;
+	/* O ideal seria adicionar esse espaçamento adicionando mais componentes no html ou classes, 
+	 * mas estou tentando modificar o mínimo possível do html disponibilizado */
+	margin-top: 10px;
+}
+
+/* generic */
+.container {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.card {
+	background-color: white;
+	border-radius: 5px;
+	margin: 20px 0px;
+	box-shadow: 1px 1px 1px #bbb;
+	padding: 20px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+
+/* top info */
+.img-circle {
+	width: 100px;
+	height: 100px;
+	border: 3px solid #ddd;
+	border-radius: 50%;
+}
+
+/* social list */
+.list-inline {
+	list-style-type: none;
+	padding: 40px 0px;
+}
+.list-inline ul { display: inline; }
+.list-inline li { 
+	display: inline-block; 
+	padding: 2px 20px;
+}
+.list-inline li a i{ 
+	font-size: 1.5em;
+}
+
+/* movies info */
+#movies img {
+	height: 150px;
+	width: 110px;
+	padding: 10px;
+}
+
+#movies p {
+	margin-top: 10px;
+	text-align: justify;
+}

@@ -1,0 +1,19 @@
+.conteudo {
+	background-color: #ccc;
+	width: 95%;
+	width: 600px;
+	height: 80%;
+	height: 200px;
+
+	padding: 10px 20px;
+	margin: 40px 0px 0px 40px;
+}
+
+.conteudo2 {
+	margin-top: 10px;
+	margin-left: 5px;
+	padding-top: 10px;
+	padding-left: 20px;
+	background: green;
+	color: white;
+}

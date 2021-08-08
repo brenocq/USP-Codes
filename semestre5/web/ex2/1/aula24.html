@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<title>Aula24 - Formularios (Datalist,...)</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<h1>Aprendendo formulario</h1>
+		<form action="cadastro.php" method="POST">
+			<fieldset>
+				<legend>Informações de login</legend>
+				Seu nome: <br>
+				<input type="text" name="nome" required autofocus maxlength="3"><br>
+				Seu email: <br>
+				<input type="email" name="email" autocomplete="on" placeholder="primeiro.ultimo@dominio" required><br>
+				Sua senha: <br>
+				<input type="password" name="senha" disabled><br>
+				Time: <br>
+				<input type="radio" name="time" value="azul">Azul<br>
+				<input type="radio" name="time" value="verde" checked>Verde<br>
+				<input type="radio" name="time" value="vermelho">Vermelho<br>
+				Opcoes: <br>
+				<input type="checkbox" name="time" value="opcao1" checked>Opcao 1<br>
+				<input type="checkbox" name="time" value="opcao2">Opcao 2<br>
+				Quantidade: <br>
+				<input type="number" name="quantidade" min="0" max="10" value="2" step="2"><br>
+				<input type="range" name="quantidade"><br>
+				Cor:<br>
+				<input type="color" name="cor"><br>
+				Imagem:<br>
+				<input type="file" name="imagem"><br>
+				<input type="hidden" name="id"><br>
+				Site:<br>
+				<input type="url" name="site"><br>
+				Pesquisa:<br>
+				<input type="search" name="pesquisa"><br>
+				Telefone:<br>
+				<input type="tel" name="telefone"><br>
+				Data:<br>
+				<input type="date" name="data" min="2001-02-05" max="2021-04-21"><br>
+				Hora:<br>
+				<input type="time" name="hora"><br>
+				Mês e ano:<br>
+				<input type="month" name="mes-ano"><br>
+				Semana:<br>
+				<input type="week" name="semana"><br>
+				Data e hora:<br>
+				<input type="datetime-local" name="data-e-hora"><br>
+				Mensagem:<br>
+				<textarea name="mensagem" rows="15" cols="40" spellcheck="true"></textarea><br>
+				<button type="button">Meu botão</button><br>
+				Escola seu veículo:<br>
+				<select name="veiculo">
+					<optgroup label="Carros Novos">
+						<option value="golzinho">Golzinho</option>
+					<optgroup>
+					<optgroup label="Carros Antigos">
+						<option value="fusca">Fusca</option>
+						<option value="amarelinha">Amarelinha</option>
+						<option value="fusca-rosa" selected>Fusca Rosa</option>
+					<optgroup>
+				</select>
+				<br>
+
+				Escolha um curso:<br>
+				<input name="cursos" list="lista-cursos">
+				<datalist id="lista-cursos">
+					<option value="Machine Learning">
+					<option value="SLAM">
+					<option value="Robotics">
+					<option value="AI">
+				</datalist>
+
+				<br>
+				<input type="submit" name="btn-enviar" value="Enviar">
+			</fieldset>
+		</form>
+	</body>
+</html>

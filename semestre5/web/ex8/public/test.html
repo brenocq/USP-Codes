@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <meta>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+  </meta>
+ 
+  <body>
+ 
+    <div id="app">
+      <h2>User Information</h2>
+ 
+      <label>Username</label> <input v-model="username" type="text"> 
+      <br> <br>
+      <label>Password</label> <input v-model="password" type="text">
+      <br> <br>
+      <label>Email</label>    <input v-model="email"    type="text">
+      <br> <br>
+      <label>Address</label>  <input v-model="address"  type="text">
+      <br> <br>
+      <input type="button" value="Read" @click="read">
+      <input type="button" value="Delete" @click="del">
+      <input type="button" value="Create" @click="write">
+    </div>
+    
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.min.js">
+    </script>
+ 
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+            username: "john",
+            password: "",
+            email: "",
+            address: ""
+        },
+        methods: {
+           read: async function() {
+			   if(this.username !== "") {
+					try {
+					  let resp = await fetch("http://localhost:3000/store/"+this.username);
+					  // É esperado que dê erro ao tentar ler um usuário que não existe pois na descrição do execício pede para retornar ""
+					  resp = await resp.json();
+					  console.log("GET resp: "+JSON.stringify(resp));
+					  
+					  this.username = resp.username;
+					  this.password = resp.password;
+					  this.email = resp.email;
+					  this.address = resp.address;
+				   }
+				   catch (e) {alert("Error: " + e);}
+				}
+           },
+           write: async function() {
+			   if(this.username !== "") {
+					try {
+						let resp = await fetch("http://localhost:3000/store/"+this.username, { 
+							method: 'PUT', 
+							body: JSON.stringify(this.$data),
+							headers: {
+            					'Content-Type': 'application/json'
+        					}
+						});
+						resp = await resp.json();
+					 	console.log("PUT resp: "+JSON.stringify(resp));
+				   }
+				   catch (e) {alert("Error: " + e);}
+				}
+
+           },
+           del: async function() {
+				if(this.username!=="") {
+					try {
+						let resp = await fetch("http://localhost:3000/store/"+this.username, { method: 'DELETE'});
+						resp = await resp.json();
+						console.log("DELETE resp: "+JSON.stringify(resp));
+				   }
+				   catch (e) {alert("Error: " + e);}
+				}
+           }
+        }
+      });
+    </script>
+  </body>
+

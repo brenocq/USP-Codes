@@ -1,0 +1,10 @@
+* {
+	box-sizing: border-box;
+}
+
+#conteudo {
+	background-color: #ccc;
+	width: 300px;
+	padding: 10px;
+	box-shadow: 2px 2px 10px black;
+}

@@ -1,0 +1,19 @@
+p {
+	background-color: #9f9;
+	color: black;
+	text-align: center;
+	text-decoration: line-through;
+	text-transform: capitalize;
+}
+
+h1 {
+	text-align: left;
+	text-decoration: underline;
+	text-transform: lowercase;
+}
+
+h2 {
+	text-align: right;
+	text-decoration: overline;
+	text-transform: uppercase;
+}

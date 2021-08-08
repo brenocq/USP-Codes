@@ -1,0 +1,37 @@
+/* Comentario seletor global
+* {
+	margin: 0;
+	padding: 0;
+	color: red;
+}
+*/
+
+h1 {
+	color: green;
+	font-size: 30px;
+}
+
+p {
+	color: magenta;
+	font-size: 20px;
+}
+
+input[type="text"] {
+	width: 200px;
+	border: none;
+	height: 30px;
+	background-color: #aaa;
+}
+
+input[type="email"] {
+	width: 200px;
+	border: none;
+	height: 25px;
+	background-color: #baa;
+}
+
+input[value="enviar"] {
+	width: 200px;
+	height: 25px;
+	background-color: #9b9;
+}

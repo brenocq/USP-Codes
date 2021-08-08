@@ -1,0 +1,4 @@
+.container:target {
+	background-color: gray;
+	margin: 20px;
+}

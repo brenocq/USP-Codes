@@ -1,0 +1,17 @@
+1. What are Two-Way Bindings and how to create them in Vue.js? 
+	Two-Way Bindings significa que o modelo do DOM no javascript reflete os componentes do DOM no navegador. Sempre que um componente é alterado no javascript, a mudança também ocorre no DOM, e sempre que há uma mudança no DOM, esta mudança também ocorre no modelo.
+	Podemos criar este Two-Way Bindings ao adicionar uma nova variável no mapa "data" do objeto Vue. Quando esta variável for utilizada no html, elas sempre irão se alterar juntas.
+
+Ex:
+	html:
+		<div id="app">
+			<p>{{myVariable}}</p>
+		</div>
+
+	javascript:
+		let app = new Vue({
+			el: "#app",
+			data: {
+				myVariable: "Test",
+			}
+		})

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<title>Aula17 - Formularios (Email,...)</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<h1>Aprendendo formulario</h1>
+		<form action="cadastro.php" method="POST">
+			<fieldset>
+				<legend>Informações de login</legend>
+				Seu nome: <br>
+				<input type="text" name="nome" required autofocus maxlength="3"><br>
+				Seu email: <br>
+				<input type="email" name="email" required><br>
+				Sua senha: <br>
+				<input type="password" name="senha" disabled><br>
+				Time: <br>
+				<input type="radio" name="time" value="azul">Azul<br>
+				<input type="radio" name="time" value="verde" checked>Verde<br>
+				<input type="radio" name="time" value="vermelho">Vermelho<br>
+				Opcoes: <br>
+				<input type="checkbox" name="time" value="opcao1" checked>Opcao 1<br>
+				<input type="checkbox" name="time" value="opcao2">Opcao 2<br>
+
+				<br>
+				<input type="submit" name="btn-enviar" value="Enviar">
+			</fieldset>
+		</form>
+	</body>
+</html>

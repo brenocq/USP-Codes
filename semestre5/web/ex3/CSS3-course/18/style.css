@@ -1,0 +1,19 @@
+#base {
+	width: 200px;
+	height: 200px;
+	background: blue;
+}
+
+#left {
+	background: red;
+	width: 100px;
+	height: 100px;
+	float: left;
+}
+
+#right {
+	background: green;
+	width: 100px;
+	height: 100px;
+	float: right;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8" />
+		<title>Joe Happiness</title>
+
+		<!-- Adicionado fonte do google fonts -->
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+		<!-- Adicionado estilo -->
+		<link href="ex2.css" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Original version with callback -->
+		<p>Callback version</p>
+		<div class="base">
+			<div class="top">
+				<p>Threshold: </p>
+				<input type="number" class="threshold-input" id="input-v1" value="0.5" min="0" max="1" step="0.01"/>
+				<button class="threshold-button" id="button-v1">Is Joe Happy?</button>
+			</div>
+			<p id="result-v1"></p>
+		</div>
+
+		<!-- Version with promises -->
+		<p>Promises version</p>
+		<div class="base">
+			<div class="top">
+				<p>Threshold: </p>
+				<input type="number" class="threshold-input" id="input-v2" value="0.5" min="0" max="1" step="0.01"/>
+				<button class="threshold-button" id="button-v2">Is Joe Happy?</button>
+			</div>
+			<p id="result-v2"></p>
+		</div>
+
+		<!-- Version with async/await -->
+		<p>Async/Await version</p>
+		<div class="base">
+			<div class="top">
+				<p>Threshold: </p>
+				<input type="number" class="threshold-input" id="input-v3" value="0.5" min="0" max="1" step="0.01"/>
+				<button class="threshold-button" id="button-v3">Is Joe Happy?</button>
+			</div>
+			<p id="result-v3"></p>
+		</div>
+		<!-- Adicionado script com arquivo js -->
+		<script src="ex2.js"></script>
+	</body>
+</html>
+

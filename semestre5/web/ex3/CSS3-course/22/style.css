@@ -1,0 +1,16 @@
+* {
+	/*
+	background-image: url(background.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-attachment:fixed;
+	background-size: 100% 100%;*/
+	background: url(background.jpg) center center/100% 100% no-repeat fixed;
+}
+
+#base {
+	background: blue;
+	color: white;
+	width: 200px;
+	height: 2000px;
+}

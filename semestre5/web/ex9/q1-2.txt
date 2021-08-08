@@ -1,0 +1,7 @@
+1. O teorema CAP é um teorema que afirma que é impossível que um sistema distribuido de banco de dados possua Consistency, Availability, e Partition tolerance ao mesmo tempo. Dos diferentes tipos de bancos de dados NoSQL existentes, sempre uma dessas características que não é atendida. No caso do CouchDB, não é assegurado a Consistência por padrão pois existem várias versões dos dados.
+
+2. A principal diferença entre eles é como os dados são armazenados e relacionados entre si, abaixo uma breve descrição dos principais tipos:
+	- Key-Value: Um dos tipos mais simples e armazena somente pares de valores.
+	- BigTable: Criado para armazenar muitos dados, normalmente esparços e numéricos.
+	- GraphDB: Os dados são nós com relacionamentos entre eles. Muito utilizado quando o dado é melhor representado como um grafo.
+	- Document: Possui coleções de atributos chave-valor. Por ser orientado a documento, costuma mapear melhor aos dados.

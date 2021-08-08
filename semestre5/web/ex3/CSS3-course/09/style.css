@@ -1,0 +1,27 @@
+p {
+	background-color: #9f9;
+	color: black;
+	text-align: center;
+	text-decoration: line-through;
+	text-transform: capitalize;
+	text-align: justify;
+
+	text-indent: 20px;
+	line-height: 30px;
+	direction: rtl;
+	letter-spacing: -1px;
+	word-spacing: 5px;
+	text-shadow: 3px 50px 1px blue;
+}
+
+h1 {
+	text-align: left;
+	text-decoration: underline;
+	text-transform: lowercase;
+}
+
+h2 {
+	text-align: right;
+	text-decoration: overline;
+	text-transform: uppercase;
+}

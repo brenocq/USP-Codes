@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue.js Search</title>
+	<!-- Adicionado fonte do google fonts -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+	<!-- Adicionado estilo -->
+	<link href="q2.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app" class="container-fluid">
+      <h1>Vue.js Search</h1>
+      
+      <div class="form-group">
+        <input type="text" class="form-control"
+               placeholder="Search term" v-model="searchText">
+      </div>
+      
+      <div class="result-container">
+        <h2>Results<span></span></h2>
+        <ul class="list-group">
+			<li class="list-group-item" v-for="item in filtered">{{item}}</li>
+        </ul>
+      </div>
+      
+    </div>
+
+	<!-- link com Vue.js -->
+	<script src="https://unpkg.com/vue"></script>
+	<!-- Adicionado script com arquivo js -->
+	<script src="q2.js"></script>
+  </body>
+</html>
+

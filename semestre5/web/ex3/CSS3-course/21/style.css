@@ -1,0 +1,30 @@
+* {
+	margin: 0;
+}
+
+#base {
+	background-color: black;
+	color: gray;
+	width: 400px;
+	height: 400px;
+
+	/*
+	transition-property: height;
+	transition-duration: 0.5s;
+	transition-timing-function: ease;
+	transition-delay: 0.1s;
+	*/
+
+	/*
+	transition: background-color 1s linear 0.5s;
+	transition: color 1s linear 0.5s;
+	*/
+
+	transition: all 0.5s ease;
+}
+
+#base:hover {
+	background-color: gray;
+	color: black;
+	height: 400px;
+}

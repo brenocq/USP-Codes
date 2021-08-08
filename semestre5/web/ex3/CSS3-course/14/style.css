@@ -1,0 +1,27 @@
+* {
+	font-size: 100%;
+}
+
+@font-face {
+	font-family: melody;
+	src: url(font/MelodySouthern.woff);
+}
+
+@font-face {
+	font-family: melody_script;
+	src: url(font/MelodySouthern-Script.woff);
+}
+
+#conteudo {
+	background-color: #ccc;
+	width: 600px;
+	height: 600px;
+	padding: 10px;
+}
+
+p {
+	color: black;
+	text-transform: capitalize;
+	font-family: melody_script;
+	font-size: 2em;
+}

@@ -1,0 +1,12 @@
+* {
+	font-size: 100%;
+}
+
+#cores {
+	/*background-color: red;*/
+	/*background-color: #40b3fa;*/
+	/*background-color: rgba(230, 89, 225, 0.5);*/
+	background-color: hsla(20, 100%, 59%, 0.2);
+	width: 300px;
+	height: 300px;
+}

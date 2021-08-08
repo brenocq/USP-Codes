@@ -1,0 +1,79 @@
+:root {
+	--display-color: #c3a9e8;
+	--display-dark-color: #8754c9;
+	--numpad-color: #dedede;
+	--button-light-color: #b956d3;
+	--button-light-color-hover: #b95ed1;
+	--button-light-color-click: #b66bc9;
+	--button-dark-color: #8c00b9;
+	--button-dark-color-hover: #8f19b5;
+	--button-dark-color-click: #8f2ab0;
+}
+
+* { 
+	padding:0; 
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+	font-size: 100%;
+}
+
+#base {
+	margin: 10px;
+	padding: 5px;
+	width: 218px;
+	background-color: white;
+	box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.35);
+	overflow:hidden;
+}
+
+#display {
+	margin-bottom: 5px;
+	height: 40px;
+	background-color: var(--display-color);
+	border: 5px solid var(--display-dark-color);
+	color: var(--display-dark-color);
+	text-align: right;
+	line-height: 40px;
+}
+
+#numpad {
+	background-color: var(--numpad-color);
+	padding: 5px;
+	display: grid;
+	grid-template-columns: 40px 40px 40px 40px 40px;
+	grid-template-rows: 40px 40px 40px 40px;
+	grid-column-gap: 2px;
+	grid-row-gap: 2px;
+}
+
+button {
+	background-color: var(--button-light-color);
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: var(--button-light-color-hover);
+}
+
+button:active {
+	background-color: var(--button-light-color-click);
+}
+
+#op-eq {
+	background-color: var(--button-dark-color);
+	grid-row-end: span 2;
+}
+
+#op-eq:hover {
+	background-color: var(--button-dark-color-hover);
+}
+
+#op-eq:active {
+	background-color: var(--button-dark-color-click);
+}
+
+#num0 {
+	grid-column-end: span 2;
+}

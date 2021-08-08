@@ -1,0 +1,10 @@
+#conteudo {
+	background-color: #ccc;
+	width: 300px;
+	height: 300px;
+	padding: 10px;
+
+	border-radius: 5px 10px 20px 40px;
+	border-bottom-left-radius: 100px;
+	border-bottom-right-radius: 100px;
+}

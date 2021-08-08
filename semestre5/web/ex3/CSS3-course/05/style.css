@@ -1,0 +1,14 @@
+.title {
+	color: green;
+	font-size: 30px;
+}
+
+.text-background {
+	text-align: center;
+	background: #ccc;
+	padding: 30px;
+}
+
+#text-intro {
+	color: blue;
+}
