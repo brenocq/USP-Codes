@@ -4,8 +4,8 @@
 #include <cstdlib>
 #include <climits>
 
-#define PARALLEL
-#define T 16
+#define PARALLEL// Comentar essa linha para executar o código sequencial
+#define T 1
 #define N 30000000
 
 int main()
@@ -54,6 +54,7 @@ int main()
     printf("OMP Vet Maior Local: Tam=%d, Num_Threads=%d, maximum=%d, Elapsed wall clock time = %f \n", N, num_threads, maximum, wtime); //Imprime o vetor ordenado
     free(vec);
 
+	//---------- Meus resultados ----------//
 	// Ts -> 0.0435
 	// 1 thread -> 0.042
 	// 2 threads -> 0.011
